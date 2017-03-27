@@ -3,8 +3,8 @@ Proyecto para clase de laboratorio web.
 
 Raúl
 
-Artistas Modelo + Pagina
-Géneros Modelo + Pagina
+- Artistas Modelo + Pagina
+- Géneros Modelo + Pagina
 Reporte en LaTex (definición de arquitectura, web services, lenguaje usado, base de datos, tecnologías cliente, entre otros)
 Enviar mail de cambio de artistas con Jobs
 

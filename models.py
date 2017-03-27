@@ -121,3 +121,30 @@ class Team(CustomBaseModel):
         team.put()#inserta o hace un update depende del main.py
         return 0
 
+########## Artist #########
+class Artist(CustomBaseModel):
+    _message_fields_schema = ('entityKey', 'nombre', 'urlImage')
+    empresa_key = ndb.KeyProperty(kind=Empresa)
+    nombre = ndb.StringProperty()
+    urlImage = ndb.StringProperty()
+
+    def artist_m(self, data, empresakey):
+        artist = Artist()
+        artist.populate(data)
+        artist.empresa_key=empresakey
+        artist.put()
+        return 0
+
+########## Genero #########
+class Genero(CustomBaseModel):
+    _message_fields_schema = ('entityKey', 'nombre', 'urlImage')
+    empresa_key = ndb.KeyProperty(kind=Empresa)
+    nombre = ndb.StringProperty()
+    urlImage = ndb.StringProperty()
+
+    def genero_m(self, data, empresakey):
+        genero = Genero()
+        genero.populate(data)
+        genero.empresa_key=empresakey
+        genero.put()
+        return 0

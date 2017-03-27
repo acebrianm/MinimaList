@@ -10,8 +10,7 @@ import json
 import os
 import jinja2
 
-from models import Empresa
-from models import Team
+from models import Empresa, Team, Artist, Genero
 
 jinja_env = jinja2.Environment(
  loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -47,7 +46,51 @@ class GetTeamHandler(webapp2.RequestHandler):
      json_string = json.dumps(myList, default=MyClass)
      self.response.write(json_string)
 
+class GetArtistHandler(webapp2.RequestHandler):
 
+    def get(self):
+        self.response.headers.add_header('Access-Control-Allow-Origin', '*')
+        self.response.headers['Content-Type'] = 'application/json'
+
+        id_empresa = self.request.get('empresa')
+        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        strKey = objemp.key.urlsafe()
+        myEmpKey = ndb.Key(urlsafe=strkey)
+        myartist = Artist.query(Artist.empresa_key == myEmpKey)
+
+        myList = []
+        for i in myartist:
+            myObj = DemoClass()
+            myObj.nombre = i.nombre
+            myObj.urlImage = i.urlImage
+
+            myList.append(myObj)
+
+        json_string = json.dumps(myList, default=Myclass)
+        self.response.write(json_string)
+
+class GetGeneroHandler(webapp2.RequestHandler):
+
+    def get(self):
+        self.response.headers.add_header('Access-Control-Allow-Origin', '*')
+        self.response.headers['Content-Type'] = 'application/json'
+
+        id_empresa = self.request.get('empresa')
+        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        strKey = objemp.key.urlsafe()
+        myEmpKey = ndb.Key(urlsafe=strkey)
+        mygenero = Genero.query(Genero.empresa_key == myEmpKey)
+
+        myList = []
+        for i in mygenero:
+            myObj = DemoClass()
+            myObj.nombre = i.nombre
+            myObj.urlImage = i.urlImage
+
+            myList.append(myObj)
+
+        json_string = json.dumps(myList, default=Myclass)
+        self.response.write(json_string)
 
 ###########################################################################     
 
@@ -61,7 +104,7 @@ class UpHandler(webapp2.RequestHandler):
      key = blobstore.create_gs_key(real_path)
      try:
       url = images.get_serving_url(key, size=0)
-     except images.TransformationError, images.NotImageError:
+     except (images.TransformationError, images.NotImageError):
       url = "http://storage.googleapis.com{}".format(path)
 
      return url
@@ -120,6 +163,35 @@ class AdminHandler(webapp2.RequestHandler):
     template = jinja_env.get_template(template_name)
     return template.render(context)
 
+class GeneroHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('admin-genero.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
+class ArtistHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('admin-artist.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -141,6 +213,10 @@ app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/login', LoginHandler),
     ('/admin', AdminHandler),
+    ('/admin-artist', ArtistHandler),
+    ('/admin-genero', GeneroHandler),
     ('/up', UpHandler),
     ('/getteam', GetTeamHandler),
+    ('/getartist', GetArtistHandler),
+    ('/getgenero', GetGeneroHandler),
 ], debug = True)

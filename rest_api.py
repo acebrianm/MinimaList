@@ -11,13 +11,15 @@ from CustomExceptions import NotFoundException
 from messages import EmailPasswordMessage, TokenMessage, CodeMessage, Token, TokenKey,MessageNone
 from messages import EmpresaInput, EmpresaUpdate, EmpresaList
 from messages import TeamInput, TeamUpdate, TeamList
+from messages import ArtistInput, ArtistUpdate, ArtistList
 from messages import UserInput, UserUpdate, UserList
+from messages import GeneroInput, GeneroUpdate, GeneroList
 
 from endpoints_proto_datastore.ndb import EndpointsModel
 
 import models
 from models import validarEmail
-from models import Empresa, Usuarios, Team
+from models import Empresa, Usuarios, Team, Artist, Genero
 
 ###############
 # Usuarios
@@ -221,9 +223,7 @@ class EmpresasApi(remote.Service):
    myempresa = Empresa()
    if myempresa.empresa_m(request)==0: 
     codigo=1
-   else:
-		codigo=-3
-      	      #la funcion josue_m puede actualizar e insertar
+   else: codigo=-3 #la funcion josue_m puede actualizar e insertar
 	      #depende de la ENTRADA de este endpoint method
    message = CodeMessage(code=codigo, message='Succesfully added')
       #else:
@@ -413,6 +413,243 @@ class TeamApi(remote.Service):
    message = CodeMessage(code=-1, message='Token expired')
   return message
 
+###########################
+#### Artist
+###########################
 
-application = endpoints.api_server([UsuariosApi, EmpresasApi, TeamApi], restricted=False)
+@endpoints.api(name='artist_api', version='v1', description='Artist REST API')
+class ArtistApi(remote.Service):
+# get one
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, ArtistList, path='artist/get', http_method='POST', name='artist.get')
+#siempre lleva cls y request
+ def artist_get(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+      #Obtiene el elemento dado el entityKey
+   artist_entity = ndb.Key(urlsafe=request.entityKey)
+      #CREA LA SALIDA de tipo JosueInput y le asigna los valores, es a como se declaro en el messages.py
+      #josuentity.get().empresa_key.urlsafe() para poder optener el EntityKey
+   message = ArtistList(code=1, data=[ArtistUpdate(token='Succesfully get',
+    entityKey=artist_entity.get().entityKey,
+    #empresa_key=teamentity.get().empresa_key.urlsafe(), 
+    nombre=artist_entity.get().nombre, 
+    urlImage=artist_entity.get().urlImage)])
+  except jwt.DecodeError:
+   message = ArtistList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = ArtistList(code=-2, data=[])
+  return message
+
+
+# delete
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, CodeMessage, path='artist/delete', http_method='POST', name='artist.delete')
+#siempre lleva cls y request
+ def artist_remove(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   artist_entity = ndb.Key(urlsafe=request.entityKey)#Obtiene el elemento dado el EntitKey
+   artist_entity.delete()#BORRA
+   message = CodeMessage(code=0, message='Se ha eliminado el artista')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# list
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(Token, ArtistList, path='artist/list', http_method='POST', name='artist.list')
+#siempre lleva cls y request
+ def artist_list(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene usuario dado el token
+   lista = [] #crea lista para guardar contenido de la BD
+   lstMessage = ArtistList(code=1) #CREA el mensaje de salida
+   lstBd = Artist.query().fetch() #obtiene de la base de datos
+   for i in lstBd: #recorre la base de datos
+    #inserta a la lista creada con los elementos que se necesiten de la base de datos
+    #i.empresa_key.urlsafe() obtiene el entityKey
+	     
+    lista.append(ArtistUpdate(token='', 
+     entityKey=i.entityKey, 
+     #empresa_key=i.empresa_key.urlsafe(),
+     nombre=i.nombre, 
+     urlImage=i.urlImage))
+   lstMessage.data = lista #ASIGNA a la salida la lista
+   message = lstMessage
+  except jwt.DecodeError:
+   message = ArtistList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = ArtistList(code=-2, data=[])
+  return message
+
+# insert
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(ArtistInput, CodeMessage, path='artist/insert', http_method='POST', name='artist.insert')
+#siempre lleva cls y request
+ def artist_add(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de
+   myartist = Artist()
+   if myartist.artist_m(request, user.empresa_key)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+          #la funcion josue_m puede actualizar e insertar
+          #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=codigo, message='Su artista se ha sido registrado exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# update
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(ArtistUpdate, CodeMessage, path='artist/update', http_method='POST', name='artist.update')
+#siempre lleva cls y request
+ def artist_update(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id'])#obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de USUARIOS
+   empresakey = ndb.Key(urlsafe=user.empresa_key.urlsafe())#convierte el string dado a entityKey
+   myartist = Artist()
+   if myartist.artist_m(request, empresakey)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+      #la funcion josue_m puede actualizar e insertar
+      #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=1, message='Sus cambios han sido guardados exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+###########################
+#### Genero
+###########################
+
+@endpoints.api(name='genero_api', version='v1', description='Genero REST API')
+class GeneroApi(remote.Service):
+# get one
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, GeneroList, path='genero/get', http_method='POST', name='genero.get')
+#siempre lleva cls y request
+ def genero_get(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+      #Obtiene el elemento dado el entityKey
+   genero_entity = ndb.Key(urlsafe=request.entityKey)
+      #CREA LA SALIDA de tipo JosueInput y le asigna los valores, es a como se declaro en el messages.py
+      #josuentity.get().empresa_key.urlsafe() para poder optener el EntityKey
+   message = GeneroList(code=1, data=[GeneroUpdate(token='Succesfully get',
+    entityKey=genero_entity.get().entityKey,
+    #empresa_key=teamentity.get().empresa_key.urlsafe(), 
+    nombre=genero_entity.get().nombre, 
+    urlImage=genero_entity.get().urlImage)])
+  except jwt.DecodeError:
+   message = GeneroList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = GeneroList(code=-2, data=[])
+  return message
+
+
+# delete
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, CodeMessage, path='genero/delete', http_method='POST', name='genero.delete')
+#siempre lleva cls y request
+ def genero_remove(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   genero_entity = ndb.Key(urlsafe=request.entityKey)#Obtiene el elemento dado el EntitKey
+   genero_entity.delete()#BORRA
+   message = CodeMessage(code=0, message='Se ha eliminado el genero')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# list
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(Token, GeneroList, path='genero/list', http_method='POST', name='genero.list')
+#siempre lleva cls y request
+ def genero_list(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene usuario dado el token
+   lista = [] #crea lista para guardar contenido de la BD
+   lstMessage = GeneroList(code=1) #CREA el mensaje de salida
+   lstBd = Genero.query().fetch() #obtiene de la base de datos
+   for i in lstBd: #recorre la base de datos
+    #inserta a la lista creada con los elementos que se necesiten de la base de datos
+    #i.empresa_key.urlsafe() obtiene el entityKey
+	     
+    lista.append(GeneroUpdate(token='', 
+     entityKey=i.entityKey, 
+     #empresa_key=i.empresa_key.urlsafe(),
+     nombre=i.nombre, 
+     urlImage=i.urlImage))
+   lstMessage.data = lista #ASIGNA a la salida la lista
+   message = lstMessage
+  except jwt.DecodeError:
+   message = GeneroList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = GeneroList(code=-2, data=[])
+  return message
+
+# insert
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(GeneroInput, CodeMessage, path='genero/insert', http_method='POST', name='genero.insert')
+#siempre lleva cls y request
+ def genero_add(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de
+   mygenero = Genero()
+   if mygenero.genero_m(request, user.empresa_key)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+          #la funcion josue_m puede actualizar e insertar
+          #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=codigo, message='Su genero se ha sido registrado exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# update
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(GeneroUpdate, CodeMessage, path='genero/update', http_method='POST', name='genero.update')
+#siempre lleva cls y request
+ def genero_update(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id'])#obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de USUARIOS
+   empresakey = ndb.Key(urlsafe=user.empresa_key.urlsafe())#convierte el string dado a entityKey
+   mygenero = Genero()
+   if mygenero.genero_m(request, empresakey)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+      #la funcion josue_m puede actualizar e insertar
+      #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=1, message='Sus cambios han sido guardados exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+
+application = endpoints.api_server([UsuariosApi, EmpresasApi, TeamApi,
+    ArtistApi, GeneroApi], restricted=False)
 
