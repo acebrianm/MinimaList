@@ -92,6 +92,52 @@ class GetGeneroHandler(webapp2.RequestHandler):
         json_string = json.dumps(myList, default=Myclass)
         self.response.write(json_string)
 
+class GetServicioHandler(webapp2.RequestHandler):
+
+    def get(self):
+        self.response.headers.add_header('Access-Control-Allow-Origin', '*')
+        self.response.headers['Content-Type'] = 'application/json'
+
+        id_empresa = self.request.get('empresa')
+        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        strKey = objemp.key.urlsafe()
+        myEmpKey = ndb.Key(urlsafe=strkey)
+        myservicio = Servicio.query(Servicio.empresa_key == myEmpKey)
+
+        myList = []
+        for i in myservicio:
+            myObj = DemoClass()
+            myObj.nombre = i.nombre
+            myObj.urlImage = i.urlImage
+
+            myList.append(myObj)
+
+        json_string = json.dumps(myList, default=Myclass)
+        self.response.write(json_string)
+
+class GetSponsorHandler(webapp2.RequestHandler):
+
+    def get(self):
+        self.response.headers.add_header('Access-Control-Allow-Origin', '*')
+        self.response.headers['Content-Type'] = 'application/json'
+
+        id_empresa = self.request.get('empresa')
+        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        strKey = objemp.key.urlsafe()
+        myEmpKey = ndb.Key(urlsafe=strkey)
+        mysponsor = Sponsor.query(Sponsor.empresa_key == myEmpKey)
+
+        myList = []
+        for i in mysponsor:
+            myObj = DemoClass()
+            myObj.nombre = i.nombre
+            myObj.urlImage = i.urlImage
+
+            myList.append(myObj)
+
+        json_string = json.dumps(myList, default=Myclass)
+        self.response.write(json_string)
+
 ###########################################################################     
 
 
@@ -222,6 +268,36 @@ class ArtistEditHandler(webapp2.RequestHandler):
         return template.render(context)
 
 
+class ServicioHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('admin-servicio.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
+class SponsorHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('admin-sponsor.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
 class MainHandler(webapp2.RequestHandler):
 
    def get(self):
@@ -246,8 +322,12 @@ app = webapp2.WSGIApplication([
     ('/edit-artist', ArtistEditHandler),
     ('/new-artist', ArtistNewHandler),
     ('/admin-genero', GeneroHandler),
+    ('/admin-servicio', ServicioHandler),
+    ('/admin-sponsor', SponsorHandler),
     ('/up', UpHandler),
     ('/getteam', GetTeamHandler),
     ('/getartist', GetArtistHandler),
     ('/getgenero', GetGeneroHandler),
+    ('/getservicio', GetServicioHandler),
+    ('/getsponsor', GetSponsorHandler),
 ], debug = True)

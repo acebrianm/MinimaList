@@ -649,7 +649,242 @@ class GeneroApi(remote.Service):
    message = CodeMessage(code=-1, message='Token expired')
   return message
 
+###########################
+#### Servicio
+###########################
+
+@endpoints.api(name='servicio_api', version='v1', description='Servicio REST API')
+class ServicioApi(remote.Service):
+# get one
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, ServicioList, path='servicio/get', http_method='POST', name='servicio.get')
+#siempre lleva cls y request
+ def servicio_get(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+      #Obtiene el elemento dado el entityKey
+   servicio_entity = ndb.Key(urlsafe=request.entityKey)
+      #CREA LA SALIDA de tipo JosueInput y le asigna los valores, es a como se declaro en el messages.py
+      #josuentity.get().empresa_key.urlsafe() para poder optener el EntityKey
+   message = ServicioList(code=1, data=[ServicioUpdate(token='Succesfully get',
+    entityKey=servicio_entity.get().entityKey,
+    #empresa_key=teamentity.get().empresa_key.urlsafe(), 
+    nombre=servicio_entity.get().nombre, 
+    urlImage=servicio_entity.get().urlImage)])
+  except jwt.DecodeError:
+   message = ServicioList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = ServicioList(code=-2, data=[])
+  return message
+
+
+# delete
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, CodeMessage, path='servicio/delete', http_method='POST', name='servicio.delete')
+#siempre lleva cls y request
+ def servicio_remove(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   servicio_entity = ndb.Key(urlsafe=request.entityKey)#Obtiene el elemento dado el EntitKey
+   servicio_entity.delete()#BORRA
+   message = CodeMessage(code=0, message='Se ha eliminado el servicio')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# list
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(Token, ServicioList, path='servicio/list', http_method='POST', name='servicio.list')
+#siempre lleva cls y request
+ def servicio_list(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene usuario dado el token
+   lista = [] #crea lista para guardar contenido de la BD
+   lstMessage = ServicioList(code=1) #CREA el mensaje de salida
+   lstBd = Servicio.query().fetch() #obtiene de la base de datos
+   for i in lstBd: #recorre la base de datos
+    #inserta a la lista creada con los elementos que se necesiten de la base de datos
+    #i.empresa_key.urlsafe() obtiene el entityKey
+	     
+    lista.append(ServicioUpdate(token='', 
+     entityKey=i.entityKey, 
+     #empresa_key=i.empresa_key.urlsafe(),
+     nombre=i.nombre, 
+     urlImage=i.urlImage))
+   lstMessage.data = lista #ASIGNA a la salida la lista
+   message = lstMessage
+  except jwt.DecodeError:
+   message = ServicioList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = ServicioList(code=-2, data=[])
+  return message
+
+# insert
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(ServicioInput, CodeMessage, path='servicio/insert', http_method='POST', name='servicio.insert')
+#siempre lleva cls y request
+ def servicio_add(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de
+   myserv = Servicio()
+   if myserv.servicio_m(request, user.empresa_key)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+          #la funcion josue_m puede actualizar e insertar
+          #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=codigo, message='Su servicio se ha sido registrado exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# update
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(ServicioUpdate, CodeMessage, path='servicio/update', http_method='POST', name='servicio.update')
+#siempre lleva cls y request
+ def servicio_update(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id'])#obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de USUARIOS
+   empresakey = ndb.Key(urlsafe=user.empresa_key.urlsafe())#convierte el string dado a entityKey
+   myserv = Servicio()
+   if myserv.servicio_m(request, empresakey)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+      #la funcion josue_m puede actualizar e insertar
+      #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=1, message='Sus cambios han sido guardados exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+###########################
+#### Sponsor
+###########################
+
+@endpoints.api(name='sponsor_api', version='v1', description='Sponsor REST API')
+class SponsorApi(remote.Service):
+# get one
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, SponsorList, path='sponsor/get', http_method='POST', name='sponsor.get')
+#siempre lleva cls y request
+ def sponsor_get(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+      #Obtiene el elemento dado el entityKey
+   sponsor_entity = ndb.Key(urlsafe=request.entityKey)
+      #CREA LA SALIDA de tipo JosueInput y le asigna los valores, es a como se declaro en el messages.py
+      #josuentity.get().empresa_key.urlsafe() para poder optener el EntityKey
+   message = SponsorList(code=1, data=[SponsorUpdate(token='Succesfully get',
+    entityKey=sponsor_entity.get().entityKey,
+    #empresa_key=teamentity.get().empresa_key.urlsafe(), 
+    nombre=sponsor_entity.get().nombre, 
+    urlImage=sponsor_entity.get().urlImage)])
+  except jwt.DecodeError:
+   message = SponsorList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = SponsorList(code=-2, data=[])
+  return message
+
+
+# delete
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(TokenKey, CodeMessage, path='sponsor/delete', http_method='POST', name='sponsor.delete')
+#siempre lleva cls y request
+ def sponsor_remove(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   sponsor_entity = ndb.Key(urlsafe=request.entityKey)#Obtiene el elemento dado el EntitKey
+   sponsor_entity.delete()#BORRA
+   message = CodeMessage(code=0, message='Se ha eliminado el sponsor')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# list
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(Token, SponsorList, path='sponsor/list', http_method='POST', name='sponsor.list')
+#siempre lleva cls y request
+ def sponsor_list(cls, request):
+  try:
+   token = jwt.decode(request.tokenint, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene usuario dado el token
+   lista = [] #crea lista para guardar contenido de la BD
+   lstMessage = SponsorList(code=1) #CREA el mensaje de salida
+   lstBd = Sponsor.query().fetch() #obtiene de la base de datos
+   for i in lstBd: #recorre la base de datos
+    #inserta a la lista creada con los elementos que se necesiten de la base de datos
+    #i.empresa_key.urlsafe() obtiene el entityKey
+	     
+    lista.append(SponsorUpdate(token='', 
+     entityKey=i.entityKey, 
+     #empresa_key=i.empresa_key.urlsafe(),
+     nombre=i.nombre, 
+     urlImage=i.urlImage))
+   lstMessage.data = lista #ASIGNA a la salida la lista
+   message = lstMessage
+  except jwt.DecodeError:
+   message = SponsorList(code=-1, data=[])
+  except jwt.ExpiredSignatureError:
+   message = SponsorList(code=-2, data=[])
+  return message
+
+# insert
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(SponsorInput, CodeMessage, path='sponsor/insert', http_method='POST', name='sponsor.insert')
+#siempre lleva cls y request
+ def sponsor_add(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id']) #obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de
+   myspon = Sponsor()
+   if myspon.sponsor_m(request, user.empresa_key)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+          #la funcion josue_m puede actualizar e insertar
+          #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=codigo, message='Su sponsor se ha sido registrado exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
+
+# update
+#                   ENTRADA    SALIDA        RUTA              siempre es POST     NOMBRE
+ @endpoints.method(SponsorUpdate, CodeMessage, path='sponsor/update', http_method='POST', name='sponsor.update')
+#siempre lleva cls y request
+ def sponsor_update(cls, request):
+  try:
+   token = jwt.decode(request.token, 'secret')#CHECA EL TOKEN
+   user = Usuarios.get_by_id(token['user_id'])#obtiene el usuario para poder acceder a los metodos declarados en models.py en la seccion de USUARIOS
+   empresakey = ndb.Key(urlsafe=user.empresa_key.urlsafe())#convierte el string dado a entityKey
+   myspon = Sponsor()
+   if myspon.sponsor_m(request, empresakey)==0:#llama a la funcion declarada en models.py en la seccion de USUARIOS
+    codigo=1
+   else:
+    codigo=-3
+      #la funcion josue_m puede actualizar e insertar
+      #depende de la ENTRADA de este endpoint method
+   message = CodeMessage(code=1, message='Sus cambios han sido guardados exitosamente')
+  except jwt.DecodeError:
+   message = CodeMessage(code=-2, message='Invalid token')
+  except jwt.ExpiredSignatureError:
+   message = CodeMessage(code=-1, message='Token expired')
+  return message
 
 application = endpoints.api_server([UsuariosApi, EmpresasApi, TeamApi,
-    ArtistApi, GeneroApi], restricted=False)
+    ArtistApi, GeneroApi, ServicioApi, SponsorApi], restricted=False)
 

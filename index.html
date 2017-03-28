@@ -1,647 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Evento | Free Onepage Event Template | ShapeBootstrap</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet">
+	<link href="css/animate.css" rel="stylesheet">	
+	<link href="css/responsive.css" rel="stylesheet">
 
-	<!-- Template site title
-   ================================================== -->
-	<title>Galaxy - Responsive Business template</title>
+    <!--[if lt IE 9]>
+	    <script src="js/html5shiv.js"></script>
+	    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+</head><!--/head-->
 
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="keywords" content="">
-	<meta name="description" content="">
-
-	<!-- Bootstrap CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-
-	<!-- Animate CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/animate.min.css">
-
-	<!-- Font Icons
-   ================================================== -->
-	<link rel="stylesheet" href="css/font-awesome.min.css">
-	<link rel="stylesheet" href="css/et-line-font.css">
-
-	<!-- Nivo Lightbox CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/nivo-lightbox.css">
-	<link rel="stylesheet" href="css/nivo_themes/default/default.css">
-
-	<!-- Owl Carousel CSS
-   ================================================== -->
-   	<link rel="stylesheet" href="css/owl.theme.css">
-	<link rel="stylesheet" href="css/owl.carousel.css">
-
-	<!-- Main CSS
-   ================================================== -->
-	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Google web font 
-   ================================================== -->	
-	<link href='https://fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
-<script type="text/javascript">
-
-function getData() 
-{
-
-	sessionStorage.empresa = "kubeet";
-
-    jQuery.support.cors = true;
-    try
-    {                         
-     $.ajax({
-        url: "http://localhost:8080/getteam",
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: true,
-        data: {empresa: sessionStorage.empresa},                         
-        type: 'get',
-        crossDomain: true,
-        success: function(response) {
-	  tweets = response;
-          //alert(response);
-          tweets.forEach(function (tweet) 
-          {
-             var nombre = "<div class='col-md-3 col-sm-3 wow fadeInUp' " +
-  			" data-wow-delay='0.2s'> " +
-                        "<img src='" + tweet.urlImage + "'" +
-                        " class='img-responsive img-circle' alt='team img' heigth='150' width='150'" +
-                        " >" +
-                        " <div class='section-title wow bounceIn'> " +
-                        "<h3>" + tweet.puesto + "</h3>" +
-                        "<h5>" + tweet.nombre + "</h5>" +
-                        "<a href=" + tweet.urlImage + "> descargar </a>" +
-                        "</div>" +
-                        "</div>" 
-                       $("#divTeam").append(nombre);
-                });
-	   
- 	 }
-        });          
-     
-    }
- catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
-
-
-</script>
-	
-</head>
-
-<body onload="getData()" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
-
-
-<!-- Preloader section
-================================================== -->
-<section class="preloader">
-	<div class="sk-three-bounce">
-      	<div class="sk-child sk-bounce1"></div>
-      	<div class="sk-child sk-bounce2"></div>
-     	 <div class="sk-child sk-bounce3"></div>
-	</div>
-</section>
-
-
-<!-- Navigation section
-================================================== -->
-<section class="navbar navbar-default navbar-fixed-top sticky-navigation" role="navigation">
-	<div class="container">
-
-		<div class="navbar-header">
-			<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon icon-bar"></span>
-				<span class="icon icon-bar"></span>
-				<span class="icon icon-bar"></span>
-			</button>
-			<a href="#" class="navbar-brand">GALAXY</a>
-		</div>
-		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav navbar-right main-navigation">
-				<li><a href="#home" class="smoothScroll">HOME</a></li>
-				<li><a href="#about" class="smoothScroll">ABOUT</a></li>
-				<li><a href="#team" class="smoothScroll">TEAM</a></li>
-				<li><a href="#service" class="smoothScroll">SERVICE</a></li>
-				<li><a href="#portfolio" class="smoothScroll">PORTFOLIO</a></li>
-				<li><a href="#price" class="smoothScroll">PACKAGE</a></li>
-				<li><a href="#contact" class="smoothScroll">CONTACT</a></li>
-			</ul>
-		</div>
-
-	</div>
-</section>
-
-
-<!-- Home section
-================================================== -->
-<section id="home" class="parallax-section">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-offset-2 col-md-8 col-sm-12">
-				<h1>Introduction</h1>
-				<h2 class="wow bounceIn">Galaxy Studio Agency</h2>
-				<p class="wow fadeIn" data-wow-delay="0.3s">We are talented people who around the world and create stunning things on web and graphics. We produce web designs, brand & identity, graphic design and interactive UX / UI.</p>
-				<a href="#about" class="btn btn-default section-btn smoothScroll wow fadeInUp" data-wow-delay="0.6s">LEARN MORE</a>
-				<a href="#portfolio" class="btn btn-danger section-btn smoothScroll wow fadeInUp hidden-xs" data-wow-delay="0.6s">VIEW PORTFOLIO</a>
-			</div>
-
-		</div>
-	</div>		
-</section>
-
-
-<!-- About section
-================================================== -->
-<section id="about" class="parallax-section">
-	<div class="container">
-		<div class="row">
-
-			<!-- Section title
-			================================================== -->
-			<div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 text-center">
-				<div class="section-title">
-					<h5>ABOUT US</h5>
-					<h3>We create stunning things on web and graphics. We produce web designs, brand & identity, graphic design and interactive UX / UI.</h3>
-					<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque, curabitur dolor libero sodales vitae elit massa. Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque.</p>
-				</div>
-			</div>	
-
-
-
-			<div class="col-md-4 col-sm-4">
-				<i class="icon icon-laptop wow fadeInUp" data-wow-delay="0.9s"></i>
-				<h3>Fully Responsive</h3>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque.</p>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<i class="icon icon-key wow fadeInUp" data-wow-delay="0.9s"></i>
-				<h3>Easy to customize</h3>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque.</p>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<i class="icon icon-layers wow fadeInUp" data-wow-delay="0.9s"></i>
-				<h3>HTML5 & CSS3</h3>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque.</p>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-
-<!-- Counter section
-================================================== -->
-<section id="counter" class="paralla-section">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-3 col-sm-3 counter-item">	
-				<h3 class="counter-number" data-from="1" data-to="256" data-speed="1000"></h3>
-				<span class="counter-text">HAPPY CLIENTS</span>
-            </div> 
-            <div class="col-md-3 col-sm-3 counter-item">	
-				<h3 class="counter-number" data-from="1" data-to="512" data-speed="2000"></h3>
-				<span class="counter-text">CREATIVE</span>
-            </div>   
-            <div class="col-md-3 col-sm-3 counter-item">	
-				<h3 class="counter-number" data-from="1" data-to="1024" data-speed="3000"></h3>
-				<span class="counter-text">PROJECT FINISHED</span>
-            </div> 
-             <div class="col-md-3 col-sm-3 counter-item">
-				<h3 class="counter-number" data-from="1" data-to="2048" data-speed="4000"></h3>
-				<span class="counter-text">AWARDS</span>
-            </div> 
-              
-
-		</div>
-	</div>
-</section>
-
-
-<!-- team section
-================================================== -->
-<section id="team" class="parallax-section">
-	<div class="container">
-		<div class="row" id="divTeam">
-
-			<!-- Section title
-			================================================== -->
-			<div class="col-md-8 col-sm-8">
-				<div class="section-title">
-					<h5>TEAM MEMBERS</h5>
-					<h3>We create stunning things on web and graphics. We produce web designs, brand & identity, graphic design and interactive UX / UI.</h3>
-				</div>
-			</div>	
-
-			<div class="col-md-12 col-sm-12"></div>
-
-			<div class="col-md-3 col-sm-3 wow fadeInUp" data-wow-delay="0.6s">
-				<img src="images/team-img1.jpg" class="img-responsive img-circle" alt="team img">
-				<h3>Jonny Dennis</h3>
-				<h5>Creative Director</h5>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus.</p>
-			</div>
-			<div class="col-md-3 col-sm-3 wow fadeInUp" data-wow-delay="0.6s">
-				<img src="images/team-img2.jpg" class="img-responsive img-circle" alt="team img">
-				<h3>Mark Genius</h3>
-				<h5>Project Manager</h5>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus.</p>
-			</div>
-			<div class="col-md-3 col-sm-3 wow fadeInUp" data-wow-delay="0.6s">
-				<img src="images/team-img3.jpg" class="img-responsive img-circle" alt="team img">
-				<h3>James David</h3>
-				<h5>UX Designer</h5>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus.</p>
-			</div>
-			<div class="col-md-3 col-sm-3 wow fadeInUp" data-wow-delay="0.6s">
-				<img src="images/team-img4.jpg" class="img-responsive img-circle" alt="team img">
-				<h3>Simon Leo</h3>
-				<h5>Designer</h5>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus.</p>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-
-<!-- download section
-================================================== -->
-<section id="download" class="paralla-section">
-	<div class="container">
-		<div class="row">
-
-            <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 wow bounceIn" data-wow-delay="0.9s">
-            	<h1>Galaxy Onepage Multipurpose template</h1>
-            	<h2>well documented & easy to customise!</h2>
-            </div>
-
-		</div>
-	</div>
-</section>
-
-
-<!-- Service section
-================================================== -->
-<section id="service" class="parallax-section">
-	<div class="container">
-		<div class="row">
-
-			<!-- Section title
-			================================================== -->
-			<div class="col-md-12 col-sm-12 text-center">
-				<div class="section-title">
-					<h5>OUR SERVICE</h5>
-				</div>
-			</div>	
-
-
-			<div class="col-md-6 col-sm-10 wow fadeInUp" data-wow-delay="0.6s">
-				<h3>We create stunning things on web and graphics. We produce web designs, brand & identity, graphic design and interactive UX / UI.</h3>
-				<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque, curabitur dolor libero sodales vitae elit massa. Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque, curabitur dolor libero sodales vitae elit massa.</p>
-			</div>
-
-			<div class="col-md-6 col-sm-12">
-
-				<div class="col-md-6 col-sm-6">
-					<div class="media">
-						<div class="media-object pull-left">
-							<i class="icon icon-laptop wow fadeInUp" data-wow-delay="0.9s"></i>
-						</div>
-						<div class="media-body">
-							<h3 class="media-heading">Web Design</h3>
-							<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo.</p>
-						</div>
+<body>
+	<header id="header" role="banner">		
+		<div class="main-nav">
+			<div class="container">
+				<div class="header-top">
+					<div class="pull-right social-icons">
+						<a href="#"><i class="fa fa-twitter"></i></a>
+						<a href="#"><i class="fa fa-facebook"></i></a>
+						<a href="#"><i class="fa fa-google-plus"></i></a>
+						<a href="#"><i class="fa fa-youtube"></i></a>
 					</div>
-					<div class="media">
-						<div class="media-object pull-left">
-							<i class="icon icon-focus wow fadeInUp" data-wow-delay="0.9s"></i>
-						</div>
-						<div class="media-body">
-							<h3 class="media-heading">SEO Friendly</h3>
-							<p>You can easily change icons by looking at <span>ET Line Icons</span>.</p>
-						</div>
-					</div>
-				</div>
+				</div>     
+		        <div class="row">	        		
+		            <div class="navbar-header">
+		                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		                    <span class="sr-only">Toggle navigation</span>
+		                    <span class="icon-bar"></span>
+		                    <span class="icon-bar"></span>
+		                    <span class="icon-bar"></span>
+		                </button>
+		                <a class="navbar-brand" href="index.html">
+		                	<img class="img-responsive" src="images/logo.png" alt="logo">
+		                </a>                    
+		            </div>
+		            <div class="collapse navbar-collapse">
+		                <ul class="nav navbar-nav navbar-right">                 
+		                    <li class="scroll active"><a href="#home">Home</a></li>
+		                    <li class="scroll"><a href="#explore">Explore</a></li>                         
+		                    <li class="scroll"><a href="#event">Artists</a></li>
+							<li class="scroll"><a href="#twitter">Genres</a></li>
+							<li class="scroll"><a href="#">Services</a></li>
+		                    <li class="no-scroll"><a href="#sponsor">Sponsors</a></li>
+		                    <li><a class="no-scroll" href="#" target="_blank">PURCHASE TICKETS</a></li>
+		                    <li class="scroll"><a href="#contact">Contact</a></li>       
+		                </ul>
+		            </div>
+		        </div>
+	        </div>
+        </div>                    
+    </header>
+    <!--/#header--> 
 
-				<div class="col-md-6 col-sm-6">
-					<div class="media">
-						<div class="media-object pull-left">
-							<i class="icon icon-camera wow fadeInUp" data-wow-delay="0.9s"></i>
-						</div>
-						<div class="media-body">
-							<h3 class="media-heading">Multimedia</h3>
-							<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo.</p>
-						</div>
-					</div>
-					<div class="media">
-						<div class="media-object pull-left">
-							<i class="icon icon-cloud wow fadeInUp" data-wow-delay="0.9s"></i>
-						</div>
-						<div class="media-body">
-							<h3 class="media-heading">Social Marketing</h3>
-							<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo.</p>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-
-		</div>
-	</div>
-</section>
-
-
-<!-- portfolio section
-================================================== -->
-<section id="portfolio" class="parallax-section">
-	<div class="container">
-		<div class="row">
-
-			<!-- Section title
-			================================================== -->
-			<div class="col-md-12 col-sm-12 text-center">
-				<div class="section-title wow bounceIn">
-					<h5>MY PORTFOLIO</h5>
-				</div>
-			</div>	
-
-			<div class="col-md-4 col-sm-4">
-				<div class="portfolio-des">
-					<a href="images/portfolio-img1.jpg" data-lightbox-gallery="portfolio-gallery"><img src="images/portfolio-img1.jpg" alt="portfolio img"></a>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<div class="portfolio-des">
-					<a href="images/portfolio-img2.jpg" data-lightbox-gallery="portfolio-gallery"><img src="images/portfolio-img2.jpg" alt="portfolio img"></a>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<div class="portfolio-des">
-					<a href="images/portfolio-img3.jpg" data-lightbox-gallery="portfolio-gallery"><img src="images/portfolio-img3.jpg" alt="portfolio img"></a>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<div class="portfolio-des">
-					<a href="images/portfolio-img4.jpg" data-lightbox-gallery="portfolio-gallery"><img src="images/portfolio-img4.jpg" alt="portfolio img"></a>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<div class="portfolio-des">
-					<a href="images/portfolio-img5.jpg" data-lightbox-gallery="portfolio-gallery"><img src="images/portfolio-img5.jpg" alt="portfolio img"></a>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-4">
-				<div class="portfolio-des">
-					<a href="images/portfolio-img6.jpg" data-lightbox-gallery="portfolio-gallery"><img src="images/portfolio-img6.jpg" alt="portfolio img"></a>
-				</div>
-			</div>
-
-			
-		</div>
-	</div>
-</section>
-
-
-<!-- price section
-================================================== -->
-<section id="price">
-	<div class="container">
-		<div class="row">
-
-			<!-- Section title
-			================================================== -->
-			<div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10">
-				<div class="section-title">
-					<h5 class="wow bounceIn">PRICE PACKAGE</h5>
-				</div>
-			</div>	
-			<div class="col-md-4 col-sm-6">
-				<div class="price-plan">
-					<div class="price-title">
-						<i class="icon icon-bike"></i>
-						<h3>Freelancer</h3>
-					</div>
-					<div class="price-month">
-						<h4>$320 / monthly</h4>
-					</div>
-					<p>Free 25 templates</p>
-					<p>10 GB storage</p>
-					<p>lifetime support</p>
-					<button class="btn btn-default section-btn">MAKE PLAN</button>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.6s">
-				<div class="price-plan price-plan-default">
-					<div class="price-title">
-						<i class="icon icon-download"></i>
-						<h3>Personal</h3>
-					</div>
-					<div class="price-month">
-						<h4>$320 / monthly</h4>
-					</div>
-					<p>Free 25 templates</p>
-					<p>10 GB storage</p>
-					<p>lifetime support</p>
-					<button class="btn btn-default section-btn">CHOOSE PLAN</button>
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-10">
-				<div class="price-plan">
-					<div class="price-title">
-						<i class="icon icon-target"></i>
-						<h3>Professional</h3>
-					</div>
-					<div class="price-month">
-						<h4>$420 / monthly</h4>
-					</div>
-					<p>Free 25 templates</p>
-					<p>10 GB storage</p>
-					<p>lifetime support</p>
-					<button class="btn btn-default section-btn">MAKE PLAN</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-
-<!-- Testimonial section
-================================================== -->
-<section id="testimonial" class="parallax-section">
-	<div class="container">
-		<div class="row">
-
-			<!-- Service Owl Carousel section
-			================================================== -->
-			<div id="owl-testimonial" class="owl-carousel">
-
-				<div class="item">
-					<div class="row">
-						<div class="col-md-offset-3 col-md-6">
-							<img src="images/testimonial-img1.jpg" class="img-responsive img-circle" alt="testimonial img">
-							<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque, curabitur dolor libero sodales vitae elit massa.</p>
-							<h2>Designer at Google</h2>
-						</div>
+    <section id="home">	
+		<div id="main-slider" class="carousel slide" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#main-slider" data-slide-to="0" class="active"></li>
+				<li data-target="#main-slider" data-slide-to="1"></li>
+				<li data-target="#main-slider" data-slide-to="2"></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="item active">
+					<img class="img-responsive" src="images/slider/bg1.jpg" alt="slider">						
+					<div class="carousel-caption">
+						<h2>register for our next event </h2>
+						<h4>full event package only @$199</h4>
+						<a href="#contact">GRAB YOUR TICKETS <i class="fa fa-angle-right"></i></a>
 					</div>
 				</div>
 				<div class="item">
-					<div class="row">
-						<div class="col-md-offset-3 col-md-6">
-							<img src="images/testimonial-img2.jpg" class="img-responsive img-circle" alt="testimonial img">
-							<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque, curabitur dolor libero sodales vitae elit massa.</p>
-							<h2>UX Designer at facebook</h2>
-						</div>
+					<img class="img-responsive" src="images/slider/bg2.jpg" alt="slider">	
+					<div class="carousel-caption">
+						<h2>register for our next event </h2>
+						<h4>full event package only @$199</h4>
+						<a href="#contact">GRAB YOUR TICKETS <i class="fa fa-angle-right"></i></a>
 					</div>
 				</div>
 				<div class="item">
-					<div class="row">
-						<div class="col-md-offset-3 col-md-6">
-							<img src="images/testimonial-img3.jpg" class="img-responsive img-circle" alt="testimonial img">
-							<p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque, curabitur dolor libero sodales vitae elit massa.</p>
-							<h2>Creative Director at apple</h2>
-						</div>
+					<img class="img-responsive" src="images/slider/bg3.jpg" alt="slider">	
+					<div class="carousel-caption">
+						<h2>register for our next event </h2>
+						<h4>full event package only @$199</h4>
+						<a href="#contact" >GRAB YOUR TICKETS <i class="fa fa-angle-right"></i></a>
 					</div>
-				</div>
-				
+				</div>				
 			</div>
+		</div>    	
+    </section>
+	<!--/#home-->
 
-
-		</div>
-	</div>
-</section>
-
-
-<!-- Contact section
-================================================== -->
-<section id="contact" class="parallax-section">
-	<div class="container">
-		<div class="row">
-
-			<!-- Section title
-			================================================== -->
-			<div class="col-md-12 col-sm-12 text-center">
-				<div class="section-title">
-					<h5>GET IN TOUCH</h5>
-				</div>
-			</div>
-
-			<!-- Contact form section
-			================================================== -->
-			<div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 wow fadeIn" data-wow-delay="0.6s">
-				<div class="contact-form">
-					<form id="contact-form" method="post" action="contact.php">
-						<div class="col-md-6 col-sm-6">
-							<input name="name" type="text" class="form-control" placeholder="Your Name" required>
-							<input name="email" type="email" class="form-control" placeholder="Your Email" required>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<textarea name="message" class="form-control" placeholder="Message" rows="4" required></textarea>
-						</div>
-						<div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6">
-							<input type="submit" class="form-control submit" value="SEND MESSAGE">
-						</div>
-					</form>
-				</div>
-			</div>
-			</div>
-			<div class="col-md-12 col-sm-12"></div>
-			<!-- Contact detail section
-			================================================== -->
-			<div class="col-md-offset-2 col-md-3 col-sm-4 wow fadeInUp" data-wow-delay="0.6s">
-				<div class="media">
-					<div class="media-object pull-left">
-						<i class="icon icon-phone"></i>
-					</div>
-					<div class="media-body">
-						<h3 class="media-heading">PHONE</h3>
-						<p> + 01 2034 2304234</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-4 wow fadeInUp" data-wow-delay="0.6s">
-				<div class="media">
-					<div class="media-object pull-left">
-						<i class="icon icon-envelope"></i>
-					</div>
-					<div class="media-body">
-						<h3 class="media-heading">EMAIL</h3>
-						<p> contact@galaxyagency.co</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-4 wow fadeInUp" data-wow-delay="0.6s">
-				<div class="media">
-					<div class="media-object pull-left">
-						<i class="icon icon-browser"></i>
-					</div>
-					<div class="media-body">
-						<h3 class="media-heading">ADDRESS</h3>
-						<p> + 0034 Rose, twitter Inc.</p>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
-</section>
-
-
-<!-- Footer section
-================================================== -->
-<footer>
-	<!-- google map -->
-		<div class="google_map">
-			<div id="map-canvas"></div>
-		</div>
-</footer>
-
-
-<!-- copyright section
-================================================== -->
-<section id="copyright">
-	<div class="container">
-		<div class="row">
-
-			<div class="col-md-12 col-sm-12">
-				<div class="copyright-text wow fadeInUp" data-wow-delay="0.9s">
-					<ul class="social-icon">
-						<li><a href="#" class="fa fa-facebook wow fadeIn" data-wow-delay="0.3s"></a></li>
-						<li><a href="#" class="fa fa-twitter wow fadeIn" data-wow-delay="0.6s"></a></li>
-						<li><a href="#" class="fa fa-dribbble wow fadeIn" data-wow-delay="0.9s"></a></li>
-						<li><a href="#" class="fa fa-behance wow fadeIn" data-wow-delay="1s"></a></li>
+	<section id="explore">
+		<div class="container">
+			<div class="row">
+				<div class="watch">
+					<img class="img-responsive" src="images/watch.png" alt="">
+				</div>				
+				<div class="col-md-4 col-md-offset-2 col-sm-5">
+					<h2>our next event in</h2>
+				</div>				
+				<div class="col-sm-7 col-md-6">					
+					<ul id="countdown">
+						<li>					
+							<span class="days time-font">00</span>
+							<p>days </p>
+						</li>
+						<li>
+							<span class="hours time-font">00</span>
+							<p class="">hours </p>
+						</li>
+						<li>
+							<span class="minutes time-font">00</span>
+							<p class="">minutes</p>
+						</li>
+						<li>
+							<span class="seconds time-font">00</span>
+							<p class="">seconds</p>
+						</li>				
 					</ul>
-					<p> &copy; 2016 | Galaxy Agency - All Rights Reserved.</p>
 				</div>
 			</div>
-
+			<div class="cart">
+				<a href="#"><i class="fa fa-shopping-cart"></i> <span>Purchase Tickets</span></a>
+			</div>
 		</div>
-	</div>
-</section>
+	</section><!--/#explore-->
 
+	<section id="event">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-9">
+					<div id="event-carousel" class="carousel slide" data-interval="false">
+						<h2 class="heading">Artists</h2>
+						<a class="even-control-left" href="#event-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+						<a class="even-control-right" href="#event-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
+						<div class="carousel-inner">
+							<div class="item active">
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event1.jpg" alt="event-image">
+											<h4>Chester Bennington</h4>
+											<h5>Vocal</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event2.jpg" alt="event-image">
+											<h4>Mike Shinoda</h4>
+											<h5>vocals, rhythm guitar</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event3.jpg" alt="event-image">
+											<h4>Rob Bourdon</h4>
+											<h5>drums</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item">
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event1.jpg" alt="event-image">
+											<h4>Chester Bennington</h4>
+											<h5>Vocal</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event2.jpg" alt="event-image">
+											<h4>Mike Shinoda</h4>
+											<h5>vocals, rhythm guitar</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event3.jpg" alt="event-image">
+											<h4>Rob Bourdon</h4>
+											<h5>drums</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!--/#event-->
 
-<!-- Javascript 
-================================================== -->
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.nav.js"></script>
-<script src="js/jquery.parallax.js"></script>
-<script src="js/nivo-lightbox.min.js"></script>
-<script src="js/counter.js"></script>
-<script src="js/smoothscroll.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/custom.js"></script>
+	<section id="twitter">
+		<div id="twitter-feed" class="carousel slide" data-interval="false">
+			<h2 class="genres" align="center">Genres</h2>
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<div class="text-center carousel-inner center-block">
+						<div class="item active">
+							<img src="images/twitter/twitter1.png" alt="">
+							<p>Rock</p>
+						</div>
+						<div class="item">
+							<img src="images/twitter/twitter2.png" alt="">
+							<p>Punk Rock</p>
+						</div>
+						<div class="item">
+							<img src="images/twitter/twitter3.png" alt="">
+							<p>Alternative</p>
+						</div>
+					</div>
+					<a class="twitter-control-left" href="#twitter-feed" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+					<a class="twitter-control-right" href="#twitter-feed" data-slide="next"><i class="fa fa-angle-right"></i></a>
+				</div>
+			</div>
+		</div>		
+	</section><!--/#genres-->
 
+	<section id="services">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 col-md-9">
+					<div id="event-carousel1" class="carousel slide" data-interval="false">
+						<h2 class="heading">Services</h2>
+						<a class="even-control-left" href="#event-carousel1" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+						<a class="even-control-right" href="#event-carousel1" data-slide="next"><i class="fa fa-angle-right"></i></a>
+						<div class="carousel-inner">
+							<div class="item active">
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event1.jpg" alt="event-image">
+											<h4>Chester Bennington</h4>
+											<h5>Vocal</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event2.jpg" alt="event-image">
+											<h4>Mike Shinoda</h4>
+											<h5>vocals, rhythm guitar</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event3.jpg" alt="event-image">
+											<h4>Rob Bourdon</h4>
+											<h5>drums</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="item">
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event1.jpg" alt="event-image">
+											<h4>Chester Bennington</h4>
+											<h5>Vocal</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event2.jpg" alt="event-image">
+											<h4>Mike Shinoda</h4>
+											<h5>vocals, rhythm guitar</h5>
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="single-event">
+											<img class="img-responsive" src="images/event/event3.jpg" alt="event-image">
+											<h4>Rob Bourdon</h4>
+											<h5>drums</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</section>
+	
+	<section id="sponsor">
+		<div id="sponsor-carousel" class="carousel slide" data-interval="false">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-10">
+						<h2>Sponsors</h2>			
+						<a class="sponsor-control-left" href="#sponsor-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+						<a class="sponsor-control-right" href="#sponsor-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
+						<div class="carousel-inner">
+							<div class="item active">
+								<ul>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor1.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor2.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor3.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor4.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor5.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor6.png" alt=""></a></li>
+								</ul>
+							</div>
+							<div class="item">
+								<ul>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor6.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor5.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor4.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor3.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor2.png" alt=""></a></li>
+									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor1.png" alt=""></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>
+			<div class="light">
+				<img class="img-responsive" src="images/light.png" alt="">
+			</div>
+		</div>
+	</section><!--/#sponsor-->
 
+	<section id="contact">
+		<div id="map">
+			<div id="gmap-wrap">
+	 			<div id="gmap"> 				
+	 			</div>	 			
+	    	</div>
+		</div><!--/#map-->
+		<div class="contact-section">
+			<div class="ear-piece">
+				<img class="img-responsive" src="images/ear-piece.png" alt="">
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3 col-sm-offset-4">
+						<div class="contact-text">
+							<h3>Contact</h3>
+							<address>
+								E-mail: promo@party.com<br>
+								Phone: +1 (123) 456 7890<br>
+								Fax: +1 (123) 456 7891
+							</address>
+						</div>
+						<div class="contact-address">
+							<h3>Contact</h3>
+							<address>
+								Unit C2, St.Vincent's Trading Est.,<br>
+								Feeder Road,<br>
+								Bristol, BS2 0UY<br>
+								United Kingdom
+							</address>
+						</div>
+					</div>
+					<div class="col-sm-5">
+						<div id="contact-section">
+							<h3>Send a message</h3>
+					    	<div class="status alert alert-success" style="display: none"></div>
+					    	<form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="sendemail.php">
+					            <div class="form-group">
+					                <input type="text" name="name" class="form-control" required="required" placeholder="Name">
+					            </div>
+					            <div class="form-group">
+					                <input type="email" name="email" class="form-control" required="required" placeholder="Email ID">
+					            </div>
+					            <div class="form-group">
+					                <textarea name="message" id="message" required="required" class="form-control" rows="4" placeholder="Enter your message"></textarea>
+					            </div>                        
+					            <div class="form-group">
+					                <button type="submit" class="btn btn-primary pull-right">Send</button>
+					            </div>
+					        </form>	       
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</section>
+    <!--/#contact-->
+
+    <footer id="footer">
+        <div class="container">
+            <div class="text-center">
+                <p> Copyright  &copy;2014<a target="_blank" href="http://shapebootstrap.net/"> Evento </a>Theme. All Rights Reserved. <br> Designed by <a target="_blank" href="http://shapebootstrap.net/">ShapeBootstrap</a></p>                
+            </div>
+        </div>
+    </footer>
+    <!--/#footer-->
+  
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  	<script type="text/javascript" src="js/gmaps.js"></script>
+	<script type="text/javascript" src="js/smoothscroll.js"></script>
+    <script type="text/javascript" src="js/jquery.parallax.js"></script>
+    <script type="text/javascript" src="js/coundown-timer.js"></script>
+    <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
+    <script type="text/javascript" src="js/jquery.nav.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>  
 </body>
 </html>
