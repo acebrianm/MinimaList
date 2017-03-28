@@ -148,3 +148,32 @@ class Genero(CustomBaseModel):
         genero.empresa_key=empresakey
         genero.put()
         return 0
+
+########## Servicio #########
+class Servicio(CustomBaseModel):
+    _message_fields_schema = ('entityKey', 'nombre', 'urlImage')
+    empresa_key = ndb.KeyProperty(kind=Empresa)
+    nombre = ndb.StringProperty()
+    urlImage = ndb.StringProperty()
+
+    def servicio_m(self, data, empresakey):
+        servicio = Servicio()
+        servicio.populate(data)
+        servicio.empresa_key=empresakey
+        servicio.put()
+        return 0
+
+
+########## Sponsor #########
+class Sponsor(CustomBaseModel):
+    _message_fields_schema = ('entityKey', 'nombre', 'urlImage')
+    empresa_key = ndb.KeyProperty(kind=Empresa)
+    nombre = ndb.StringProperty()
+    urlImage = ndb.StringProperty()
+
+    def sponsor_m(self, data, empresakey):
+        sponsor = Sponsor()
+        sponsor.populate(data)
+        sponsor.empresa_key=empresakey
+        sponsor.put()
+        return 0
