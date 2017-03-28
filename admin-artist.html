@@ -1,6 +1,27 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet">
+	<link href="css/animate.css" rel="stylesheet">	
+	<link href="css/responsive.css" rel="stylesheet">
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script><!-- Latest compiled and minified JavaScript --> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!--[if lt IE 9]>
+	    <script src="js/html5shiv.js"></script>
+	    <script src="js/respond.min.js"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
  <title>
    new - demo
  </title>
@@ -131,31 +152,87 @@ function uploadDemo()
 </script>
 
 </head>
-<body>
+<body style="color: black;">
 
-
-<h1> Add demo</h1>
-
-nombre: <input type="text" id="nombre" placeholder="Korn" /> <br>
-
- <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 text-center">
-              <label for="exampleInputEmail1"><i>Foto</i></label>
-               <br>
-               <img  src="" alt="Image preview" id="preview" style="width:128px;height:128px;" >
-               <br>
-               <input type="text" id="url_photo">
-               <br><input onchange="uploadDemo()" type="file"  id="uploaded_file" name="uploaded_file">
-              </div>
-
-
-<br>
-<button onclick="addArtist()"> Guardar </button> 
-
-<br>
-<br>
-
-<button onclick="getArtistList()"> Obtener Lista </button> 
-
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav animated fadeIn text16">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Artists <span class="caret"></span></a>
+          <ul class="dropdown-menu animated flipInX" role="menu">
+            <li><a href="/new-artist"><span class="glyphicon glyphicon-plus"></span>Create Artist</a></li>
+            <li><a href="/admin-artist"><span class="glyphicon glyphicon-tasks"></span> Lists of Artists</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-music"></span> Genre <span class="caret"></span></a>
+          <ul class="dropdown-menu animated flipInX" role="menu">
+            <li><a href="/new-genero"><span class="glyphicon glyphicon-plus"></span>Create Genre</a></li>
+            <li><a href="/admin-genero"><span class="glyphicon glyphicon-tasks"></span> Lists of Genres</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-usd"></span> Sponsors <span class="caret"></span></a>
+          <ul class="dropdown-menu animated flipInX" role="menu">
+            <li><a href="/new-sponsor"><span class="glyphicon glyphicon-plus"></span>Create Sponsor</a></li>
+            <li><a href="/admin-sponsor"><span class="glyphicon glyphicon-tasks"></span> Lists of Sponsors</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span> Services <span class="caret"></span></a>
+          <ul class="dropdown-menu animated flipInX" role="menu">
+            <li><a href="/new-service"><span class="glyphicon glyphicon-plus"></span>Create Service</a></li>
+            <li><a href="/admin-service"><span class="glyphicon glyphicon-tasks"></span> Lists of Services</a></li>
+          </ul>
+        </li>
+      </ul>
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="container">
+    <h1> Add Artist</h1>
+	<div class="row">
+	    
+	    <div class="col-md-8 col-md-offset-2">
+	        
+    		<h1>Create Artist</h1>
+    		
+    		    
+    		    <div class="form-group ">
+    		        <label for="nombre">Nombre: <span class="require">*</span></label>
+    		        <input type="text" id="nombre" class="form-control" name="nombre" />
+    		    </div>
+    		    
+    		    <div class="form-group">
+                    <img  src="" alt="Image preview" id="preview" style="width:128px;height:128px;" >
+    		    </div>
+    		    
+    		    <div class="form-group">
+                    <input type="text" id="url_photo">
+    		    </div>
+    		    
+    		    <div class="form-group">
+                    <br><input onchange="uploadDemo()" type="file"  id="uploaded_file" name="uploaded_file">
+    		    </div>
+    		    
+    		    <div class="form-group">
+    		        <button type="submit" onclick="addArtist()" class="btn btn-primary">
+    		            Create
+    		        </button>
+    		    </div>
+    		    
+		</div>
+		
+	</div>
+</div>
 
 </body>
 </html>

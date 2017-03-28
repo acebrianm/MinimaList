@@ -42,7 +42,7 @@ function getData()
     try
     {                         
      $.ajax({
-        url: "http://localhost:8080/getartist",
+        url: "http://localhost:8080/getgenero",
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -51,17 +51,17 @@ function getData()
         type: 'get',
         crossDomain: true,
         success: function(response) {
-        artists = response;
+        genres = response;
           //alert(response);
-            $("#artistAdmin").empty();
-            artists.forEach(function (artist) 
+            $("#genreAdmin").empty();
+            genres.forEach(function (genre) 
             {
-                var row = "<tr> <td class='hidden'><input type='hidden' value='" + artist.id_artist + "'</td> <td>" + artist.nombre +
+                var row = "<tr> <td class='hidden'><input type='hidden' value='" + genre.id_genero + "'</td> <td>" + genre.nombre +
                   "</td> <td class='text-center'><a class='btn btn-info btn-xs' " + 
-                  "href='edit-artist?key=" + artist.id_artist + "'><span class='glyphicon glyphicon-edit'></span>" + 
-                  "Edit</a> <a href='javascript:deleteArtist(\""+ artist.id_artist.toString() + "\");' class='btn btn-danger btn-xs'><span " +
+                  "href='edit-genero?key=" + genre.id_genero + "'><span class='glyphicon glyphicon-edit'></span>" + 
+                  "Edit</a> <a href='javascript:deleteGenero(\""+ genre.id_genero.toString() + "\");' class='btn btn-danger btn-xs'><span " +
                   "class='glyphicon glyphicon-remove'></span> Del</a></td> </tr><tr>"
-                $("#artistAdmin").append(row);
+                $("#genreAdmin").append(row);
             });
  	 }
         });          
@@ -74,7 +74,7 @@ function getData()
 }
 
 
-function deleteArtist(entityKey)
+function deleteGenero(entityKey)
 {
 	try
   {
@@ -89,7 +89,7 @@ function deleteArtist(entityKey)
 
   	 jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/artist_api/v1/artist/delete",
+           url: "http://localhost:8080/_ah/api/genero_api/v1/genero/delete",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -145,8 +145,8 @@ function TokenObject() {
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Artists <span class="caret"></span></a>
           <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-artist"><span class="glyphicon glyphicon-plus"></span>Create Artist</a></li>
-            <li><a href="/admin-artist"><span class="glyphicon glyphicon-tasks"></span> Lists of Artists</a></li>
+            <li><a href="/new-genre"><span class="glyphicon glyphicon-plus"></span>Create Artist</a></li>
+            <li><a href="/admin-genre"><span class="glyphicon glyphicon-tasks"></span> Lists of Artists</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -174,19 +174,19 @@ function TokenObject() {
   </div><!-- /.container-fluid -->
 </nav>
 
-<section class="parallax-section" id="artist-admin">
+<section class="parallax-section" id="genre-admin">
 <div class="container">
     <div class="row col-md-8 col-md-offset-2 custyle">
         <form action="" method="post">
             <table class="table table-striped custab">
             <thead>
-            <a href="/new-artist" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
+            <a href="/new-genre" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new genre</a>
                 <tr>
-                    <th>Nombre</th>
+                    <th>Name</th>
                     <th class="text-center">Action</th>
                 </tr>
             </thead>
-            <tbody id="artistAdmin">
+            <tbody id="genreAdmin">
             </tbody>
             
             </table>
