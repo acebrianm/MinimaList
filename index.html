@@ -21,9 +21,153 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+
+
+
+<script type="text/javascript">
+
+function getGenres() 
+{
+
+	sessionStorage.empresa = "kubeet";
+
+    jQuery.support.cors = true;
+    try
+    {                         
+     $.ajax({
+        url: "http://localhost:8080/getgenero",
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: true,
+        data: {empresa: sessionStorage.empresa},                         
+        type: 'get',
+        crossDomain: true,
+        success: function(response) {
+                generos = response;
+                //alert(response);
+                var count = 0;
+                generos.forEach(function (genero) 
+                {
+                    if (count === 0){
+                        $("#genreCarrousel").empty();
+                        var active =  "<div class='item active' id ='genre0'>";
+                        $("#genreCarrousel").append(active);
+                        var genreInfo = "<img src='" + genero.urlImage + "'><p>" + genero.nombre + "</p>";
+                        $("#genre0").append(genreInfo);
+                        var activeEnd = "</div>";
+                        $("#genreCarrousel").append(activeEnd);
+                    }
+                    else{
+                        var active =  "<div class='item' id='genre"+count+"'>";
+                        $("#genreCarrousel").append(active);
+                        var genreInfo = "<img src='" + genero.urlImage + "'><p>" + genero.nombre + "</p>";
+                        $("#genre"+count).append(genreInfo);
+                        var activeEnd = "</div></div>";
+                        $("#genreCarrousel").append(activeEnd);
+                    }
+                    count++;
+                });
+ 	 }
+        });          
+     
+    }
+ catch(e)
+    {
+      alert("error : " +  e);
+     }
+}
+
+
+function getArtists() 
+{
+
+	sessionStorage.empresa = "kubeet";
+
+    jQuery.support.cors = true;
+    try
+    {                         
+     $.ajax({
+        url: "http://localhost:8080/getartist",
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: true,
+        data: {empresa: sessionStorage.empresa},                         
+        type: 'get',
+        crossDomain: true,
+        success: function(response) {
+                artists = response;
+                //alert(response);
+                var count = 0;
+                var rows = 1;
+                artists.forEach(function (artist) 
+                {
+                    var row = "row"+rows;
+
+                    if (count < 3) {
+                        if (count === 0){
+                            $("#artistCarrousel").empty();
+                            var active =  "<div class='item active'>" + "<div class='row' id='"+ row + "'>";
+                            $("#artistCarrousel").append(active);
+                        }
+                        var artistInfo = "<div class='col-sm-4'>" + 
+                                                "<div class='single-event'>" + 
+                                                    "<img class='img-responsive' src='" + artist.urlImage + "' alt='event-image'>" +
+                                                    "<h4>" + artist.nombre + "</h4>" +
+                                                "</div>"+
+                                            "</div>"
+                        $("#"+row).append(artistInfo);
+                        if (count == 2){
+                            var activeEnd = "</div></div>"
+                            $("#"+row).append(activeEnd);
+                        }
+                    }
+
+
+                    if (count > 2) {
+                        if (count % 3 == 0) {
+                            rows++;
+                            row = "row"+rows;
+                            var active =  "<div class='item'>" + "<div class='row' id='" + row + "'>";
+                            $("#artistCarrousel").append(active);
+                        }
+
+                        var artistInfo = "<div class='col-sm-4'>" + 
+                                                "<div class='single-event'>" + 
+                                                    "<img class='img-responsive' src='" + artist.urlImage + "' alt='event-image'>" +
+                                                    "<h4>" + artist.nombre + "</h4>" +
+                                                "</div>"+
+                                            "</div>"
+                        $("#"+row).append(artistInfo);
+                        if (count % 3 == 0) {
+                            var activeEnd = "</div></div>"
+                            $("#"+row).append(activeEnd);
+                        }
+
+                    }
+                    count ++;
+                });
+ 	 }
+        });          
+     
+    }
+ catch(e)
+    {
+      alert("error : " +  e);
+     }
+}
+
+function loadData(){
+    getArtists();
+    getGenres();
+}
+
+
+</script>
 </head><!--/head-->
 
-<body>
+<body onload="loadData()">
 	<header id="header" role="banner">		
 		<div class="main-nav">
 			<div class="container">
@@ -146,7 +290,7 @@
 						<h2 class="heading">Artists</h2>
 						<a class="even-control-left" href="#event-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
 						<a class="even-control-right" href="#event-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
-						<div class="carousel-inner">
+						<div class="carousel-inner" id="artistCarrousel">
 							<div class="item active">
 								<div class="row">
 									<div class="col-sm-4">
@@ -209,7 +353,7 @@
 			<h2 class="genres" align="center">Genres</h2>
 			<div class="row">
 				<div class="col-sm-6 col-sm-offset-3">
-					<div class="text-center carousel-inner center-block">
+					<div class="text-center carousel-inner center-block" id="genreCarrousel">
 						<div class="item active">
 							<img src="images/twitter/twitter1.png" alt="">
 							<p>Rock</p>
