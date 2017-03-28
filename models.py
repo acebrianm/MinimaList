@@ -135,6 +135,11 @@ class Artist(CustomBaseModel):
         artist.put()
         return 0
 
+    def delete_artist(self, entity_id): 
+        entity_to_delete = Artist.query(Artist.key.id() == entity_id)
+        entity_to_delete.delete()
+        
+
 ########## Genero #########
 class Genero(CustomBaseModel):
     _message_fields_schema = ('entityKey', 'nombre', 'urlImage')

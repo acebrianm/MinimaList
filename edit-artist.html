@@ -9,34 +9,90 @@
 
 <script>
 // contact
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function TokenObject(entityKey) {
+    this.entityKey = entityKey;
+    this.tokenint = sessionStorage.token;
+    this.toJsonString = function () { return JSON.stringify(this); };
+};
 
-function ArtistObject(myNombre, urlImage) {
+function ArtistObject(myNombre, entityKey) {
     this.nombre = myNombre;
+    this.entityKey = entityKey;
     this.token = sessionStorage.token;
-    this.urlImage = urlImage;
+    this.urlImage = sessionStorage.urlImage;
     this.toJsonString = function () { return JSON.stringify(this); };
 
 };
 
+function getArtist()
+{
+  try
+  {
 
 
-function addArtist()
+    //alert("token : " + sessionStorage.token);
+
+    var ek = getParameterByName('key'); // "lorem"
+    var myData = new TokenObject(ek);
+    
+    jQuery.ajax({
+        type: "POST",
+        url: "http://localhost:8080/_ah/api/artist_api/v1/artist/get",
+        data: myData.toJsonString(),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            artists = response;
+            artists.data.forEach(function (artist) 
+            {
+                $("#nombre").empty();
+                $("#url_photo").empty();
+                $("#nombre").val(artist.nombre);
+                $("#url_photo").val(artist.urlImage);
+                document.getElementById("preview").src=artist.urlImage;
+            });
+        },
+        error: function (error) {            
+            // error handler
+            alert("error :" + error.message)
+        }
+
+       });
+   }
+   catch(error)
+   {
+    alert(error);
+   }
+
+}
+
+function editArtist()
 {
     try
   
 {
 
-    alert("token : " + sessionStorage.token);
-
+    var ek = getParameterByName('key'); // "lorem"
     var myData = new ArtistObject(
      $("#nombre").val(),
-     $("#url_photo").val()
+     ek
      );
     alert(myData.toJsonString());
 
      jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/artist_api/v1/artist/insert",
+           url: "http://localhost:8080/_ah/api/artist_api/v1/artist/update",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -58,37 +114,6 @@ function addArtist()
     alert(error);
    }
 
-}
-
-function TokenObject() {
-    
-    this.tokenint = sessionStorage.token;
-    this.toJsonString = function () { return JSON.stringify(this); };
-
-};
-
-
-function getArtistList() {
-    try {
-        var myData = new TokenObject();
-
-        jQuery.ajax({
-            type: "POST",
-            url: "http://localhost:8080/_ah/api/artist_api/v1/artist/list",
-            data: myData.toJsonString(),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                alert(response.data)
-            },
-            error: function(error) {
-                alert("error: " + error.message)
-            }
-        });
-    }
-    catch(error){
-        alert(error)
-    }
 }
 
 function uploadDemo()
@@ -131,12 +156,12 @@ function uploadDemo()
 </script>
 
 </head>
-<body>
+<body onload="getArtist();">
 
 
 <h1> Add demo</h1>
 
-nombre: <input type="text" id="nombre" placeholder="Korn" /> <br>
+nombre: <input type="text" id="nombre" value="" /> <br>
 
  <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 text-center">
               <label for="exampleInputEmail1"><i>Foto</i></label>
@@ -146,16 +171,6 @@ nombre: <input type="text" id="nombre" placeholder="Korn" /> <br>
                <input type="text" id="url_photo">
                <br><input onchange="uploadDemo()" type="file"  id="uploaded_file" name="uploaded_file">
               </div>
-
-
-<br>
-<button onclick="addArtist()"> Guardar </button> 
-
-<br>
-<br>
-
-<button onclick="getArtistList()"> Obtener Lista </button> 
-
-
+<button onclick="editArtist()"> Guardar </button> 
 </body>
 </html>

@@ -54,8 +54,8 @@ class GetArtistHandler(webapp2.RequestHandler):
 
         id_empresa = self.request.get('empresa')
         objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
-        strKey = objemp.key.urlsafe()
-        myEmpKey = ndb.Key(urlsafe=strkey)
+        strKey = objemp.key.urlsafe() 
+        myEmpKey = ndb.Key(urlsafe=strKey) 
         myartist = Artist.query(Artist.empresa_key == myEmpKey)
 
         myList = []
@@ -63,10 +63,10 @@ class GetArtistHandler(webapp2.RequestHandler):
             myObj = DemoClass()
             myObj.nombre = i.nombre
             myObj.urlImage = i.urlImage
-
+            myObj.id_artist = i.entityKey
             myList.append(myObj)
-
-        json_string = json.dumps(myList, default=Myclass)
+        
+        json_string = json.dumps(myList, default=MyClass)
         self.response.write(json_string)
 
 class GetGeneroHandler(webapp2.RequestHandler):
@@ -178,7 +178,7 @@ class GeneroHandler(webapp2.RequestHandler):
     template = jinja_env.get_template(template_name)
     return template.render(context)
 
-class ArtistHandler(webapp2.RequestHandler):
+class ArtistNewHandler(webapp2.RequestHandler):
 
    def get(self):
 
@@ -192,6 +192,35 @@ class ArtistHandler(webapp2.RequestHandler):
 
     template = jinja_env.get_template(template_name)
     return template.render(context)
+class ArtistHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('admin-artist2.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
+class ArtistEditHandler(webapp2.RequestHandler):
+
+    def get(self):
+        key = self.request.get('key')
+        template_context = {}
+        self.response.out.write(self._render_template('edit-artist.html', template_context))
+
+    def _render_template(self, template_name, context=None):
+        if context is None:
+            context = {}
+
+        template = jinja_env.get_template(template_name)
+        return template.render(context)
+
 
 class MainHandler(webapp2.RequestHandler):
 
@@ -214,6 +243,8 @@ app = webapp2.WSGIApplication([
     ('/login', LoginHandler),
     ('/admin', AdminHandler),
     ('/admin-artist', ArtistHandler),
+    ('/edit-artist', ArtistEditHandler),
+    ('/new-artist', ArtistNewHandler),
     ('/admin-genero', GeneroHandler),
     ('/up', UpHandler),
     ('/getteam', GetTeamHandler),

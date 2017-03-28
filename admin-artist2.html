@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<!-- Template site title
+   ================================================== -->
+	<title>Admin Artist</title>
+
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+	<!-- Bootstrap CSS
+   ================================================== -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+	<!-- Animate CSS
+   ================================================== -->
+	<link rel="stylesheet" href="css/animate.min.css">
+
+	<!-- Font Icons
+   ================================================== -->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/et-line-font.css">
+
+	<!-- Main CSS
+   ================================================== -->
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Google web font 
+   ================================================== -->	
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:700,400' rel='stylesheet' type='text/css'>
+<script type="text/javascript">
+
+function TeamObject(entityKey) {
+    
+    this.entityKey = entityKey.toString();
+    this.tokenint = sessionStorage.token;
+    this.toJsonString = function () { return JSON.stringify(this); };
+
+};
+
+function getData() 
+{
+
+	sessionStorage.empresa = "kubeet";
+
+    jQuery.support.cors = true;
+    try
+    {                         
+     $.ajax({
+        url: "http://localhost:8080/getartist",
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: true,
+        data: {empresa: sessionStorage.empresa},                         
+        type: 'get',
+        crossDomain: true,
+        success: function(response) {
+        artists = response;
+          //alert(response);
+            $("#artistAdmin").empty();
+            artists.forEach(function (artist) 
+            {
+                var row = "<tr> <td class='hidden'><input type='hidden' value='" + artist.id_artist + "'</td> <td>" + artist.nombre +
+                  "</td> <td class='text-center'><a class='btn btn-info btn-xs' " + 
+                  "href='edit-artist?key=" + artist.id_artist + "'><span class='glyphicon glyphicon-edit'></span>" + 
+                  "Edit</a> <a href='javascript:deleteArtist(\""+ artist.id_artist.toString() + "\");' class='btn btn-danger btn-xs'><span " +
+                  "class='glyphicon glyphicon-remove'></span> Del</a></td> </tr><tr>"
+                $("#artistAdmin").append(row);
+            });
+ 	 }
+        });          
+     
+    }
+ catch(e)
+    {
+      alert("error : " +  e);
+     }
+}
+
+
+function deleteArtist(entityKey)
+{
+	try
+  {
+
+
+    alert("token : " + sessionStorage.token);
+
+  	var myData = new TeamObject(
+        entityKey
+     );
+  	alert(myData.toJsonString());
+
+  	 jQuery.ajax({
+           type: "POST",
+           url: "http://localhost:8080/_ah/api/artist_api/v1/artist/delete",
+           data: myData.toJsonString(),
+           contentType: "application/json; charset=utf-8",
+           dataType: "json",
+           success: function (response) {
+                // do something
+                alert (response.code + " " + response.message);
+           },
+           complete: function(response){
+                getData();
+           },
+       
+           error: function (error) {            
+                // error handler
+                alert("error :" + error.message)
+           }
+
+       });
+
+   }
+   catch(error)
+   {
+    alert(error);
+   }
+
+}
+
+
+function TokenObject() {
+    
+    this.tokenint = sessionStorage.token;
+    this.toJsonString = function () { return JSON.stringify(this); };
+
+};
+
+</script>
+	
+</head>
+
+<body onload="getData()" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+
+<!-- Preloader section
+================================================== -->
+<section class="preloader">
+	<div class="sk-three-bounce">
+      	<div class="sk-child sk-bounce1"></div>
+      	<div class="sk-child sk-bounce2"></div>
+     	 <div class="sk-child sk-bounce3"></div>
+	</div>
+</section>
+
+
+
+<section class="parallax-section" id="artist-admin">
+<div class="container">
+    <div class="row col-md-8 col-md-offset-2 custyle">
+        <form action="" method="post">
+            <table class="table table-striped custab">
+            <thead>
+            <a href="/new-artist" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
+                <tr>
+                    <th>Nombre</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody id="artistAdmin">
+            </tbody>
+            
+            </table>
+        </form>
+    </div>
+</div>
+</section>
+
+
+
+<!-- Javascript 
+================================================== -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.nav.js"></script>
+<script src="js/jquery.parallax.js"></script>
+<script src="js/nivo-lightbox.min.js"></script>
+<script src="js/counter.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/custom.js"></script>
+
+</body>
+</html>
