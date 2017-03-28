@@ -184,7 +184,77 @@ class CodeMessage(messages.Message):
     message = messages.StringField(2)
 
 
+######Servicio########
 
+#Mensaje de Entrada y Salida para la base de datos Artist
+class ServicioInput(messages.Message):
+    token = messages.StringField(1, required=True) 
+    nombre = messages.StringField(2)
+    urlImage = messages.StringField(3)
 
+    
+class ServicioUpdate(messages.Message):
+    token = messages.StringField(1, required=True)
+    #empresa_key = messages.StringField(2, required=True)
+    entityKey = messages.StringField(2, required=True)
+    nombre = messages.StringField(3)
+    urlImage = messages.StringField(4)
 
+#regresa una lista para la base de datos Artista
+class ServicioList(messages.Message):
+    code = messages.IntegerField(1)
+#regresa mensaje de lo ocurrido
+#mensaje de tipo MENSAJEFIED que regresa una lista de tipo TeamUpdate
+#es necesario el repeated para que sea lista
+    data = messages.MessageField(GeneroUpdate, 2, repeated=True)
+
+    
+# Output messages
+#regresa un token
+class TokenMessage(messages.Message):
+    code = messages.IntegerField(1)
+    message = messages.StringField(2)
+    token = messages.StringField(3)
+
+#regresa mensajes de lo ocurrido
+class CodeMessage(messages.Message):
+    code = messages.IntegerField(1)
+    message = messages.StringField(2)
+
+######Sponsor########
+
+#Mensaje de Entrada y Salida para la base de datos Artist
+class SponsorInput(messages.Message):
+    token = messages.StringField(1, required=True) 
+    nombre = messages.StringField(2)
+    urlImage = messages.StringField(3)
+
+    
+class SponsorUpdate(messages.Message):
+    token = messages.StringField(1, required=True)
+    #empresa_key = messages.StringField(2, required=True)
+    entityKey = messages.StringField(2, required=True)
+    nombre = messages.StringField(3)
+    urlImage = messages.StringField(4)
+
+#regresa una lista para la base de datos Artista
+class SponsorList(messages.Message):
+    code = messages.IntegerField(1)
+#regresa mensaje de lo ocurrido
+#mensaje de tipo MENSAJEFIED que regresa una lista de tipo TeamUpdate
+#es necesario el repeated para que sea lista
+    data = messages.MessageField(GeneroUpdate, 2, repeated=True)
+
+    
+# Output messages
+#regresa un token
+class TokenMessage(messages.Message):
+    code = messages.IntegerField(1)
+    message = messages.StringField(2)
+    token = messages.StringField(3)
+
+#regresa mensajes de lo ocurrido
+class CodeMessage(messages.Message):
+    code = messages.IntegerField(1)
+    message = messages.StringField(2)
 

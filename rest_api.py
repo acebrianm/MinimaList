@@ -14,6 +14,8 @@ from messages import TeamInput, TeamUpdate, TeamList
 from messages import ArtistInput, ArtistUpdate, ArtistList
 from messages import UserInput, UserUpdate, UserList
 from messages import GeneroInput, GeneroUpdate, GeneroList
+from messages import ServicioInput, ServicioUpdate, ServicioList
+from messages import SponsorInput, SponsorUpdate, SponsorList
 
 from endpoints_proto_datastore.ndb import EndpointsModel
 
