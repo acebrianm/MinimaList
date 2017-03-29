@@ -10,8 +10,8 @@ Enviar mail de cambio de artistas con Jobs
 
 Alexandro
 
-Servicios Modelo + Pagina
-Productos Modelo + Pagina
+- Servicios Modelo + Pagina
+- Productos Modelo + Pagina
 Google Maps Modelo + Pagina
 Envío mail de contacto (Pagina Principal) con Tasks
 
