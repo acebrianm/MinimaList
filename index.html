@@ -332,56 +332,51 @@ function loadData(){
 <script>
 	var marker;
 
-				function TokenObject() {
-					this.tokenint = sessionStorage.token;
-					this.toJsonString = function() {
-						return JSON.stringify(this);
-					};
-
-				};
-
 				function initMap() {
 					// Create a map object and specify the DOM element for display.
 					
-
+					jQuery.support.cors = true;
 					try {
-						var myData = new TokenObject();
+						//var myData = new TokenObject();
 
 						jQuery.ajax({
-							type: "POST",
-							url: "http://localhost:8080/_ah/api/empresas_api/v1/empresa/list",
-							data: myData.toJsonString(),
+							url: "http://localhost:8080/getempresas",
+							type: "get",
+							data: {empresa: sessionStorage.empresa},
 							contentType: "application/json; charset=utf-8",
 							dataType: "json",
-
+							cache: false,
+							contentType: false,
+							processData: true,
+							crossDomain: true,
 							success: function(response) {
-								var map;
+									var map;
 
-								map = new GMaps({
-									el: '#gmap',
-									lat: 43.04446,
-									lng: -76.130791,
-									scrollwheel:false,
-									zoom: 16,
-									zoomControl : false,
-									panControl : false,
-									streetViewControl : false,
-									mapTypeControl: false,
-									overviewMapControl: false,
-									clickable: false
-								});
+									map = new GMaps({
+										el: '#gmap',
+										lat: response.lat,
+										lng: response.lng,
+										scrollwheel:false,
+										zoom: 16,
+										zoomControl : false,
+										panControl : false,
+										streetViewControl : false,
+										mapTypeControl: false,
+										overviewMapControl: false,
+										clickable: false
+									});
 
-								var image = 'images/map-icon.png';
-								map.addMarker({
-									lat: 43.04446,
-									lng: -76.130791,
-									icon: image,
-									animation: google.maps.Animation.DROP,
-									verticalAlign: 'bottom',
-									horizontalAlign: 'center',
-									backgroundColor: '#3e8bff',
-								});
-
+									var image = 'images/map-icon.png';
+									map.addMarker({
+										lat: response.lat,
+										lng: response.lng,
+										icon: image,
+										animation: google.maps.Animation.DROP,
+										verticalAlign: 'bottom',
+										horizontalAlign: 'center',
+										backgroundColor: '#3e8bff',
+									});
+								
 
 								var styles = [ 
 

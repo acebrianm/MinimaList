@@ -189,7 +189,9 @@ class EmpresasApi(remote.Service):
    message = EmpresaList(code=1, data = [EmpresaUpdate(token='Succesfully get',
     entityKey = empresaentity.get().entityKey,
     codigo_empresa=empresaentity.get().codigo_empresa, 
-    nombre_empresa = empresaentity.get().nombre_empresa)])
+    nombre_empresa = empresaentity.get().nombre_empresa,
+    lat = empresaentity.get().lat,
+    lng = empresaentity.get().lng)])
 
   except jwt.DecodeError:
    message = EmpresaList(code=-1, data=[])
@@ -282,7 +284,9 @@ class EmpresasApi(remote.Service):
     lista.append(EmpresaUpdate(token='', 
      entityKey = i.entityKey,
      codigo_empresa=i.codigo_empresa, 
-     nombre_empresa = i.nombre_empresa))
+     nombre_empresa = i.nombre_empresa,
+     lat = i.lat,
+     lng = i.lng))
       
    lstMessage.data = lista #ASIGNA a la salida la lista
    message = lstMessage

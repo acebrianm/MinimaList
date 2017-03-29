@@ -65,6 +65,8 @@ class GetEmpresasHandler(webapp2.RequestHandler):
       myObj.nombre = i.nombre_empresa
       myObj.codigo = i.codigo_empresa
       myObj.id_empresa = i.entityKey
+      myObj.lat = i.lat
+      myObj.lng = i.lng
       myList.append(myObj)
        
      json_string = json.dumps(myList, default=MyClass)
