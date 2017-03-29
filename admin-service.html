@@ -57,7 +57,7 @@ function addService()
 
      jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/servicio_api/v1/servicio/insert",
+           url: "/_ah/api/servicio_api/v1/servicio/insert",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -95,7 +95,7 @@ function getServiceList() {
 
         jQuery.ajax({
             type: "POST",
-            url: "http://localhost:8080/_ah/api/servicio_api/v1/servicio/list",
+            url: "/_ah/api/servicio_api/v1/servicio/list",
             data: myData.toJsonString(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -124,7 +124,7 @@ function uploadDemo()
     try
     {
      $.ajax({
-                url: "http://localhost:8080/up",
+                url: "/up",
                 dataType: 'text',
                 cache: false,
                 contentType: false,

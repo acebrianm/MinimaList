@@ -57,7 +57,7 @@ function addSponsor()
 
      jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/sponsor_api/v1/sponsor/insert",
+           url: "/_ah/api/sponsor_api/v1/sponsor/insert",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -95,7 +95,7 @@ function getSponsorList() {
 
         jQuery.ajax({
             type: "POST",
-            url: "http://localhost:8080/_ah/api/sponsor_api/v1/sponsor/list",
+            url: "/_ah/api/sponsor_api/v1/sponsor/list",
             data: myData.toJsonString(),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -124,7 +124,7 @@ function uploadDemo()
     try
     {
      $.ajax({
-                url: "http://localhost:8080/up",
+                url: "/up",
                 dataType: 'text',
                 cache: false,
                 contentType: false,

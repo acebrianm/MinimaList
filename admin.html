@@ -36,7 +36,7 @@ function addTeamDemo()
 
   	 jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/team_api/v1/team/insert",
+           url: "/_ah/api/team_api/v1/team/insert",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -83,7 +83,7 @@ function getTeamList()
 
      jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/team_api/v1/team/list",
+           url: "/_ah/api/team_api/v1/team/list",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -120,7 +120,7 @@ function uploadDemo()
     try
     {
      $.ajax({
-                url: "http://localhost:8080/up",
+                url: "/up",
                 dataType: 'text',
                 cache: false,
                 contentType: false,

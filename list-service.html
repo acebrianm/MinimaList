@@ -42,7 +42,7 @@ function getData()
     try
     {                         
      $.ajax({
-        url: "http://localhost:8080/getservice",
+        url: "/getservice",
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -89,7 +89,7 @@ function deleteService(entityKey)
 
   	 jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/servicio_api/v1/servicio/delete",
+           url: "/_ah/api/servicio_api/v1/servicio/delete",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",

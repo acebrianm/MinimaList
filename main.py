@@ -12,6 +12,9 @@ import jinja2
 
 from models import Empresa, Team, Artist, Genero, Sponsor, Servicio
 
+import cloudstorage
+from google.appengine.api import app_identity
+
 jinja_env = jinja2.Environment(
  loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -24,6 +27,7 @@ def MyClass(obj):
 
 
 class GetTotalCounts(webapp2.RequestHandler):
+
     def get(self):
         # if 'X-AppEngine-Cron' not in self.request.headers:
             # self.error(403)
@@ -34,22 +38,15 @@ class GetTotalCounts(webapp2.RequestHandler):
         myObj.artista = len(artists)
         myList.append(myObj)
         
+        bucketName = app_identity.get_default_gcs_bucket_name()
+        fileName = "/" + bucketName + "/somedir/somefile.txt"
+
+        with cloudstorage.open(fileName, "w") as gcsFile:
+            gcsFile.write("text")
 
         # json_string = json.dumps(myList, default=MyClass)
         # self.response.write(json_string)
 
-
-        template_context = {}
-        self.response.out.write( self._render_template('admin-artist2.html', template_context))
-
-    def _render_template(self, template_name, context=None):
-        if context is None:
-            context = {myList}
-
-        template = jinja_env.get_template(template_name)
-        return template.render(context)
-        ## hacer una parte en la pagina principal en donde esten los numeros de
-        # artistas y generos y que se cambien de manera automatica
 
 class GetEmpresasHandler(webapp2.RequestHandler):
 

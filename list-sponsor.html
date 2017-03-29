@@ -42,7 +42,7 @@ function getData()
     try
     {                         
      $.ajax({
-        url: "http://localhost:8080/getsponsor",
+        url: "/getsponsor",
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -89,7 +89,7 @@ function deleteSponsor(entityKey)
 
   	 jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/sponsor_api/v1/sponsor/delete",
+           url: "/_ah/api/sponsor_api/v1/sponsor/delete",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",

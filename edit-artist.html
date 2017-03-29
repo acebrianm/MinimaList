@@ -70,7 +70,7 @@ function getArtist()
     
     jQuery.ajax({
         type: "POST",
-        url: "http://localhost:8080/_ah/api/artist_api/v1/artist/get",
+        url: "/_ah/api/artist_api/v1/artist/get",
         data: myData.toJsonString(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -114,7 +114,7 @@ function editArtist()
 
      jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/artist_api/v1/artist/update",
+           url: "/_ah/api/artist_api/v1/artist/update",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -150,7 +150,7 @@ function uploadDemo()
     try
     {
      $.ajax({
-                url: "http://localhost:8080/up",
+                url: "/up",
                 dataType: 'text',
                 cache: false,
                 contentType: false,

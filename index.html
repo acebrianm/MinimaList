@@ -34,7 +34,7 @@ function getGenres()
     try
     {                         
      $.ajax({
-        url: "http://localhost:8080/getgenero",
+        url: "/getgenero",
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -87,7 +87,7 @@ function getArtists()
     try
     {                         
      $.ajax({
-        url: "http://localhost:8080/getartist",
+        url: "/getartist",
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -166,7 +166,7 @@ function getServices()
     try
     {                         
      $.ajax({
-        url: "http://localhost:8080/getservice",
+        url: "/getservice",
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -245,7 +245,7 @@ function getSponsors()
     try
     {                         
      $.ajax({
-        url: "http://localhost:8080/getsponsor",
+        url: "/getsponsor",
         dataType: 'json',
         cache: false,
         contentType: false,
@@ -339,7 +339,7 @@ function loadData(){
                         try
                         {                         
                         $.ajax({
-                            url: "http://localhost:8080/getempresa",
+                            url: "/getempresa",
                             dataType: 'json',
                             cache: false,
                             contentType: false,
