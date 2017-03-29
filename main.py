@@ -20,6 +20,7 @@ from google.appengine.api import mail
 jinja_env = jinja2.Environment(
  loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+week = 1
 
 class DemoClass(object):
  pass
@@ -55,7 +56,7 @@ class SendMessageHandler(webapp2.RequestHandler):
                      #params={'name': name, 'email': email, 'content': content})
         self.response.write("TRUE")
 
-class GetTotalCounts(webapp2.RequestHandler):
+class GetCron(webapp2.RequestHandler):
 
     def get(self):
         # if 'X-AppEngine-Cron' not in self.request.headers:
@@ -66,15 +67,71 @@ class GetTotalCounts(webapp2.RequestHandler):
 
         myObj.artista = len(artists)
         myList.append(myObj)
+        allArtists =  " ".join(str(x) for x in myList)
         
         bucketName = app_identity.get_default_gcs_bucket_name()
         fileName = "/" + bucketName + "/somedir/somefile.txt"
 
         with cloudstorage.open(fileName, "w") as gcsFile:
-            gcsFile.write("text")
+            gcsFile.write(allArtists)
 
         # json_string = json.dumps(myList, default=MyClass)
         # self.response.write(json_string)
+
+bucketName = app_identity.get_default_gcs_bucket_name()
+
+class GetTotalCounts(webapp2.RequestHandler):
+
+    def get(self):
+
+        
+        empresas = Empresa.query().fetch()
+
+        myList = []
+        for i in empresas:
+            empObj = DemoClass()
+            empObj.nombre = i.nombre_empresa
+            empObj.codigo = i.codigo_empresa
+            empObj.id_empresa = i.entityKey
+            empObj.lat = i.lat
+            empObj.lng = i.lng
+            myList.append(empObj.nombre)
+
+            emp_key = ndb.Key(urlsafe=empObj.id_empresa)
+            objemp = emp_key.get()
+            strKey = objemp.key.urlsafe() 
+            myEmpKey = ndb.Key(urlsafe=strKey) 
+            myartist = Artist.query(Artist.empresa_key == myEmpKey)
+
+            for i in myartist:
+                artObj = DemoClass()
+                artObj.nombre = i.nombre
+                artObj.urlImage = i.urlImage
+                artObj.id_artist = i.entityKey
+                myList.append(artObj.nombre)
+                myList.append("\n")
+
+
+
+
+        allArtists =  "\n".join(str(x) for x in myList)
+
+        fileName = "/" + bucketName + "/artists.txt"
+
+        try:
+            with cloudstorage.open(fileName, "r") as gcsFile:
+                tempStorage = gcsFile.read()
+                tempStorage += "\n"
+        except:
+            tempStorage = ""
+
+        with cloudstorage.open(fileName, "w") as gcsFile:
+            gcsFile.write(str(allArtists))
+            # gcsFile.write(tempStorage + str(allArtists))
+
+        with cloudstorage.open(fileName, "r") as gcsFile:
+            output=  gcsFile.read()  
+        self.response.out.write(output)
 
 
 class GetEmpresasHandler(webapp2.RequestHandler):
