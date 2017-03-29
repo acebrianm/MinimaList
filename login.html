@@ -56,6 +56,8 @@ function loginDemo()
          success: function (response) {
               // do something
               sessionStorage.token = response.token;
+              alert(response.message);
+              sessionStorage.empresa = response.message;
               alert ("token generado: " + sessionStorage.token);
               window.location = "/admin-artist";
 

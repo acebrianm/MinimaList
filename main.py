@@ -57,6 +57,25 @@ class GetTeamHandler(webapp2.RequestHandler):
      self.response.headers.add_header('Access-Control-Allow-Origin', '*')
      self.response.headers['Content-Type'] = 'application/json'
 
+     empresas = Empresa.query().fetch()
+
+     myList = []
+     for i in empresas:
+      myObj = DemoClass()
+      myObj.nombre = i.nombre_empresa
+      myObj.codigo = i.codigo_empresa
+      myObj.id_empresa = i.entityKey
+      myList.append(myObj)
+       
+     json_string = json.dumps(myList, default=MyClass)
+     self.response.write(json_string)
+
+class GetTeamHandler(webapp2.RequestHandler):
+
+    def get(self):
+     self.response.headers.add_header('Access-Control-Allow-Origin', '*')
+     self.response.headers['Content-Type'] = 'application/json'
+
      id_empresa = self.request.get('empresa')
      objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
      strKey = objemp.key.urlsafe() 
@@ -81,7 +100,8 @@ class GetArtistHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
 
         id_empresa = self.request.get('empresa')
-        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        emp_key = ndb.Key(urlsafe=id_empresa)
+        objemp = emp_key.get()
         strKey = objemp.key.urlsafe() 
         myEmpKey = ndb.Key(urlsafe=strKey) 
         myartist = Artist.query(Artist.empresa_key == myEmpKey)
@@ -105,7 +125,8 @@ class GetGeneroHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
 
         id_empresa = self.request.get('empresa')
-        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        emp_key = ndb.Key(urlsafe=id_empresa)
+        objemp = emp_key.get()
         strKey = objemp.key.urlsafe() 
         myEmpKey = ndb.Key(urlsafe=strKey) 
         mygenero = Genero.query(Genero.empresa_key == myEmpKey)
@@ -128,7 +149,8 @@ class GetServicioHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
 
         id_empresa = self.request.get('empresa')
-        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        emp_key = ndb.Key(urlsafe=id_empresa)
+        objemp = emp_key.get()
         strKey = objemp.key.urlsafe()
         myEmpKey = ndb.Key(urlsafe=strKey)
         myservicio = Servicio.query(Servicio.empresa_key == myEmpKey)
@@ -151,7 +173,8 @@ class GetSponsorHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
 
         id_empresa = self.request.get('empresa')
-        objemp = Empresa.query(Empresa.codigo_empresa == id_empresa).get()
+        emp_key = ndb.Key(urlsafe=id_empresa)
+        objemp = emp_key.get()
         strKey = objemp.key.urlsafe()
         myEmpKey = ndb.Key(urlsafe=strKey)
         mysponsor = Sponsor.query(Sponsor.empresa_key == myEmpKey)
@@ -266,6 +289,21 @@ class GeneroEditHandler(webapp2.RequestHandler):
 
         template = jinja_env.get_template(template_name)
         return template.render(context)
+
+class EmpresasHanlder(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('empresas.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
 
 class GeneroNewHandler(webapp2.RequestHandler):
 
@@ -447,6 +485,7 @@ app = webapp2.WSGIApplication([
     ('/admin-sponsor', SponsorHandler),
     ('/edit-sponsor', SponsorEditHandler),
     ('/new-sponsor', SponsorNewHandler),
+    ('/empresas', EmpresasHanlder),
     ('/up', UpHandler),
     ('/getteam', GetTeamHandler),
     ('/getartist', GetArtistHandler),
