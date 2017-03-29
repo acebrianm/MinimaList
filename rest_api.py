@@ -21,7 +21,7 @@ from endpoints_proto_datastore.ndb import EndpointsModel
 
 import models
 from models import validarEmail
-from models import Empresa, Usuarios, Team, Artist, Genero
+from models import Empresa, Usuarios, Team, Artist, Genero, Sponsor, Servicio
 
 ###############
 # Usuarios

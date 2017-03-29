@@ -206,7 +206,7 @@ class ServicioList(messages.Message):
 #regresa mensaje de lo ocurrido
 #mensaje de tipo MENSAJEFIED que regresa una lista de tipo TeamUpdate
 #es necesario el repeated para que sea lista
-    data = messages.MessageField(GeneroUpdate, 2, repeated=True)
+    data = messages.MessageField(ServicioUpdate, 2, repeated=True)
 
     
 # Output messages
@@ -243,7 +243,7 @@ class SponsorList(messages.Message):
 #regresa mensaje de lo ocurrido
 #mensaje de tipo MENSAJEFIED que regresa una lista de tipo TeamUpdate
 #es necesario el repeated para que sea lista
-    data = messages.MessageField(GeneroUpdate, 2, repeated=True)
+    data = messages.MessageField(SponsorUpdate, 2, repeated=True)
 
     
 # Output messages
