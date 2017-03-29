@@ -10,7 +10,7 @@ import json
 import os
 import jinja2
 
-from models import Empresa, Team, Artist, Genero
+from models import Empresa, Team, Artist, Genero, Sponsor, Servicio
 
 jinja_env = jinja2.Environment(
  loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -138,10 +138,10 @@ class GetServicioHandler(webapp2.RequestHandler):
             myObj = DemoClass()
             myObj.nombre = i.nombre
             myObj.urlImage = i.urlImage
-
+            myObj.id_servicio = i.entityKey
             myList.append(myObj)
 
-        json_string = json.dumps(myList, default=Myclass)
+        json_string = json.dumps(myList, default=MyClass)
         self.response.write(json_string)
 
 class GetSponsorHandler(webapp2.RequestHandler):
@@ -161,10 +161,10 @@ class GetSponsorHandler(webapp2.RequestHandler):
             myObj = DemoClass()
             myObj.nombre = i.nombre
             myObj.urlImage = i.urlImage
-
+            myObj.id_sponsor = i.entityKey
             myList.append(myObj)
 
-        json_string = json.dumps(myList, default=Myclass)
+        json_string = json.dumps(myList, default=MyClass)
         self.response.write(json_string)
 
 ###########################################################################     
@@ -296,6 +296,7 @@ class ArtistNewHandler(webapp2.RequestHandler):
 
     template = jinja_env.get_template(template_name)
     return template.render(context)
+
 class ArtistHandler(webapp2.RequestHandler):
 
    def get(self):
@@ -332,7 +333,36 @@ class ServicioHandler(webapp2.RequestHandler):
 
     template_context = {}
     self.response.out.write(
-      self._render_template('admin-servicio.html', template_context))
+      self._render_template('list-service.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
+class ServicioEditHandler(webapp2.RequestHandler):
+
+    def get(self):
+        key = self.request.get('key')
+        template_context = {}
+        self.response.out.write(self._render_template('edit-service.html', template_context))
+
+    def _render_template(self, template_name, context=None):
+        if context is None:
+            context = {}
+
+        template = jinja_env.get_template(template_name)
+        return template.render(context)
+
+class ServicioNewHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('admin-service.html', template_context))
 
    def _render_template(self, template_name, context=None):
     if context is None:
@@ -342,6 +372,35 @@ class ServicioHandler(webapp2.RequestHandler):
     return template.render(context)
 
 class SponsorHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
+      self._render_template('list-sponsor.html', template_context))
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
+class SponsorEditHandler(webapp2.RequestHandler):
+
+    def get(self):
+        key = self.request.get('key')
+        template_context = {}
+        self.response.out.write(self._render_template('edit-sponsor.html', template_context))
+
+    def _render_template(self, template_name, context=None):
+        if context is None:
+            context = {}
+
+        template = jinja_env.get_template(template_name)
+        return template.render(context)
+
+class SponsorNewHandler(webapp2.RequestHandler):
 
    def get(self):
 
@@ -382,13 +441,17 @@ app = webapp2.WSGIApplication([
     ('/admin-genero', GeneroHandler),
     ('/new-genero', GeneroNewHandler),
     ('/edit-genero', GeneroEditHandler),
-    ('/admin-servicio', ServicioHandler),
+    ('/admin-service', ServicioHandler),
+    ('/edit-service', ServicioEditHandler),
+    ('/new-service', ServicioNewHandler),
     ('/admin-sponsor', SponsorHandler),
+    ('/edit-sponsor', SponsorEditHandler),
+    ('/new-sponsor', SponsorNewHandler),
     ('/up', UpHandler),
     ('/getteam', GetTeamHandler),
     ('/getartist', GetArtistHandler),
     ('/getgenero', GetGeneroHandler),
-    ('/getservicio', GetServicioHandler),
+    ('/getservice', GetServicioHandler),
     ('/getsponsor', GetSponsorHandler),
     ('/cron', GetTotalCounts),
 ], debug = True)

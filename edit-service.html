@@ -11,6 +11,7 @@
 	<link href="css/animate.css" rel="stylesheet">	
 	<link href="css/responsive.css" rel="stylesheet">
 
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script><!-- Latest compiled and minified JavaScript --> 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!--[if lt IE 9]>
@@ -30,34 +31,90 @@
 
 <script>
 // contact
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+function TokenObject(entityKey) {
+    this.entityKey = entityKey;
+    this.tokenint = sessionStorage.token;
+    this.toJsonString = function () { return JSON.stringify(this); };
+};
 
-function SponsorObject(myNombre, urlImage) {
+function ServiceObject(myNombre, entityKey) {
     this.nombre = myNombre;
+    this.entityKey = entityKey;
     this.token = sessionStorage.token;
-    this.urlImage = urlImage;
+    this.urlImage = sessionStorage.urlImage;
     this.toJsonString = function () { return JSON.stringify(this); };
 
 };
 
+function getService()
+{
+  try
+  {
 
 
-function addSponsor()
+    //alert("token : " + sessionStorage.token);
+
+    var ek = getParameterByName('key'); // "lorem"
+    var myData = new TokenObject(ek);
+    
+    jQuery.ajax({
+        type: "POST",
+        url: "http://localhost:8080/_ah/api/servicio_api/v1/servicio/get",
+        data: myData.toJsonString(),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            servicios = response;
+            servicios.data.forEach(function (service) 
+            {
+                $("#nombre").empty();
+                $("#url_photo").empty();
+                $("#nombre").val(service.nombre);
+                $("#url_photo").val(service.urlImage);
+                document.getElementById("preview").src=service.urlImage;
+            });
+        },
+        error: function (error) {            
+            // error handler
+            alert("error :" + error.message)
+        }
+
+       });
+   }
+   catch(error)
+   {
+    alert(error);
+   }
+
+}
+
+function editService()
 {
     try
   
 {
 
-    alert("token : " + sessionStorage.token);
-
-    var myData = new SponsorObject(
+    var ek = getParameterByName('key'); // "lorem"
+    var myData = new ServiceObject(
      $("#nombre").val(),
-     $("#url_photo").val()
+     ek
      );
     alert(myData.toJsonString());
 
      jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/sponsor_api/v1/sponsor/insert",
+           url: "http://localhost:8080/_ah/api/servicio_api/v1/servicio/update",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
@@ -79,37 +136,6 @@ function addSponsor()
     alert(error);
    }
 
-}
-
-function TokenObject() {
-    
-    this.tokenint = sessionStorage.token;
-    this.toJsonString = function () { return JSON.stringify(this); };
-
-};
-
-
-function getSponsorList() {
-    try {
-        var myData = new TokenObject();
-
-        jQuery.ajax({
-            type: "POST",
-            url: "http://localhost:8080/_ah/api/sponsor_api/v1/sponsor/list",
-            data: myData.toJsonString(),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                alert(response.data)
-            },
-            error: function(error) {
-                alert("error: " + error.message)
-            }
-        });
-    }
-    catch(error){
-        alert(error)
-    }
 }
 
 function uploadDemo()
@@ -152,8 +178,7 @@ function uploadDemo()
 </script>
 
 </head>
-<body style="color: black;">
-
+<body onload="getService();" style="color: black;">
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -174,10 +199,10 @@ function uploadDemo()
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-music"></span> Genre <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-music"></span> Service <span class="caret"></span></a>
           <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-genero"><span class="glyphicon glyphicon-plus"></span>Create Genre</a></li>
-            <li><a href="/admin-genero"><span class="glyphicon glyphicon-tasks"></span> Lists of Genres</a></li>
+            <li><a href="/new-genero"><span class="glyphicon glyphicon-plus"></span>Create Service</a></li>
+            <li><a href="/admin-genero"><span class="glyphicon glyphicon-tasks"></span> Lists of Services</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -197,17 +222,17 @@ function uploadDemo()
       </ul>
   </div><!-- /.container-fluid -->
 </nav>
+
 <div class="container">
-    <h1> Add Sponsor</h1>
 	<div class="row">
 	    
 	    <div class="col-md-8 col-md-offset-2">
 	        
-    		<h1>Create Sponsor</h1>
+    		<h1>Edit Servicio</h1>
     		
     		    
-    		    <div class="form-group ">
-    		        <label for="nombre">Nombre: <span class="require">*</span></label>
+    		    <div class="form-group">
+    		        <label for="nombre">Name: <span class="require">*</span></label>
     		        <input type="text" id="nombre" class="form-control" name="nombre" />
     		    </div>
     		    
@@ -224,8 +249,8 @@ function uploadDemo()
     		    </div>
     		    
     		    <div class="form-group">
-    		        <button type="submit" onclick="addSponsor()" class="btn btn-primary">
-    		            Create
+    		        <button type="submit" onclick="editService()" class="btn btn-primary">
+    		            Edit
     		        </button>
     		    </div>
     		    
@@ -234,5 +259,6 @@ function uploadDemo()
 	</div>
 </div>
 
+</body>
 </body>
 </html>

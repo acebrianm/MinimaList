@@ -1,7 +1,7 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -22,48 +22,83 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
- <title>
-   new - demo
- </title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
 
-<script>
-// contact
-
-function SponsorObject(myNombre, urlImage) {
-    this.nombre = myNombre;
-    this.token = sessionStorage.token;
-    this.urlImage = urlImage;
+function TeamObject(entityKey) {
+    
+    this.entityKey = entityKey.toString();
+    this.tokenint = sessionStorage.token;
     this.toJsonString = function () { return JSON.stringify(this); };
 
 };
 
-
-
-function addSponsor()
+function getData() 
 {
+
+	sessionStorage.empresa = "kubeet";
+
+    jQuery.support.cors = true;
     try
-  
+    {                         
+     $.ajax({
+        url: "http://localhost:8080/getservice",
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: true,
+        data: {empresa: sessionStorage.empresa},                         
+        type: 'get',
+        crossDomain: true,
+        success: function(response) {
+        services = response;
+          //alert(response);
+            $("#serviceAdmin").empty();
+            services.forEach(function (service) 
+            {
+                var row = "<tr> <td class='hidden'><input type='hidden' value='" + service.id_servicio + "'</td> <td>" + service.nombre +
+                  "</td> <td class='text-center'><a class='btn btn-info btn-xs' " + 
+                  "href='edit-service?key=" + service.id_servicio + "'><span class='glyphicon glyphicon-edit'></span>" + 
+                  "Edit</a> <a href='javascript:deleteService(\""+ service.id_servicio.toString() + "\");' class='btn btn-danger btn-xs'><span " +
+                  "class='glyphicon glyphicon-remove'></span> Del</a></td> </tr><tr>"
+                $("#serviceAdmin").append(row);
+            });
+ 	 }
+        });          
+     
+    }
+ catch(e)
+    {
+      alert("error : " +  e);
+     }
+}
+
+
+function deleteService(entityKey)
 {
+	try
+  {
+
 
     alert("token : " + sessionStorage.token);
 
-    var myData = new SponsorObject(
-     $("#nombre").val(),
-     $("#url_photo").val()
+  	var myData = new TeamObject(
+        entityKey
      );
-    alert(myData.toJsonString());
+  	alert(myData.toJsonString());
 
-     jQuery.ajax({
+  	 jQuery.ajax({
            type: "POST",
-           url: "http://localhost:8080/_ah/api/sponsor_api/v1/sponsor/insert",
+           url: "http://localhost:8080/_ah/api/servicio_api/v1/servicio/delete",
            data: myData.toJsonString(),
            contentType: "application/json; charset=utf-8",
            dataType: "json",
            success: function (response) {
                 // do something
                 alert (response.code + " " + response.message);
+           },
+           complete: function(response){
+                getData();
            },
        
            error: function (error) {            
@@ -81,6 +116,7 @@ function addSponsor()
 
 }
 
+
 function TokenObject() {
     
     this.tokenint = sessionStorage.token;
@@ -88,71 +124,11 @@ function TokenObject() {
 
 };
 
-
-function getSponsorList() {
-    try {
-        var myData = new TokenObject();
-
-        jQuery.ajax({
-            type: "POST",
-            url: "http://localhost:8080/_ah/api/sponsor_api/v1/sponsor/list",
-            data: myData.toJsonString(),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                alert(response.data)
-            },
-            error: function(error) {
-                alert("error: " + error.message)
-            }
-        });
-    }
-    catch(error){
-        alert(error)
-    }
-}
-
-function uploadDemo()
-
-{
-
-    var file_data = $("#uploaded_file").prop("files")[0];
-    var form_data = new FormData();
-    form_data.append("uploaded_file", file_data)
-
-    jQuery.support.cors = true;
-    try
-    {
-     $.ajax({
-                url: "http://localhost:8080/up",
-                dataType: 'text',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                type: 'post',
-                crossDomain: true,
-                success: function(response){
-
-                                document.getElementById("preview").src=response;
-
-                                sessionStorage.urlImage = response;
-
-                                document.getElementById("url_photo").value = response;
-                }
-      });
-    }
-    catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
-
-
 </script>
-
+	
 </head>
-<body style="color: black;">
+
+<body onload="getData()" style="color: black;">
 
 <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid">
@@ -197,42 +173,27 @@ function uploadDemo()
       </ul>
   </div><!-- /.container-fluid -->
 </nav>
+
+<section class="parallax-section" id="genre-admin">
 <div class="container">
-    <h1> Add Sponsor</h1>
-	<div class="row">
-	    
-	    <div class="col-md-8 col-md-offset-2">
-	        
-    		<h1>Create Sponsor</h1>
-    		
-    		    
-    		    <div class="form-group ">
-    		        <label for="nombre">Nombre: <span class="require">*</span></label>
-    		        <input type="text" id="nombre" class="form-control" name="nombre" />
-    		    </div>
-    		    
-    		    <div class="form-group">
-                    <img  src="" alt="Image preview" id="preview" style="width:128px;height:128px;" >
-    		    </div>
-    		    
-    		    <div class="form-group">
-                    <input type="text" id="url_photo">
-    		    </div>
-    		    
-    		    <div class="form-group">
-                    <br><input onchange="uploadDemo()" type="file"  id="uploaded_file" name="uploaded_file">
-    		    </div>
-    		    
-    		    <div class="form-group">
-    		        <button type="submit" onclick="addSponsor()" class="btn btn-primary">
-    		            Create
-    		        </button>
-    		    </div>
-    		    
-		</div>
-		
-	</div>
+    <div class="row col-md-8 col-md-offset-2 custyle">
+        <form action="" method="post">
+            <table class="table table-striped custab">
+            <thead>
+            <a href="/new-genre" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new service</a>
+                <tr>
+                    <th>Name</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody id="serviceAdmin">
+            </tbody>
+            
+            </table>
+        </form>
+    </div>
 </div>
+</section>
 
 </body>
 </html>

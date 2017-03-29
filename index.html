@@ -158,9 +158,160 @@ function getArtists()
      }
 }
 
+function getServices() 
+{
+
+	sessionStorage.empresa = "kubeet";
+
+    jQuery.support.cors = true;
+    try
+    {                         
+     $.ajax({
+        url: "http://localhost:8080/getservice",
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: true,
+        data: {empresa: sessionStorage.empresa},                         
+        type: 'get',
+        crossDomain: true,
+        success: function(response) {
+                services = response;
+                //alert(response);
+                var count = 0;
+                var rows = 1;
+                services.forEach(function (service) 
+                {
+                    var row = "row"+rows;
+
+                    if (count < 3) {
+                        if (count === 0){
+                            $("#serviceCarousel").empty();
+                            var active =  "<div class='item active'>" + "<div class='row' id='"+ row + "'>";
+                            $("#serviceCarousel").append(active);
+                        }
+                        var serviceInfo = "<div class='col-sm-4'>" + 
+                                                "<div class='single-event'>" + 
+                                                    "<img class='img-responsive' src='" + service.urlImage + "' alt='event-image'>" +
+                                                    "<h4>" + service.nombre + "</h4>" +
+                                                "</div>"+
+                                            "</div>"
+                        $("#"+row).append(serviceInfo);
+                        if (count == 2){
+                            var activeEnd = "</div></div>"
+                            $("#"+row).append(activeEnd);
+                        }
+                    }
+
+
+                    if (count > 2) {
+                        if (count % 3 == 0) {
+                            rows++;
+                            row = "row"+rows;
+                            var active =  "<div class='item'>" + "<div class='row' id='" + row + "'>";
+                            $("#serviceCarousel").append(active);
+                        }
+
+                        var serviceInfo = "<div class='col-sm-4'>" + 
+                                                "<div class='single-event'>" + 
+                                                    "<img class='img-responsive' src='" + service.urlImage + "' alt='event-image'>" +
+                                                    "<h4>" + service.nombre + "</h4>" +
+                                                "</div>"+
+                                            "</div>"
+                        $("#"+row).append(serviceInfo);
+                        if (count % 3 == 0) {
+                            var activeEnd = "</div></div>"
+                            $("#"+row).append(activeEnd);
+                        }
+
+                    }
+                    count ++;
+                });
+ 	 }
+        });          
+     
+    }
+ catch(e)
+    {
+      alert("error : " +  e);
+     }
+}
+
+function getSponsors() 
+{
+
+	sessionStorage.empresa = "kubeet";
+
+    jQuery.support.cors = true;
+    try
+    {                         
+     $.ajax({
+        url: "http://localhost:8080/getsponsor",
+        dataType: 'json',
+        cache: false,
+        contentType: false,
+        processData: true,
+        data: {empresa: sessionStorage.empresa},                         
+        type: 'get',
+        crossDomain: true,
+        success: function(response) {
+                sponsors = response;
+                //alert(response);
+                var count = 0;
+                var rows = 1;
+                sponsors.forEach(function (sponsor) 
+                {
+                    var row = "row"+rows;
+
+                    if (count < 6) {
+                        if (count === 0){
+                            $("#sponsorCarousel").empty();
+                            var active =  "<div class='item active'>" + "<div class='row' id='" + row + "'> <ul>";
+                            $("#sponsorCarousel").append(active);
+                        }
+                        var sponsorInfo = "<li><a href='#' class='img-responsive' src='" + sponsor.urlImage + "' alt=''></a></li>"
+                        
+						$("#"+row).append(sponsorInfo);
+                        if (count == 5){
+                            var activeEnd = "</ul></div></div>"
+                            $("#"+row).append(activeEnd);
+                        }
+                    }
+
+                    if (count > 5) {
+                        if (count % 6 == 0) {
+                            rows++;
+                            row = "row"+rows;
+                            var active =  "<div class='item'>" + "<div class='row' id='" + row + "'> <ul>";
+                            $("#sponsorCarousel").append(active);
+                        }
+
+                        var sponsorInfo = "<li><a href='#' class='img-responsive' src='" + sponsor.urlImage + "' alt=''></a></li>"
+                        
+						$("#"+row).append(sponsorInfo);
+                        if (count % 6 == 0) {
+                            var activeEnd = "</ul></div></div>"
+                            $("#"+row).append(activeEnd);
+                        }
+
+                    }
+                    count ++;
+                });
+ 	 }
+        });          
+     
+    }
+ catch(e)
+    {
+      alert("error : " +  e);
+     }
+}
+
 function loadData(){
     getArtists();
     getGenres();
+	getServices();
+	getSponsors();
 }
 
 
@@ -197,7 +348,7 @@ function loadData(){
 		                    <li class="scroll"><a href="#explore">Explore</a></li>                         
 		                    <li class="scroll"><a href="#event">Artists</a></li>
 							<li class="scroll"><a href="#twitter">Genres</a></li>
-							<li class="scroll"><a href="#">Services</a></li>
+							<li class="scroll"><a href="#services">Services</a></li>
 		                    <li class="no-scroll"><a href="#sponsor">Sponsors</a></li>
 		                    <li><a class="no-scroll" href="#" target="_blank">PURCHASE TICKETS</a></li>
 		                    <li class="scroll"><a href="#contact">Contact</a></li>       
@@ -382,7 +533,7 @@ function loadData(){
 						<h2 class="heading">Services</h2>
 						<a class="even-control-left" href="#event-carousel1" data-slide="prev"><i class="fa fa-angle-left"></i></a>
 						<a class="even-control-right" href="#event-carousel1" data-slide="next"><i class="fa fa-angle-right"></i></a>
-						<div class="carousel-inner">
+						<div class="carousel-inner" id="serviceCarousel">
 							<div class="item active">
 								<div class="row">
 									<div class="col-sm-4">
@@ -448,7 +599,7 @@ function loadData(){
 						<h2>Sponsors</h2>			
 						<a class="sponsor-control-left" href="#sponsor-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
 						<a class="sponsor-control-right" href="#sponsor-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
-						<div class="carousel-inner">
+						<div class="carousel-inner" id ="sponsorCarousel">
 							<div class="item active">
 								<ul>
 									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor1.png" alt=""></a></li>
@@ -472,9 +623,6 @@ function loadData(){
 						</div>
 					</div>
 				</div>				
-			</div>
-			<div class="light">
-				<img class="img-responsive" src="images/light.png" alt="">
 			</div>
 		</div>
 	</section><!--/#sponsor-->
