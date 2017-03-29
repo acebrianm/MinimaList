@@ -53,12 +53,12 @@
             var count = 0;
             empresas.forEach(function (empresa) {
               if (count % 2 == 0)
-                var emp = "<a href='/?empresa=" + empresa.id_empresa + "' class='btn btn-sq-lg btn-primary'>" +
+                var emp = "<a href='/index?empresa=" + empresa.id_empresa + "' class='btn btn-sq-lg btn-primary'>" +
                   "<i class='fa fa-user fa-5x'></i><br/>" +
                   empresa.nombre + " <br>" + empresa.codigo + "</a>";
 
               else
-                var emp = "<a href='/?empresa=" + empresa.id_empresa + "' class='btn btn-sq-lg btn-primary'>" +
+                var emp = "<a href='/index?empresa=" + empresa.id_empresa + "' class='btn btn-sq-lg btn-primary'>" +
                   "<i class='fa fa-user fa-5x'></i><br/>" +
                   empresa.nombre + " <br>" + empresa.codigo + "</a>";
               $("#empresas").append(emp);
