@@ -103,7 +103,7 @@ function getArtists()
                 var rows = 1;
                 artists.forEach(function (artist) 
                 {
-                    var row = "row"+rows;
+                    var row = "rowArtist"+rows;
 
                     if (count < 3) {
                         if (count === 0){
@@ -182,7 +182,7 @@ function getServices()
                 var rows = 1;
                 services.forEach(function (service) 
                 {
-                    var row = "row"+rows;
+                    var row = "rowService"+rows;
 
                     if (count < 3) {
                         if (count === 0){
@@ -261,15 +261,15 @@ function getSponsors()
                 var rows = 1;
                 sponsors.forEach(function (sponsor) 
                 {
-                    var row = "row"+rows;
+                    var row = "rowSponsor"+rows;
 
                     if (count < 6) {
                         if (count === 0){
                             $("#sponsorCarousel").empty();
-                            var active =  "<div class='item active'>" + "<div class='row' id='" + row + "'> <ul>";
+                            var active =  "<div class='item active'>" + "<div class='row' > <ul id='" + row + "'>";
                             $("#sponsorCarousel").append(active);
                         }
-                        var sponsorInfo = "<li><a href='#' class='img-responsive' src='" + sponsor.urlImage + "' alt=''></a></li>"
+                        var sponsorInfo = "<li><a href='#'><img class='img-responsive' src='" + sponsor.urlImage + "' alt=''> </a></li>"
                         
 						$("#"+row).append(sponsorInfo);
                         if (count == 5){
@@ -282,11 +282,11 @@ function getSponsors()
                         if (count % 6 == 0) {
                             rows++;
                             row = "row"+rows;
-                            var active =  "<div class='item'>" + "<div class='row' id='" + row + "'> <ul>";
+                            var active =  "<div class='item'>" + "<div class='row' > <ul id='" + row + "'>";
                             $("#sponsorCarousel").append(active);
                         }
 
-                        var sponsorInfo = "<li><a href='#' class='img-responsive' src='" + sponsor.urlImage + "' alt=''></a></li>"
+                        var sponsorInfo = "<li><a href='#' <img class='img-responsive' src='" + sponsor.urlImage + "' alt=''></a></li>"
                         
 						$("#"+row).append(sponsorInfo);
                         if (count % 6 == 0) {
