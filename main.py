@@ -95,6 +95,25 @@ class GetTeamHandler(webapp2.RequestHandler):
      json_string = json.dumps(myList, default=MyClass)
      self.response.write(json_string)
 
+class GetEmpresaHandler(webapp2.RequestHandler):
+
+    def get(self):
+        self.response.headers.add_header('Access-Control-Allow-Origin', '*')
+        self.response.headers['Content-Type'] = 'application/json'
+
+        id_empresa = self.request.get('empresa')
+        emp_key = ndb.Key(urlsafe=id_empresa)
+        objemp = emp_key.get()
+
+        myList = []
+        myObj = DemoClass()
+        myObj.lat = objemp.lat
+        myObj.lng = objemp.lng
+        myList.append(myObj)
+        
+        json_string = json.dumps(myList, default=MyClass)
+        self.response.write(json_string)
+
 class GetArtistHandler(webapp2.RequestHandler):
 
     def get(self):
@@ -495,5 +514,6 @@ app = webapp2.WSGIApplication([
     ('/getservice', GetServicioHandler),
     ('/getsponsor', GetSponsorHandler),
     ('/getempresas', GetEmpresasHandler),
+    ('/getempresa', GetEmpresaHandler),
     ('/cron', GetTotalCounts),
 ], debug = True)

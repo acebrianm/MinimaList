@@ -335,22 +335,22 @@ function loadData(){
 				function initMap() {
 					// Create a map object and specify the DOM element for display.
 					
-					jQuery.support.cors = true;
-					try {
-						//var myData = new TokenObject();
-
-						jQuery.ajax({
-							url: "http://localhost:8080/getempresas",
-							type: "get",
-							data: {empresa: sessionStorage.empresa},
-							contentType: "application/json; charset=utf-8",
-							dataType: "json",
-							cache: false,
-							contentType: false,
-							processData: true,
-							crossDomain: true,
-							success: function(response) {
+                        jQuery.support.cors = true;
+                        try
+                        {                         
+                        $.ajax({
+                            url: "http://localhost:8080/getempresa",
+                            dataType: 'json',
+                            cache: false,
+                            contentType: false,
+                            processData: true,
+                            data: {empresa: sessionStorage.empresa},                         
+                            type: 'get',
+                            crossDomain: true,
+                            success: function(response) {
 									var map;
+                                    response.forEach(function (rsp){ 
+                                        alert(rsp.lng);
 
 									map = new GMaps({
 										el: '#gmap',
@@ -368,8 +368,8 @@ function loadData(){
 
 									var image = 'images/map-icon.png';
 									map.addMarker({
-										lat: response.lat,
-										lng: response.lng,
+										lat: rsp.lat,
+										lng: rsp.lng,
 										icon: image,
 										animation: google.maps.Animation.DROP,
 										verticalAlign: 'bottom',
@@ -423,6 +423,7 @@ function loadData(){
 								});
 
 								map.setStyle("map_style");
+                                });
 								},
 								error: function(error) {
 									// error handler
