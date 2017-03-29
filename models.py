@@ -18,9 +18,11 @@ class CustomBaseModel(EndpointsModel):
 
 ## empresa
 class Empresa(CustomBaseModel):
-    _message_fields_schema = ('entityKey', 'codigo_empresa', 'nombre_empresa')
+    _message_fields_schema = ('entityKey', 'codigo_empresa', 'nombre_empresa', 'lat', 'lng')
     codigo_empresa = ndb.StringProperty()
     nombre_empresa = ndb.StringProperty()
+    lat = ndb.FloatProperty()
+    lng = ndb.FloatProperty()
     
        ###Empresa####
     def empresa_m(self, data):
@@ -85,7 +87,8 @@ if validarEmail("root@kubeet.com") == False:
     empresaAdmin = Empresa(
       codigo_empresa = 'kubeet',
       nombre_empresa="kubeet sa de cv",
- 	 
+      lat = 43.04446,
+      lng = -76.130791,
     )
     empresaAdmin.put()
     keyadmincol = ndb.Key(urlsafe=empresaAdmin.entityKey)
@@ -100,7 +103,8 @@ if validarEmail("root@kubeet.com") == False:
     edc = Empresa(
       codigo_empresa = 'edc',
       nombre_empresa="Electronic Daisy Carnival",
-     
+      lat = 19.4037934,
+      lng = -99.0930637,
     )
     edc.put()
     keyadmin = ndb.Key(urlsafe=edc.entityKey)
@@ -197,15 +201,3 @@ class Sponsor(CustomBaseModel):
         sponsor.empresa_key=empresakey
         sponsor.put()
         return 0
-
-class Mapa(CustomBaseModel):
-    _message_fields_schema = ('entityKey','lat', 'lng')
-    empresa_key = ndb = ndb.KeyProperty(kind=Empresa)
-    lat = ndb.FloatProperty()
-    lng = ndb.FloatProperty()
-
-    def mapa_m(self, data, empresakey):
-        mapa = Mapa()
-        mapa.populate(data)
-        mapa.empresa_key=empresakey
-        mapa.put()

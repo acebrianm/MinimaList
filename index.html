@@ -316,6 +316,116 @@ function loadData(){
 
 
 </script>
+<script>
+	var marker;
+
+				function TokenObject() {
+					this.tokenint = sessionStorage.token;
+					this.toJsonString = function() {
+						return JSON.stringify(this);
+					};
+
+				};
+
+				function initMap() {
+					// Create a map object and specify the DOM element for display.
+					
+
+					try {
+						var myData = new TokenObject();
+
+						jQuery.ajax({
+							type: "POST",
+							url: "http://localhost:8080/_ah/api/empresas_api/v1/empresa/list",
+							data: myData.toJsonString(),
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+
+							success: function(response) {
+								var map;
+
+								map = new GMaps({
+									el: '#gmap',
+									lat: 43.04446,
+									lng: -76.130791,
+									scrollwheel:false,
+									zoom: 16,
+									zoomControl : false,
+									panControl : false,
+									streetViewControl : false,
+									mapTypeControl: false,
+									overviewMapControl: false,
+									clickable: false
+								});
+
+								var image = 'images/map-icon.png';
+								map.addMarker({
+									lat: 43.04446,
+									lng: -76.130791,
+									icon: image,
+									animation: google.maps.Animation.DROP,
+									verticalAlign: 'bottom',
+									horizontalAlign: 'center',
+									backgroundColor: '#3e8bff',
+								});
+
+
+								var styles = [ 
+
+								{
+									"featureType": "road",
+									"stylers": [
+									{ "color": "#b4b4b4" }
+									]
+								},{
+									"featureType": "water",
+									"stylers": [
+									{ "color": "#d8d8d8" }
+									]
+								},{
+									"featureType": "landscape",
+									"stylers": [
+									{ "color": "#f1f1f1" }
+									]
+								},{
+									"elementType": "labels.text.fill",
+									"stylers": [
+									{ "color": "#000000" }
+									]
+								},{
+									"featureType": "poi",
+									"stylers": [
+									{ "color": "#d9d9d9" }
+									]
+								},{
+									"elementType": "labels.text",
+									"stylers": [
+									{ "saturation": 1 },
+									{ "weight": 0.1 },
+									{ "color": "#000000" }
+									]
+								}
+
+								];
+
+								map.addStyle({
+									styledMapName:"Styled Map",
+									styles: styles,
+									mapTypeId: "map_style"  
+								});
+
+								map.setStyle("map_style");
+								},
+								error: function(error) {
+									// error handler
+									alert("error :" + error.message)
+								}
+						});
+					} catch (error) {
+						alert(error);
+					}
+				}
+</script>
 </head><!--/head-->
 
 <body onload="loadData()">
@@ -696,7 +806,7 @@ function loadData(){
   
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyC3OWr6nNKBJQfJLpsF6WXA3qy4Kuh4d4M"></script>
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyC3OWr6nNKBJQfJLpsF6WXA3qy4Kuh4d4M&callback=initMap"></script>
   	<script type="text/javascript" src="js/gmaps.js"></script>
 	<script type="text/javascript" src="js/smoothscroll.js"></script>
     <script type="text/javascript" src="js/jquery.parallax.js"></script>
