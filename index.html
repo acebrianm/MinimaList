@@ -1,444 +1,437 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Evento | Free Onepage Event Template | ShapeBootstrap</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<title>Evento | Free Onepage Event Template | ShapeBootstrap</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
-	<link href="css/animate.css" rel="stylesheet">	
+	<link href="css/animate.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
 
-    <!--[if lt IE 9]>
+	<!--[if lt IE 9]>
 	    <script src="js/html5shiv.js"></script>
 	    <script src="js/respond.min.js"></script>
-    <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <![endif]-->
+	<link rel="shortcut icon" href="images/ico/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 
 
 
-<script type="text/javascript">
-
-function getGenres() 
-{
+	<script type="text/javascript">
+		function getGenres() {
 
 
-    jQuery.support.cors = true;
-    try
-    {                         
-     $.ajax({
-        url: "/getgenero",
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: true,
-        data: {empresa: sessionStorage.empresa},                         
-        type: 'get',
-        crossDomain: true,
-        success: function(response) {
-                generos = response;
-                //alert(response);
-                var count = 0;
-                generos.forEach(function (genero) 
-                {
-                    if (count === 0){
-                        $("#genreCarrousel").empty();
-                        var active =  "<div class='item active' id ='genre0'>";
-                        $("#genreCarrousel").append(active);
-                        var genreInfo = "<img src='" + genero.urlImage + "'><p>" + genero.nombre + "</p>";
-                        $("#genre0").append(genreInfo);
-                        var activeEnd = "</div>";
-                        $("#genreCarrousel").append(activeEnd);
-                    }
-                    else{
-                        var active =  "<div class='item' id='genre"+count+"'>";
-                        $("#genreCarrousel").append(active);
-                        var genreInfo = "<img src='" + genero.urlImage + "'><p>" + genero.nombre + "</p>";
-                        $("#genre"+count).append(genreInfo);
-                        var activeEnd = "</div></div>";
-                        $("#genreCarrousel").append(activeEnd);
-                    }
-                    count++;
-                });
- 	 }
-        });          
-     
-    }
- catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
+			jQuery.support.cors = true;
+			try {
+				$.ajax({
+					url: "/getgenero",
+					dataType: 'json',
+					cache: false,
+					contentType: false,
+					processData: true,
+					data: {
+						empresa: sessionStorage.empresa
+					},
+					type: 'get',
+					crossDomain: true,
+					success: function (response) {
+						generos = response;
+						//alert(response);
+						var count = 0;
+						generos.forEach(function (genero) {
+							if (count === 0) {
+								$("#genreCarrousel").empty();
+								var active = "<div class='item active' id ='genre0'>";
+								$("#genreCarrousel").append(active);
+								var genreInfo = "<img src='" + genero.urlImage + "'><p>" + genero.nombre + "</p>";
+								$("#genre0").append(genreInfo);
+								var activeEnd = "</div>";
+								$("#genreCarrousel").append(activeEnd);
+							} else {
+								var active = "<div class='item' id='genre" + count + "'>";
+								$("#genreCarrousel").append(active);
+								var genreInfo = "<img src='" + genero.urlImage + "'><p>" + genero.nombre + "</p>";
+								$("#genre" + count).append(genreInfo);
+								var activeEnd = "</div></div>";
+								$("#genreCarrousel").append(activeEnd);
+							}
+							count++;
+						});
+					}
+				});
+
+			} catch (e) {
+				alert("error : " + e);
+			}
+		}
 
 
-function getArtists() 
-{
+		function getArtists() {
 
-	// //sessionStorage.empresa = "kubeet";
+			// //sessionStorage.empresa = "kubeet";
 
-    jQuery.support.cors = true;
-    try
-    {                         
-     $.ajax({
-        url: "/getartist",
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: true,
-        data: {empresa: sessionStorage.empresa},                         
-        type: 'get',
-        crossDomain: true,
-        success: function(response) {
-                artists = response;
-                //alert(response);
-                var count = 0;
-                var rows = 1;
-                artists.forEach(function (artist) 
-                {
-                    var row = "rowArtist"+rows;
+			jQuery.support.cors = true;
+			try {
+				$.ajax({
+					url: "/getartist",
+					dataType: 'json',
+					cache: false,
+					contentType: false,
+					processData: true,
+					data: {
+						empresa: sessionStorage.empresa
+					},
+					type: 'get',
+					crossDomain: true,
+					success: function (response) {
+						artists = response;
+						//alert(response);
+						var count = 0;
+						var rows = 1;
+						artists.forEach(function (artist) {
+							var row = "rowArtist" + rows;
 
-                    if (count < 3) {
-                        if (count === 0){
-                            $("#artistCarrousel").empty();
-                            var active =  "<div class='item active'>" + "<div class='row' id='"+ row + "'>";
-                            $("#artistCarrousel").append(active);
-                        }
-                        var artistInfo = "<div class='col-sm-4'>" + 
-                                                "<div class='single-event'>" + 
-                                                    "<img class='img-responsive' src='" + artist.urlImage + "' alt='event-image'>" +
-                                                    "<h4>" + artist.nombre + "</h4>" +
-                                                "</div>"+
-                                            "</div>"
-                        $("#"+row).append(artistInfo);
-                        if (count == 2){
-                            var activeEnd = "</div></div>"
-                            $("#"+row).append(activeEnd);
-                        }
-                    }
-
-
-                    if (count > 2) {
-                        if (count % 3 == 0) {
-                            rows++;
-                            row = "row"+rows;
-                            var active =  "<div class='item'>" + "<div class='row' id='" + row + "'>";
-                            $("#artistCarrousel").append(active);
-                        }
-
-                        var artistInfo = "<div class='col-sm-4'>" + 
-                                                "<div class='single-event'>" + 
-                                                    "<img class='img-responsive' src='" + artist.urlImage + "' alt='event-image'>" +
-                                                    "<h4>" + artist.nombre + "</h4>" +
-                                                "</div>"+
-                                            "</div>"
-                        $("#"+row).append(artistInfo);
-                        if (count % 3 == 0) {
-                            var activeEnd = "</div></div>"
-                            $("#"+row).append(activeEnd);
-                        }
-
-                    }
-                    count ++;
-                });
- 	 }
-        });          
-     
-    }
- catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
-
-function getServices() 
-{
-
-//	//sessionStorage.empresa = "kubeet";
-
-    jQuery.support.cors = true;
-    try
-    {                         
-     $.ajax({
-        url: "/getservice",
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: true,
-        data: {empresa: sessionStorage.empresa},                         
-        type: 'get',
-        crossDomain: true,
-        success: function(response) {
-                services = response;
-                //alert(response);
-                var count = 0;
-                var rows = 1;
-                services.forEach(function (service) 
-                {
-                    var row = "rowService"+rows;
-
-                    if (count < 3) {
-                        if (count === 0){
-                            $("#serviceCarousel").empty();
-                            var active =  "<div class='item active'>" + "<div class='row' id='"+ row + "'>";
-                            $("#serviceCarousel").append(active);
-                        }
-                        var serviceInfo = "<div class='col-sm-4'>" + 
-                                                "<div class='single-event'>" + 
-                                                    "<img class='img-responsive' src='" + service.urlImage + "' alt='event-image'>" +
-                                                    "<h4>" + service.nombre + "</h4>" +
-                                                "</div>"+
-                                            "</div>"
-                        $("#"+row).append(serviceInfo);
-                        if (count == 2){
-                            var activeEnd = "</div></div>"
-                            $("#"+row).append(activeEnd);
-                        }
-                    }
+							if (count < 3) {
+								if (count === 0) {
+									$("#artistCarrousel").empty();
+									var active = "<div class='item active'>" + "<div class='row' id='" + row + "'>";
+									$("#artistCarrousel").append(active);
+								}
+								var artistInfo = "<div class='col-sm-4'>" +
+									"<div class='single-event'>" +
+									"<img class='img-responsive' src='" + artist.urlImage + "' alt='event-image'>" +
+									"<h4>" + artist.nombre + "</h4>" +
+									"</div>" +
+									"</div>"
+								$("#" + row).append(artistInfo);
+								if (count == 2) {
+									var activeEnd = "</div></div>"
+									$("#" + row).append(activeEnd);
+								}
+							}
 
 
-                    if (count > 2) {
-                        if (count % 3 == 0) {
-                            rows++;
-                            row = "row"+rows;
-                            var active =  "<div class='item'>" + "<div class='row' id='" + row + "'>";
-                            $("#serviceCarousel").append(active);
-                        }
+							if (count > 2) {
+								if (count % 3 == 0) {
+									rows++;
+									row = "row" + rows;
+									var active = "<div class='item'>" + "<div class='row' id='" + row + "'>";
+									$("#artistCarrousel").append(active);
+								}
 
-                        var serviceInfo = "<div class='col-sm-4'>" + 
-                                                "<div class='single-event'>" + 
-                                                    "<img class='img-responsive' src='" + service.urlImage + "' alt='event-image'>" +
-                                                    "<h4>" + service.nombre + "</h4>" +
-                                                "</div>"+
-                                            "</div>"
-                        $("#"+row).append(serviceInfo);
-                        if (count % 3 == 0) {
-                            var activeEnd = "</div></div>"
-                            $("#"+row).append(activeEnd);
-                        }
+								var artistInfo = "<div class='col-sm-4'>" +
+									"<div class='single-event'>" +
+									"<img class='img-responsive' src='" + artist.urlImage + "' alt='event-image'>" +
+									"<h4>" + artist.nombre + "</h4>" +
+									"</div>" +
+									"</div>"
+								$("#" + row).append(artistInfo);
+								if (count % 3 == 0) {
+									var activeEnd = "</div></div>"
+									$("#" + row).append(activeEnd);
+								}
 
-                    }
-                    count ++;
-                });
- 	 }
-        });          
-     
-    }
- catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
+							}
+							count++;
+						});
+					}
+				});
 
-function getSponsors() 
-{
+			} catch (e) {
+				alert("error : " + e);
+			}
+		}
 
-	//sessionStorage.empresa = "kubeet";
+		function getServices() {
 
-    jQuery.support.cors = true;
-    try
-    {                         
-     $.ajax({
-        url: "/getsponsor",
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: true,
-        data: {empresa: sessionStorage.empresa},                         
-        type: 'get',
-        crossDomain: true,
-        success: function(response) {
-                sponsors = response;
-                //alert(response);
-                var count = 0;
-                var rows = 1;
-                sponsors.forEach(function (sponsor) 
-                {
-                    var row = "rowSponsor"+rows;
+			//	//sessionStorage.empresa = "kubeet";
 
-                    if (count < 6) {
-                        if (count === 0){
-                            $("#sponsorCarousel").empty();
-                            var active =  "<div class='item active'>" + "<div class='row' > <ul id='" + row + "'>";
-                            $("#sponsorCarousel").append(active);
-                        }
-                        var sponsorInfo = "<li><a href='#'><img class='img-responsive' src='" + sponsor.urlImage + "' alt=''> </a></li>"
-                        
-						$("#"+row).append(sponsorInfo);
-                        if (count == 5){
-                            var activeEnd = "</ul></div></div>"
-                            $("#"+row).append(activeEnd);
-                        }
-                    }
+			jQuery.support.cors = true;
+			try {
+				$.ajax({
+					url: "/getservice",
+					dataType: 'json',
+					cache: false,
+					contentType: false,
+					processData: true,
+					data: {
+						empresa: sessionStorage.empresa
+					},
+					type: 'get',
+					crossDomain: true,
+					success: function (response) {
+						services = response;
+						//alert(response);
+						var count = 0;
+						var rows = 1;
+						services.forEach(function (service) {
+							var row = "rowService" + rows;
 
-                    if (count > 5) {
-                        if (count % 6 == 0) {
-                            rows++;
-                            row = "row"+rows;
-                            var active =  "<div class='item'>" + "<div class='row' > <ul id='" + row + "'>";
-                            $("#sponsorCarousel").append(active);
-                        }
-
-                        var sponsorInfo = "<li><a href='#' <img class='img-responsive' src='" + sponsor.urlImage + "' alt=''></a></li>"
-                        
-						$("#"+row).append(sponsorInfo);
-                        if (count % 6 == 0) {
-                            var activeEnd = "</ul></div></div>"
-                            $("#"+row).append(activeEnd);
-                        }
-
-                    }
-                    count ++;
-                });
- 	 }
-        });          
-     
-    }
- catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
-
-function getParameterByName(name, url) {
-    if (!url) {
-      url = window.location.href;
-    }
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-function loadData(){
-    var ek = getParameterByName("empresa");
-	sessionStorage.empresa = ek;
-    getArtists();
-    getGenres();
-	getServices();
-	getSponsors();
-}
+							if (count < 3) {
+								if (count === 0) {
+									$("#serviceCarousel").empty();
+									var active = "<div class='item active'>" + "<div class='row' id='" + row + "'>";
+									$("#serviceCarousel").append(active);
+								}
+								var serviceInfo = "<div class='col-sm-4'>" +
+									"<div class='single-event'>" +
+									"<img class='img-responsive' src='" + service.urlImage + "' alt='event-image'>" +
+									"<h4>" + service.nombre + "</h4>" +
+									"</div>" +
+									"</div>"
+								$("#" + row).append(serviceInfo);
+								if (count == 2) {
+									var activeEnd = "</div></div>"
+									$("#" + row).append(activeEnd);
+								}
+							}
 
 
-</script>
-<script>
-	var marker;
+							if (count > 2) {
+								if (count % 3 == 0) {
+									rows++;
+									row = "row" + rows;
+									var active = "<div class='item'>" + "<div class='row' id='" + row + "'>";
+									$("#serviceCarousel").append(active);
+								}
 
-				function initMap() {
-					// Create a map object and specify the DOM element for display.
-					
-                        jQuery.support.cors = true;
-                        try
-                        {                         
-                        $.ajax({
-                            url: "/getempresa",
-                            dataType: 'json',
-                            cache: false,
-                            contentType: false,
-                            processData: true,
-                            data: {empresa: sessionStorage.empresa},                         
-                            type: 'get',
-                            crossDomain: true,
-                            success: function(response) {
-									var map;
-                                    response.forEach(function (rsp){ 
-                                        alert(rsp.lng);
+								var serviceInfo = "<div class='col-sm-4'>" +
+									"<div class='single-event'>" +
+									"<img class='img-responsive' src='" + service.urlImage + "' alt='event-image'>" +
+									"<h4>" + service.nombre + "</h4>" +
+									"</div>" +
+									"</div>"
+								$("#" + row).append(serviceInfo);
+								if (count % 3 == 0) {
+									var activeEnd = "</div></div>"
+									$("#" + row).append(activeEnd);
+								}
 
-									map = new GMaps({
-										el: '#gmap',
-										lat: rsp.lat,
-										lng: rsp.lng,
-										scrollwheel:false,
-										zoom: 16,
-										zoomControl : false,
-										panControl : false,
-										streetViewControl : false,
-										mapTypeControl: false,
-										overviewMapControl: false,
-										clickable: false
-									});
+							}
+							count++;
+						});
+					}
+				});
 
-									var image = 'images/map-icon.png';
-									map.addMarker({
-										lat: rsp.lat,
-										lng: rsp.lng,
-										icon: image,
-										animation: google.maps.Animation.DROP,
-										verticalAlign: 'bottom',
-										horizontalAlign: 'center',
-										backgroundColor: '#3e8bff',
-									});
-								
+			} catch (e) {
+				alert("error : " + e);
+			}
+		}
 
-								var styles = [ 
+		function getSponsors() {
+
+			//sessionStorage.empresa = "kubeet";
+
+			jQuery.support.cors = true;
+			try {
+				$.ajax({
+					url: "/getsponsor",
+					dataType: 'json',
+					cache: false,
+					contentType: false,
+					processData: true,
+					data: {
+						empresa: sessionStorage.empresa
+					},
+					type: 'get',
+					crossDomain: true,
+					success: function (response) {
+						sponsors = response;
+						//alert(response);
+						var count = 0;
+						var rows = 1;
+						sponsors.forEach(function (sponsor) {
+							var row = "rowSponsor" + rows;
+
+							if (count < 6) {
+								if (count === 0) {
+									$("#sponsorCarousel").empty();
+									var active = "<div class='item active'>" + "<div class='row' > <ul id='" + row + "'>";
+									$("#sponsorCarousel").append(active);
+								}
+								var sponsorInfo = "<li><a href='#'><img class='img-responsive' src='" + sponsor.urlImage +
+									"' alt=''> </a></li>"
+
+								$("#" + row).append(sponsorInfo);
+								if (count == 5) {
+									var activeEnd = "</ul></div></div>"
+									$("#" + row).append(activeEnd);
+								}
+							}
+
+							if (count > 5) {
+								if (count % 6 == 0) {
+									rows++;
+									row = "row" + rows;
+									var active = "<div class='item'>" + "<div class='row' > <ul id='" + row + "'>";
+									$("#sponsorCarousel").append(active);
+								}
+
+								var sponsorInfo = "<li><a href='#' <img class='img-responsive' src='" + sponsor.urlImage +
+									"' alt=''></a></li>"
+
+								$("#" + row).append(sponsorInfo);
+								if (count % 6 == 0) {
+									var activeEnd = "</ul></div></div>"
+									$("#" + row).append(activeEnd);
+								}
+
+							}
+							count++;
+						});
+					}
+				});
+
+			} catch (e) {
+				alert("error : " + e);
+			}
+		}
+
+		function getParameterByName(name, url) {
+			if (!url) {
+				url = window.location.href;
+			}
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+				results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+
+		function loadData() {
+			var ek = getParameterByName("empresa");
+			sessionStorage.empresa = ek;
+			getArtists();
+			getGenres();
+			getServices();
+			getSponsors();
+		}
+	</script>
+	<script>
+		var marker;
+
+		function initMap() {
+			// Create a map object and specify the DOM element for display.
+
+			jQuery.support.cors = true;
+			try {
+				$.ajax({
+					url: "/getempresa",
+					dataType: 'json',
+					cache: false,
+					contentType: false,
+					processData: true,
+					data: {
+						empresa: sessionStorage.empresa
+					},
+					type: 'get',
+					crossDomain: true,
+					success: function (response) {
+						var map;
+						response.forEach(function (rsp) {
+
+							map = new GMaps({
+								el: '#gmap',
+								lat: rsp.lat,
+								lng: rsp.lng,
+								scrollwheel: false,
+								zoom: 16,
+								zoomControl: false,
+								panControl: false,
+								streetViewControl: false,
+								mapTypeControl: false,
+								overviewMapControl: false,
+								clickable: false
+							});
+
+							var image = 'images/map-icon.png';
+							map.addMarker({
+								lat: rsp.lat,
+								lng: rsp.lng,
+								icon: image,
+								animation: google.maps.Animation.DROP,
+								verticalAlign: 'bottom',
+								horizontalAlign: 'center',
+								backgroundColor: '#3e8bff',
+							});
+
+
+							var styles = [
 
 								{
 									"featureType": "road",
-									"stylers": [
-									{ "color": "#b4b4b4" }
-									]
-								},{
+									"stylers": [{
+										"color": "#b4b4b4"
+									}]
+								}, {
 									"featureType": "water",
-									"stylers": [
-									{ "color": "#d8d8d8" }
-									]
-								},{
+									"stylers": [{
+										"color": "#d8d8d8"
+									}]
+								}, {
 									"featureType": "landscape",
-									"stylers": [
-									{ "color": "#f1f1f1" }
-									]
-								},{
+									"stylers": [{
+										"color": "#f1f1f1"
+									}]
+								}, {
 									"elementType": "labels.text.fill",
-									"stylers": [
-									{ "color": "#000000" }
-									]
-								},{
+									"stylers": [{
+										"color": "#000000"
+									}]
+								}, {
 									"featureType": "poi",
-									"stylers": [
-									{ "color": "#d9d9d9" }
-									]
-								},{
+									"stylers": [{
+										"color": "#d9d9d9"
+									}]
+								}, {
 									"elementType": "labels.text",
-									"stylers": [
-									{ "saturation": 1 },
-									{ "weight": 0.1 },
-									{ "color": "#000000" }
+									"stylers": [{
+											"saturation": 1
+										},
+										{
+											"weight": 0.1
+										},
+										{
+											"color": "#000000"
+										}
 									]
 								}
 
-								];
+							];
 
-								map.addStyle({
-									styledMapName:"Styled Map",
-									styles: styles,
-									mapTypeId: "map_style"  
-								});
+							map.addStyle({
+								styledMapName: "Styled Map",
+								styles: styles,
+								mapTypeId: "map_style"
+							});
 
-								map.setStyle("map_style");
-                                });
-								},
-								error: function(error) {
-									// error handler
-									alert("error :" + error.message)
-								}
+							map.setStyle("map_style");
 						});
-					} catch (error) {
-						alert(error);
+					},
+					error: function (error) {
+						// error handler
+						alert("error :" + error.message)
 					}
-				}
-</script>
-</head><!--/head-->
+				});
+			} catch (error) {
+				alert(error);
+			}
+		}
+	</script>
+</head>
+<!--/head-->
 
 <body onload="loadData()">
-	<header id="header" role="banner">		
+	<header id="header" role="banner">
 		<div class="main-nav">
 			<div class="container">
 				<div class="header-top">
@@ -448,38 +441,38 @@ function loadData(){
 						<a href="#"><i class="fa fa-google-plus"></i></a>
 						<a href="#"><i class="fa fa-youtube"></i></a>
 					</div>
-				</div>     
-		        <div class="row">	        		
-		            <div class="navbar-header">
-		                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				</div>
+				<div class="row">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 		                    <span class="sr-only">Toggle navigation</span>
 		                    <span class="icon-bar"></span>
 		                    <span class="icon-bar"></span>
 		                    <span class="icon-bar"></span>
 		                </button>
-		                <a class="navbar-brand" href="index.html">
-		                	<img class="img-responsive" src="images/logo.png" alt="logo">
-		                </a>                    
-		            </div>
-		            <div class="collapse navbar-collapse">
-		                <ul class="nav navbar-nav navbar-right">                 
-		                    <li class="scroll active"><a href="#home">Home</a></li>
-		                    <li class="scroll"><a href="#explore">Explore</a></li>                         
-		                    <li class="scroll"><a href="#event">Artists</a></li>
+						<a class="navbar-brand" href="index.html">
+							<img class="img-responsive" src="images/logo.png" alt="logo">
+						</a>
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li class="scroll active"><a href="#home">Home</a></li>
+							<li class="scroll"><a href="#explore">Explore</a></li>
+							<li class="scroll"><a href="#event">Artists</a></li>
 							<li class="scroll"><a href="#twitter">Genres</a></li>
 							<li class="scroll"><a href="#services">Services</a></li>
-		                    <li class="no-scroll"><a href="#sponsor">Sponsors</a></li>
-		                    <li><a class="no-scroll" href="#" target="_blank">PURCHASE TICKETS</a></li>
-		                    <li class="scroll"><a href="#contact">Contact</a></li>       
-		                </ul>
-		            </div>
-		        </div>
-	        </div>
-        </div>                    
-    </header>
-    <!--/#header--> 
+							<li class="no-scroll"><a href="#sponsor">Sponsors</a></li>
+							<li><a class="no-scroll" href="#" target="_blank">PURCHASE TICKETS</a></li>
+							<li class="scroll"><a href="#contact">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--/#header-->
 
-    <section id="home">	
+	<section id="home">
 		<div id="main-slider" class="carousel slide" data-ride="carousel">
 			<ol class="carousel-indicators">
 				<li data-target="#main-slider" data-slide-to="0" class="active"></li>
@@ -488,7 +481,7 @@ function loadData(){
 			</ol>
 			<div class="carousel-inner">
 				<div class="item active">
-					<img class="img-responsive" src="images/slider/bg1.jpg" alt="slider">						
+					<img class="img-responsive" src="images/slider/bg1.jpg" alt="slider">
 					<div class="carousel-caption">
 						<h2>register for our next event </h2>
 						<h4>full event package only @$199</h4>
@@ -496,7 +489,7 @@ function loadData(){
 					</div>
 				</div>
 				<div class="item">
-					<img class="img-responsive" src="images/slider/bg2.jpg" alt="slider">	
+					<img class="img-responsive" src="images/slider/bg2.jpg" alt="slider">
 					<div class="carousel-caption">
 						<h2>register for our next event </h2>
 						<h4>full event package only @$199</h4>
@@ -504,16 +497,16 @@ function loadData(){
 					</div>
 				</div>
 				<div class="item">
-					<img class="img-responsive" src="images/slider/bg3.jpg" alt="slider">	
+					<img class="img-responsive" src="images/slider/bg3.jpg" alt="slider">
 					<div class="carousel-caption">
 						<h2>register for our next event </h2>
 						<h4>full event package only @$199</h4>
-						<a href="#contact" >GRAB YOUR TICKETS <i class="fa fa-angle-right"></i></a>
+						<a href="#contact">GRAB YOUR TICKETS <i class="fa fa-angle-right"></i></a>
 					</div>
-				</div>				
+				</div>
 			</div>
-		</div>    	
-    </section>
+		</div>
+	</section>
 	<!--/#home-->
 
 	<section id="explore">
@@ -521,13 +514,13 @@ function loadData(){
 			<div class="row">
 				<div class="watch">
 					<img class="img-responsive" src="images/watch.png" alt="">
-				</div>				
+				</div>
 				<div class="col-md-4 col-md-offset-2 col-sm-5">
 					<h2>our next event in</h2>
-				</div>				
-				<div class="col-sm-7 col-md-6">					
+				</div>
+				<div class="col-sm-7 col-md-6">
 					<ul id="countdown">
-						<li>					
+						<li>
 							<span class="days time-font">00</span>
 							<p>days </p>
 						</li>
@@ -542,7 +535,7 @@ function loadData(){
 						<li>
 							<span class="seconds time-font">00</span>
 							<p class="">seconds</p>
-						</li>				
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -550,7 +543,8 @@ function loadData(){
 				<a href="#"><i class="fa fa-shopping-cart"></i> <span>Purchase Tickets</span></a>
 			</div>
 		</div>
-	</section><!--/#explore-->
+	</section>
+	<!--/#explore-->
 
 	<section id="event">
 		<div class="container">
@@ -616,7 +610,8 @@ function loadData(){
 				</div>
 			</div>
 		</div>
-	</section><!--/#event-->
+	</section>
+	<!--/#event-->
 
 	<section id="twitter">
 		<div id="twitter-feed" class="carousel slide" data-interval="false">
@@ -641,8 +636,9 @@ function loadData(){
 					<a class="twitter-control-right" href="#twitter-feed" data-slide="next"><i class="fa fa-angle-right"></i></a>
 				</div>
 			</div>
-		</div>		
-	</section><!--/#genres-->
+		</div>
+	</section>
+	<!--/#genres-->
 
 	<section id="services">
 		<div class="container">
@@ -706,53 +702,79 @@ function loadData(){
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</section>
-	
+
 	<section id="sponsor">
 		<div id="sponsor-carousel" class="carousel slide" data-interval="false">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-10">
-						<h2>Sponsors</h2>			
+						<h2>Sponsors</h2>
 						<a class="sponsor-control-left" href="#sponsor-carousel" data-slide="prev"><i class="fa fa-angle-left"></i></a>
 						<a class="sponsor-control-right" href="#sponsor-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
-						<div class="carousel-inner" id ="sponsorCarousel">
+						<div class="carousel-inner" id="sponsorCarousel">
 							<div class="item active">
 								<ul>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor1.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor2.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor3.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor4.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor5.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor6.png" alt=""></a></li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor1.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor2.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor3.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor4.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor5.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor6.png" alt=""></a>
+									</li>
 								</ul>
 							</div>
 							<div class="item">
 								<ul>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor6.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor5.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor4.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor3.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor2.png" alt=""></a></li>
-									<li><a href="#"><img class="img-responsive" src="images/sponsor/sponsor1.png" alt=""></a></li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor6.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor5.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor4.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor3.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor2.png" alt=""></a>
+									</li>
+									<li>
+										<a href="#"><img class="img-responsive" src="images/sponsor/sponsor1.png" alt=""></a>
+									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
-				</div>				
+				</div>
 			</div>
 		</div>
-	</section><!--/#sponsor-->
+	</section>
+	<!--/#sponsor-->
 
 	<section id="contact">
 		<div id="map">
 			<div id="gmap-wrap">
-	 			<div id="gmap"> 				
-	 			</div>	 			
-	    	</div>
-		</div><!--/#map-->
+				<div id="gmap">
+				</div>
+			</div>
+		</div>
+		<!--/#map-->
 		<div class="contact-section">
 			<div class="ear-piece">
 				<img class="img-responsive" src="images/ear-piece.png" alt="">
@@ -763,65 +785,61 @@ function loadData(){
 						<div class="contact-text">
 							<h3>Contact</h3>
 							<address>
-								E-mail: promo@party.com<br>
-								Phone: +1 (123) 456 7890<br>
-								Fax: +1 (123) 456 7891
+								E-mail: promo@party.com<br> Phone: +1 (123) 456 7890<br> Fax: +1 (123) 456 7891
 							</address>
 						</div>
 						<div class="contact-address">
 							<h3>Contact</h3>
 							<address>
-								Unit C2, St.Vincent's Trading Est.,<br>
-								Feeder Road,<br>
-								Bristol, BS2 0UY<br>
-								United Kingdom
+								Unit C2, St.Vincent's Trading Est.,<br> Feeder Road,<br> Bristol, BS2 0UY<br> United Kingdom
 							</address>
 						</div>
 					</div>
 					<div class="col-sm-5">
 						<div id="contact-section">
 							<h3>Send a message</h3>
-					    	<div class="status alert alert-success" style="display: none"></div>
-					    	<form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="sendemail.php">
-					            <div class="form-group">
-					                <input type="text" name="name" class="form-control" required="required" placeholder="Name">
-					            </div>
-					            <div class="form-group">
-					                <input type="email" name="email" class="form-control" required="required" placeholder="Email ID">
-					            </div>
-					            <div class="form-group">
-					                <textarea name="message" id="message" required="required" class="form-control" rows="4" placeholder="Enter your message"></textarea>
-					            </div>                        
-					            <div class="form-group">
-					                <button type="submit" class="btn btn-primary pull-right">Send</button>
-					            </div>
-					        </form>	       
-					    </div>
+							<div class="status alert alert-success" style="display: none"></div>
+							<!--<form id="main-contact-form" class="contact-form" name="contact-form" method="post" action="">-->
+							<div class="form-group">
+								<input type="text" name="name" id="name" class="form-control" required="required" placeholder="Name">
+							</div>
+							<div class="form-group">
+								<input type="email" name="email" id="email" class="form-control" required="required" placeholder="Email ID">
+							</div>
+							<div class="form-group">
+								<textarea name="message" id="message" required="required" class="form-control" rows="4" placeholder="Enter your message"></textarea>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary pull-right" id="upload">Send</button>
+							</div>
+							<!--</form>-->
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
 	</section>
-    <!--/#contact-->
+	<!--/#contact-->
 
-    <footer id="footer">
-        <div class="container">
-            <div class="text-center">
-                <p> Copyright  &copy;2014<a target="_blank" href="http://shapebootstrap.net/"> Evento </a>Theme. All Rights Reserved. <br> Designed by <a target="_blank" href="http://shapebootstrap.net/">ShapeBootstrap</a></p>                
-            </div>
-        </div>
-    </footer>
-    <!--/#footer-->
-  
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<footer id="footer">
+		<div class="container">
+			<div class="text-center">
+				<p> Copyright &copy;2014<a target="_blank" href="http://shapebootstrap.net/"> Evento </a>Theme. All Rights Reserved. <br>					Designed by <a target="_blank" href="http://shapebootstrap.net/">ShapeBootstrap</a></p>
+			</div>
+		</div>
+	</footer>
+	<!--/#footer-->
+
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyC3OWr6nNKBJQfJLpsF6WXA3qy4Kuh4d4M&callback=initMap"></script>
-  	<script type="text/javascript" src="js/gmaps.js"></script>
+	<script type="text/javascript" src="js/gmaps.js"></script>
 	<script type="text/javascript" src="js/smoothscroll.js"></script>
-    <script type="text/javascript" src="js/jquery.parallax.js"></script>
-    <script type="text/javascript" src="js/coundown-timer.js"></script>
-    <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
-    <script type="text/javascript" src="js/jquery.nav.js"></script>
-    <script type="text/javascript" src="js/main.js"></script> 
+	<script type="text/javascript" src="js/jquery.parallax.js"></script>
+	<script type="text/javascript" src="js/coundown-timer.js"></script>
+	<script type="text/javascript" src="js/jquery.scrollTo.js"></script>
+	<script type="text/javascript" src="js/jquery.nav.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </body>
+
 </html>

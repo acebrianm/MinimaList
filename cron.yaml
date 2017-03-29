@@ -1,4 +1,4 @@
 cron:
 - description: Get counts 
   url: /cron
-  schedule: every 1 minutes 
+  schedule: every 59 minutes 

@@ -1,121 +1,128 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
-	<link href="css/animate.css" rel="stylesheet">	
+	<link href="css/animate.css" rel="stylesheet">
 	<link href="css/responsive.css" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script><!-- Latest compiled and minified JavaScript --> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!--[if lt IE 9]>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	    crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	    crossorigin="anonymous"></script>
+	<!--[if lt IE 9]>
 	    <script src="js/html5shiv.js"></script>
 	    <script src="js/respond.min.js"></script>
-    <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <![endif]-->
+	<link rel="shortcut icon" href="images/ico/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
- <title>
-   login demo
- </title>
+	<title>
+		login demo
+	</title>
 
 
-<script>
-// contact
-function LoginObject(myEmail, myPasswd) {
-    this.email = myEmail;
-    this.password = myPasswd;
-    this.toJsonString = function () { return JSON.stringify(this); };
+	<script>
+		// contact
+		function LoginObject(myEmail, myPasswd) {
+			this.email = myEmail;
+			this.password = myPasswd;
+			this.toJsonString = function () {
+				return JSON.stringify(this);
+			};
 
-};
+		};
 
-function loginDemo()
-{
-	//alert("testing...")
-	var myData = new LoginObject(
-    $("#username").val(), 
-    $("#passwd").val());
-	
-  alert(myData.toJsonString());
+		function loginDemo() {
+			//alert("testing...")
+			var myData = new LoginObject(
+				$("#username").val(),
+				$("#passwd").val());
 
-	 jQuery.ajax({
-         type: "POST",
-         url: "/_ah/api/usuarios_api/v1/users/login",
-         data: myData.toJsonString(),
-         contentType: "application/json; charset=utf-8",
-         dataType: "json",
-         success: function (response) {
-              // do something
-              sessionStorage.token = response.token;
-              alert(response.message);
-              sessionStorage.empresa = response.message;
-              alert ("token generado: " + sessionStorage.token);
-              window.location = "/admin-artist";
+			alert(myData.toJsonString());
 
-         },
-     
-         error: function (error) {            
-              // error handler
-              alert(error)
-         }
+			jQuery.ajax({
+				type: "POST",
+				url: "/_ah/api/usuarios_api/v1/users/login",
+				data: myData.toJsonString(),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (response) {
+					// do something
+					sessionStorage.token = response.token;
+					alert(response.message);
+					sessionStorage.empresa = response.message;
+					alert("token generado: " + sessionStorage.token);
+					window.location = "/admin-artist";
 
-     });
+				},
 
-}
+				error: function (error) {
+					// error handler
+					alert(error)
+				}
 
-</script>
+			});
+
+		}
+	</script>
 
 </head>
+
 <body>
-<div class="container">
-			<div class="row main">
-				<div class="panel-heading">
-	               <div class="panel-title text-center">
-	               		<h1 class="title" style="color: black;">Company Name</h1>
-	               		<hr />
-	               	</div>
-	            </div> 
-				<div class="main-login main-center col-md-4 col-md-offset-4">
-					<form class="form-horizontal" method="post" action="#">
-
-						<div class="form-group">
-							<label for="username" class="cols-sm-2 control-label">Username</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-									<input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" value="root@kubeet.com"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="password" class="cols-sm-2 control-label">Password</label>
-							<div class="cols-sm-10">
-								<div class="input-group">
-									<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-									<input type="password" class="form-control" name="password" id="passwd" placeholder="Enter your Password" value="docker"/>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group ">
-							<button type="button" class="btn btn-primary btn-lg
-                                btn-block login-button" onclick="loginDemo()">Login</button>
-						</div>
-					</form>
+	<div class="container">
+		<div class="row main">
+			<div class="panel-heading">
+				<div class="panel-title text-center">
+					<h1 class="title" style="color: black;">Company Name</h1>
+					<hr />
 				</div>
 			</div>
-		</div>
+			<div class="main-login main-center col-md-4 col-md-offset-4">
+				<form class="form-horizontal" method="post" action="#">
 
-	</body>
+					<div class="form-group">
+						<label for="username" class="cols-sm-2 control-label">Username</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+								<input type="text" class="form-control" name="username" id="username" placeholder="Enter your Username" value="root@kubeet.com"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="password" class="cols-sm-2 control-label">Password</label>
+						<div class="cols-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+								<input type="password" class="form-control" name="password" id="passwd" placeholder="Enter your Password" value="docker"
+								/>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group ">
+						<button type="button" class="btn btn-primary btn-lg
+                                btn-block login-button" onclick="loginDemo()">Login</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 </body>
+</body>
+
 </html>

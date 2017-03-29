@@ -1,111 +1,104 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/animate.css" rel="stylesheet">	
-	<link href="css/responsive.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/animate.css" rel="stylesheet">
+  <link href="css/responsive.css" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script><!-- Latest compiled and minified JavaScript --> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!--[if lt IE 9]>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <!--[if lt IE 9]>
 	    <script src="js/html5shiv.js"></script>
 	    <script src="js/respond.min.js"></script>
-    <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <![endif]-->
+  <link rel="shortcut icon" href="images/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
- <title>
-   login demo
- </title>
+  <title>
+    login demo
+  </title>
 
 
-<script>
-function getData() 
-{
+  <script>
+    function getData() {
 
-    jQuery.support.cors = true;
-    try
-    {                         
-     $.ajax({
-        url: "/getempresas",
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: true,
-        data: {},                         
-        type: 'get',
-        crossDomain: true,
-        success: function(response) {
-        empresas = response;
-          //alert(response);
+      jQuery.support.cors = true;
+      try {
+        $.ajax({
+          url: "/getempresas",
+          dataType: 'json',
+          cache: false,
+          contentType: false,
+          processData: true,
+          data: {},
+          type: 'get',
+          crossDomain: true,
+          success: function (response) {
+            empresas = response;
+            //alert(response);
             $("#empresas").empty();
             var count = 0;
-            empresas.forEach(function (empresa) 
-            {
-                if (count % 2 == 0)
-                    var emp = "<a href='/?empresa=" + empresa.id_empresa+ "' class='btn btn-sq-lg btn-primary'>" +
-                            "<i class='fa fa-user fa-5x'></i><br/>" +
-                             empresa.nombre + " <br>" + empresa.codigo + "</a>";
+            empresas.forEach(function (empresa) {
+              if (count % 2 == 0)
+                var emp = "<a href='/?empresa=" + empresa.id_empresa + "' class='btn btn-sq-lg btn-primary'>" +
+                  "<i class='fa fa-user fa-5x'></i><br/>" +
+                  empresa.nombre + " <br>" + empresa.codigo + "</a>";
 
-                else
-                    var emp = "<a href='/?empresa=" + empresa.id_empresa+ "' class='btn btn-sq-lg btn-primary'>" +
-                            "<i class='fa fa-user fa-5x'></i><br/>" +
-                             empresa.nombre + " <br>" + empresa.codigo + "</a>";
-                $("#empresas").append(emp);
-                count++;
+              else
+                var emp = "<a href='/?empresa=" + empresa.id_empresa + "' class='btn btn-sq-lg btn-primary'>" +
+                  "<i class='fa fa-user fa-5x'></i><br/>" +
+                  empresa.nombre + " <br>" + empresa.codigo + "</a>";
+              $("#empresas").append(emp);
+              count++;
             });
- 	 }
-        });          
-     
+          }
+        });
+
+      } catch (e) {
+        alert("error : " + e);
+      }
     }
- catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
-
-
-</script>
+  </script>
 
 </head>
-<body onload="getData()">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
-<div class="container">
-      <div class="row">
-        <div class="col-lg-12" id="empresas">
-            <a href="#" class="btn btn-sq-lg btn-primary">
-                <i class="fa fa-user fa-5x"></i><br/>
-                Demo Primary <br>Button
-            </a>
-            <a href="#" class="btn btn-sq-lg btn-success">
-              <i class="fa fa-user fa-5x"></i><br/>
-              Demo Success <br>Button
-            </a>
-            <a href="#" class="btn btn-sq-lg btn-info">
-              <i class="fa fa-user fa-5x"></i><br/>
-              Demo Info <br>Button
-            </a>
-            <a href="#" class="btn btn-sq-lg btn-warning">
-              <i class="fa fa-user fa-5x"></i><br/>
-              Demo Warning <br>Button
-            </a>
-            <a href="#" class="btn btn-sq-lg btn-danger">
-              <i class="fa fa-user fa-5x"></i><br/>
-              Demo Danger <br>Button
-            </a>
-        </div>
-	</div>
-  
+<body onload="getData()">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12" id="empresas">
+        <a href="#" class="btn btn-sq-lg btn-primary">
+          <i class="fa fa-user fa-5x"></i><br/> Demo Primary <br>Button
+        </a>
+        <a href="#" class="btn btn-sq-lg btn-success">
+          <i class="fa fa-user fa-5x"></i><br/> Demo Success <br>Button
+        </a>
+        <a href="#" class="btn btn-sq-lg btn-info">
+          <i class="fa fa-user fa-5x"></i><br/> Demo Info <br>Button
+        </a>
+        <a href="#" class="btn btn-sq-lg btn-warning">
+          <i class="fa fa-user fa-5x"></i><br/> Demo Warning <br>Button
+        </a>
+        <a href="#" class="btn btn-sq-lg btn-danger">
+          <i class="fa fa-user fa-5x"></i><br/> Demo Danger <br>Button
+        </a>
+      </div>
+    </div>
+
 </body>
+
 </html>

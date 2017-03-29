@@ -1,199 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/animate.css" rel="stylesheet">	
-	<link href="css/responsive.css" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script><!-- Latest compiled and minified JavaScript --> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!--[if lt IE 9]>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/animate.css" rel="stylesheet">
+  <link href="css/responsive.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <!--[if lt IE 9]>
 	    <script src="js/html5shiv.js"></script>
 	    <script src="js/respond.min.js"></script>
-    <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <![endif]-->
+  <link rel="shortcut icon" href="images/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 
-<script type="text/javascript">
+  <script type="text/javascript">
+    function TeamObject(entityKey) {
 
-function TeamObject(entityKey) {
-    
-    this.entityKey = entityKey.toString();
-    this.tokenint = sessionStorage.token;
-    this.toJsonString = function () { return JSON.stringify(this); };
+      this.entityKey = entityKey.toString();
+      this.tokenint = sessionStorage.token;
+      this.toJsonString = function () {
+        return JSON.stringify(this);
+      };
 
-};
+    };
 
-function getData() 
-{
+    function getData() {
 
-	//sessionStorage.empresa = "kubeet";
+      //sessionStorage.empresa = "kubeet";
 
-    jQuery.support.cors = true;
-    try
-    {                         
-     $.ajax({
-        url: "/getsponsor",
-        dataType: 'json',
-        cache: false,
-        contentType: false,
-        processData: true,
-        data: {empresa: sessionStorage.empresa},                         
-        type: 'get',
-        crossDomain: true,
-        success: function(response) {
-        sponsors = response;
-          //alert(response);
+      jQuery.support.cors = true;
+      try {
+        $.ajax({
+          url: "/getsponsor",
+          dataType: 'json',
+          cache: false,
+          contentType: false,
+          processData: true,
+          data: {
+            empresa: sessionStorage.empresa
+          },
+          type: 'get',
+          crossDomain: true,
+          success: function (response) {
+            sponsors = response;
+            //alert(response);
             $("#sponsorAdmin").empty();
-            sponsors.forEach(function (sponsor) 
-            {
-                var row = "<tr> <td class='hidden'><input type='hidden' value='" + sponsor.id_sponsor + "'</td> <td>" + sponsor.nombre +
-                  "</td> <td class='text-center'><a class='btn btn-info btn-xs' " + 
-                  "href='edit-sponsor?key=" + sponsor.id_sponsor + "'><span class='glyphicon glyphicon-edit'></span>" + 
-                  "Edit</a> <a href='javascript:deleteSponsor(\""+ sponsor.id_sponsor.toString() + "\");' class='btn btn-danger btn-xs'><span " +
-                  "class='glyphicon glyphicon-remove'></span> Del</a></td> </tr><tr>"
-                $("#sponsorAdmin").append(row);
+            sponsors.forEach(function (sponsor) {
+              var row = "<tr> <td class='hidden'><input type='hidden' value='" + sponsor.id_sponsor +
+                "'</td> <td>" + sponsor.nombre +
+                "</td> <td class='text-center'><a class='btn btn-info btn-xs' " +
+                "href='edit-sponsor?key=" + sponsor.id_sponsor +
+                "'><span class='glyphicon glyphicon-edit'></span>" +
+                "Edit</a> <a href='javascript:deleteSponsor(\"" + sponsor.id_sponsor.toString() +
+                "\");' class='btn btn-danger btn-xs'><span " +
+                "class='glyphicon glyphicon-remove'></span> Del</a></td> </tr><tr>"
+              $("#sponsorAdmin").append(row);
             });
- 	 }
-        });          
-     
+          }
+        });
+
+      } catch (e) {
+        alert("error : " + e);
+      }
     }
- catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
 
 
-function deleteSponsor(entityKey)
-{
-	try
-  {
+    function deleteSponsor(entityKey) {
+      try {
 
 
-    alert("token : " + sessionStorage.token);
+        alert("token : " + sessionStorage.token);
 
-  	var myData = new TeamObject(
-        entityKey
-     );
-  	alert(myData.toJsonString());
+        var myData = new TeamObject(
+          entityKey
+        );
+        alert(myData.toJsonString());
 
-  	 jQuery.ajax({
-           type: "POST",
-           url: "/_ah/api/sponsor_api/v1/sponsor/delete",
-           data: myData.toJsonString(),
-           contentType: "application/json; charset=utf-8",
-           dataType: "json",
-           success: function (response) {
-                // do something
-                alert (response.code + " " + response.message);
-           },
-           complete: function(response){
-                getData();
-           },
-       
-           error: function (error) {            
-                // error handler
-                alert("error :" + error.message)
-           }
+        jQuery.ajax({
+          type: "POST",
+          url: "/_ah/api/sponsor_api/v1/sponsor/delete",
+          data: myData.toJsonString(),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (response) {
+            // do something
+            alert(response.code + " " + response.message);
+          },
+          complete: function (response) {
+            getData();
+          },
 
-       });
+          error: function (error) {
+            // error handler
+            alert("error :" + error.message)
+          }
 
-   }
-   catch(error)
-   {
-    alert(error);
-   }
+        });
 
-}
+      } catch (error) {
+        alert(error);
+      }
+
+    }
 
 
-function TokenObject() {
-    
-    this.tokenint = sessionStorage.token;
-    this.toJsonString = function () { return JSON.stringify(this); };
+    function TokenObject() {
 
-};
+      this.tokenint = sessionStorage.token;
+      this.toJsonString = function () {
+        return JSON.stringify(this);
+      };
 
-</script>
-	
+    };
+  </script>
+
 </head>
 
 <body onload="getData()" style="color: black;">
 
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+  <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-    </div>
-    <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav animated fadeIn text16">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Artists <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-artist"><span class="glyphicon glyphicon-plus"></span>Create Artist</a></li>
-            <li><a href="/admin-artist"><span class="glyphicon glyphicon-tasks"></span> Lists of Artists</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-music"></span> Genre <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-genero"><span class="glyphicon glyphicon-plus"></span>Create Genre</a></li>
-            <li><a href="/admin-genero"><span class="glyphicon glyphicon-tasks"></span> Lists of Genres</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-usd"></span> Sponsors <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-sponsor"><span class="glyphicon glyphicon-plus"></span>Create Sponsor</a></li>
-            <li><a href="/admin-sponsor"><span class="glyphicon glyphicon-tasks"></span> Lists of Sponsors</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span> Services <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-service"><span class="glyphicon glyphicon-plus"></span>Create Service</a></li>
-            <li><a href="/admin-service"><span class="glyphicon glyphicon-tasks"></span> Lists of Services</a></li>
-          </ul>
-        </li>
-      </ul>
-  </div><!-- /.container-fluid -->
-</nav>
+      </div>
+      <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav animated fadeIn text16">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Artists <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-artist"><span class="glyphicon glyphicon-plus"></span>Create Artist</a></li>
+              <li><a href="/admin-artist"><span class="glyphicon glyphicon-tasks"></span> Lists of Artists</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-music"></span> Genre <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-genero"><span class="glyphicon glyphicon-plus"></span>Create Genre</a></li>
+              <li><a href="/admin-genero"><span class="glyphicon glyphicon-tasks"></span> Lists of Genres</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-usd"></span> Sponsors <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-sponsor"><span class="glyphicon glyphicon-plus"></span>Create Sponsor</a></li>
+              <li><a href="/admin-sponsor"><span class="glyphicon glyphicon-tasks"></span> Lists of Sponsors</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span> Services <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-service"><span class="glyphicon glyphicon-plus"></span>Create Service</a></li>
+              <li><a href="/admin-service"><span class="glyphicon glyphicon-tasks"></span> Lists of Services</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- /.container-fluid -->
+  </nav>
 
-<section class="parallax-section" id="genre-admin">
-<div class="container">
-    <div class="row col-md-8 col-md-offset-2 custyle">
+  <section class="parallax-section" id="genre-admin">
+    <div class="container">
+      <div class="row col-md-8 col-md-offset-2 custyle">
         <form action="" method="post">
-            <table class="table table-striped custab">
+          <table class="table table-striped custab">
             <thead>
-            <a href="/new-genre" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new sponsor</a>
-                <tr>
-                    <th>Name</th>
-                    <th class="text-center">Action</th>
-                </tr>
+              <a href="/new-genre" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new sponsor</a>
+              <tr>
+                <th>Name</th>
+                <th class="text-center">Action</th>
+              </tr>
             </thead>
             <tbody id="sponsorAdmin">
             </tbody>
-            
-            </table>
+
+          </table>
         </form>
+      </div>
     </div>
-</div>
-</section>
+  </section>
 
 </body>
+
 </html>

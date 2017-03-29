@@ -1,160 +1,157 @@
 <html>
 
 <head>
- <title>
-   new - demo
- </title>
+    <title>
+        new - demo
+    </title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-<script>
-// contact
+    <script>
+        // contact
 
-function GeneroObject(myNombre) {
-    this.nombre = myNombre;
-    this.token = sessionStorage.token;
-    this.urlImage = sessionStorage.urlImage;
-    this.toJsonString = function () { return JSON.stringify(this); };
+        function GeneroObject(myNombre) {
+            this.nombre = myNombre;
+            this.token = sessionStorage.token;
+            this.urlImage = sessionStorage.urlImage;
+            this.toJsonString = function () {
+                return JSON.stringify(this);
+            };
 
-};
-
-
-
-function addGenero()
-{
-    try
-  
-{
-
-    alert("token : " + sessionStorage.token);
-
-    var myData = new GeneroObject(
-     $("#nombre").val() 
-     );
-    alert(myData.toJsonString());
-
-     jQuery.ajax({
-           type: "POST",
-           url: "/_ah/api/genero_api/v1/genero/insert",
-           data: myData.toJsonString(),
-           contentType: "application/json; charset=utf-8",
-           dataType: "json",
-           success: function (response) {
-                // do something
-                alert (response.code + " " + response.message);
-           },
-       
-           error: function (error) {            
-                // error handler
-                alert("error :" + error.message)
-           }
-
-       });
-
-   }
-   catch(error)
-   {
-    alert(error);
-   }
-
-}
-
-function TokenObject() {
-    
-    this.tokenint = sessionStorage.token;
-    this.toJsonString = function () { return JSON.stringify(this); };
-
-};
+        };
 
 
-function getGeneroList() {
-    try {
-        var myData = new TokenObject();
 
-        jQuery.ajax({
-            type: "POST",
-            url: "/_ah/api/genero_api/v1/genero/list",
-            data: myData.toJsonString(),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(response) {
-                alert(response.data)
-            },
-            error: function(error) {
-                alert("error: " + error.message)
+        function addGenero() {
+            try
+
+            {
+
+                alert("token : " + sessionStorage.token);
+
+                var myData = new GeneroObject(
+                    $("#nombre").val()
+                );
+                alert(myData.toJsonString());
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/_ah/api/genero_api/v1/genero/insert",
+                    data: myData.toJsonString(),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        // do something
+                        alert(response.code + " " + response.message);
+                    },
+
+                    error: function (error) {
+                        // error handler
+                        alert("error :" + error.message)
+                    }
+
+                });
+
+            } catch (error) {
+                alert(error);
             }
-        });
-    }
-    catch(error){
-        alert(error)
-    }
-}
 
-function uploadDemo()
+        }
 
-{
+        function TokenObject() {
 
-    var file_data = $("#uploaded_file").prop("files")[0];
-    var form_data = new FormData();
-    form_data.append("uploaded_file", file_data)
+            this.tokenint = sessionStorage.token;
+            this.toJsonString = function () {
+                return JSON.stringify(this);
+            };
 
-    jQuery.support.cors = true;
-    try
-    {
-     $.ajax({
-                url: "/up",
-                dataType: 'text',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                type: 'post',
-                crossDomain: true,
-                success: function(response){
-
-                                document.getElementById("preview").src=response;
-
-                                sessionStorage.urlImage = response;
-
-                                document.getElementById("url_photo").value = response;
-                }
-      });
-    }
-    catch(e)
-    {
-      alert("error : " +  e);
-     }
-}
+        };
 
 
-</script>
+        function getGeneroList() {
+            try {
+                var myData = new TokenObject();
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "/_ah/api/genero_api/v1/genero/list",
+                    data: myData.toJsonString(),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        alert(response.data)
+                    },
+                    error: function (error) {
+                        alert("error: " + error.message)
+                    }
+                });
+            } catch (error) {
+                alert(error)
+            }
+        }
+
+        function uploadDemo()
+
+        {
+
+            var file_data = $("#uploaded_file").prop("files")[0];
+            var form_data = new FormData();
+            form_data.append("uploaded_file", file_data)
+
+            jQuery.support.cors = true;
+            try {
+                $.ajax({
+                    url: "/up",
+                    dataType: 'text',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: form_data,
+                    type: 'post',
+                    crossDomain: true,
+                    success: function (response) {
+
+                        document.getElementById("preview").src = response;
+
+                        sessionStorage.urlImage = response;
+
+                        document.getElementById("url_photo").value = response;
+                    }
+                });
+            } catch (e) {
+                alert("error : " + e);
+            }
+        }
+    </script>
 
 </head>
+
 <body>
 
 
-<h1> Add demo</h1>
+    <h1> Add demo</h1>
 
-Nombre del Genero: <input type="text" id="nombre" placeholder="Korn" /> <br>
+    Nombre del Genero: <input type="text" id="nombre" placeholder="Korn" /> <br>
 
- <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 text-center">
-              <label for="exampleInputEmail1"><i>Foto</i></label>
-               <br>
-               <img  src="" alt="Image preview" id="preview" style="width:128px;height:128px;" >
-               <br>
-               <input type="text" id="url_photo">
-               <br><input onchange="uploadDemo()" type="file"  id="uploaded_file" name="uploaded_file">
-              </div>
+    <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 text-center">
+        <label for="exampleInputEmail1"><i>Foto</i></label>
+        <br>
+        <img src="" alt="Image preview" id="preview" style="width:128px;height:128px;">
+        <br>
+        <input type="text" id="url_photo">
+        <br><input onchange="uploadDemo()" type="file" id="uploaded_file" name="uploaded_file">
+    </div>
 
 
-<br>
-<button onclick="addGenero()"> Guardar </button> 
+    <br>
+    <button onclick="addGenero()"> Guardar </button>
 
-<br>
-<br>
+    <br>
+    <br>
 
-<button onclick="getGeneroList()"> Obtener Lista </button> 
+    <button onclick="getGeneroList()"> Obtener Lista </button>
 
 
 </body>
+
 </html>

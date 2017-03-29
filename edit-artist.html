@@ -1,264 +1,262 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-	<link href="css/main.css" rel="stylesheet">
-	<link href="css/animate.css" rel="stylesheet">	
-	<link href="css/responsive.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+  <link href="css/animate.css" rel="stylesheet">
+  <link href="css/responsive.css" rel="stylesheet">
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script><!-- Latest compiled and minified JavaScript --> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <!--[if lt IE 9]>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <!--[if lt IE 9]>
 	    <script src="js/html5shiv.js"></script>
 	    <script src="js/respond.min.js"></script>
-    <![endif]-->       
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
- <title>
-   new - demo
- </title>
+    <![endif]-->
+  <link rel="shortcut icon" href="images/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+  <title>
+    new - demo
+  </title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-<script>
-// contact
-function getParameterByName(name, url) {
-    if (!url) {
-      url = window.location.href;
-    }
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+  <script>
+    // contact
+    function getParameterByName(name, url) {
+      if (!url) {
+        url = window.location.href;
+      }
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-function TokenObject(entityKey) {
-    this.entityKey = entityKey;
-    this.tokenint = sessionStorage.token;
-    this.toJsonString = function () { return JSON.stringify(this); };
-};
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
 
-function ArtistObject(myNombre, entityKey) {
-    this.nombre = myNombre;
-    this.entityKey = entityKey;
-    this.token = sessionStorage.token;
-    this.urlImage = sessionStorage.urlImage;
-    this.toJsonString = function () { return JSON.stringify(this); };
+    function TokenObject(entityKey) {
+      this.entityKey = entityKey;
+      this.tokenint = sessionStorage.token;
+      this.toJsonString = function () {
+        return JSON.stringify(this);
+      };
+    };
 
-};
+    function ArtistObject(myNombre, entityKey) {
+      this.nombre = myNombre;
+      this.entityKey = entityKey;
+      this.token = sessionStorage.token;
+      this.urlImage = sessionStorage.urlImage;
+      this.toJsonString = function () {
+        return JSON.stringify(this);
+      };
 
-function getArtist()
-{
-  try
-  {
+    };
+
+    function getArtist() {
+      try {
 
 
-    //alert("token : " + sessionStorage.token);
+        //alert("token : " + sessionStorage.token);
 
-    var ek = getParameterByName('key'); // "lorem"
-    var myData = new TokenObject(ek);
-    
-    jQuery.ajax({
-        type: "POST",
-        url: "/_ah/api/artist_api/v1/artist/get",
-        data: myData.toJsonString(),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (response) {
+        var ek = getParameterByName('key'); // "lorem"
+        var myData = new TokenObject(ek);
+
+        jQuery.ajax({
+          type: "POST",
+          url: "/_ah/api/artist_api/v1/artist/get",
+          data: myData.toJsonString(),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (response) {
             artists = response;
-            artists.data.forEach(function (artist) 
-            {
-                $("#nombre").empty();
-                $("#url_photo").empty();
-                $("#nombre").val(artist.nombre);
-                $("#url_photo").val(artist.urlImage);
-                document.getElementById("preview").src=artist.urlImage;
+            artists.data.forEach(function (artist) {
+              $("#nombre").empty();
+              $("#url_photo").empty();
+              $("#nombre").val(artist.nombre);
+              $("#url_photo").val(artist.urlImage);
+              document.getElementById("preview").src = artist.urlImage;
             });
-        },
-        error: function (error) {            
+          },
+          error: function (error) {
             // error handler
             alert("error :" + error.message)
-        }
+          }
 
-       });
-   }
-   catch(error)
-   {
-    alert(error);
-   }
+        });
+      } catch (error) {
+        alert(error);
+      }
 
-}
-
-function editArtist()
-{
-    try
-  
-{
-
-    var ek = getParameterByName('key'); // "lorem"
-    var myData = new ArtistObject(
-     $("#nombre").val(),
-     ek
-     );
-    alert(myData.toJsonString());
-
-     jQuery.ajax({
-           type: "POST",
-           url: "/_ah/api/artist_api/v1/artist/update",
-           data: myData.toJsonString(),
-           contentType: "application/json; charset=utf-8",
-           dataType: "json",
-           success: function (response) {
-                // do something
-                alert (response.code + " " + response.message);
-           },
-       
-           error: function (error) {            
-                // error handler
-                alert("error :" + error.message)
-           }
-
-       });
-
-   }
-   catch(error)
-   {
-    alert(error);
-   }
-
-}
-
-function uploadDemo()
-
-{
-
-    var file_data = $("#uploaded_file").prop("files")[0];
-    var form_data = new FormData();
-    form_data.append("uploaded_file", file_data)
-
-    jQuery.support.cors = true;
-    try
-    {
-     $.ajax({
-                url: "/up",
-                dataType: 'text',
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                type: 'post',
-                crossDomain: true,
-                success: function(response){
-
-                                document.getElementById("preview").src=response;
-
-                                sessionStorage.urlImage = response;
-
-                                document.getElementById("url_photo").value = response;
-                }
-      });
     }
-    catch(e)
+
+    function editArtist() {
+      try
+
+      {
+
+        var ek = getParameterByName('key'); // "lorem"
+        var myData = new ArtistObject(
+          $("#nombre").val(),
+          ek
+        );
+        alert(myData.toJsonString());
+
+        jQuery.ajax({
+          type: "POST",
+          url: "/_ah/api/artist_api/v1/artist/update",
+          data: myData.toJsonString(),
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (response) {
+            // do something
+            alert(response.code + " " + response.message);
+          },
+
+          error: function (error) {
+            // error handler
+            alert("error :" + error.message)
+          }
+
+        });
+
+      } catch (error) {
+        alert(error);
+      }
+
+    }
+
+    function uploadDemo()
+
     {
-      alert("error : " +  e);
-     }
-}
 
+      var file_data = $("#uploaded_file").prop("files")[0];
+      var form_data = new FormData();
+      form_data.append("uploaded_file", file_data)
 
-</script>
+      jQuery.support.cors = true;
+      try {
+        $.ajax({
+          url: "/up",
+          dataType: 'text',
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          type: 'post',
+          crossDomain: true,
+          success: function (response) {
+
+            document.getElementById("preview").src = response;
+
+            sessionStorage.urlImage = response;
+
+            document.getElementById("url_photo").value = response;
+          }
+        });
+      } catch (e) {
+        alert("error : " + e);
+      }
+    }
+  </script>
 
 </head>
+
 <body onload="getArtist();" style="color: black;">
-<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+  <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-    </div>
-    <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav animated fadeIn text16">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Artists <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-artist"><span class="glyphicon glyphicon-plus"></span>Create Artist</a></li>
-            <li><a href="/admin-artist"><span class="glyphicon glyphicon-tasks"></span> Lists of Artists</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-music"></span> Genre <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-genero"><span class="glyphicon glyphicon-plus"></span>Create Genre</a></li>
-            <li><a href="/admin-genero"><span class="glyphicon glyphicon-tasks"></span> Lists of Genres</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-usd"></span> Sponsors <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-sponsor"><span class="glyphicon glyphicon-plus"></span>Create Sponsor</a></li>
-            <li><a href="/admin-sponsor"><span class="glyphicon glyphicon-tasks"></span> Lists of Sponsors</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span> Services <span class="caret"></span></a>
-          <ul class="dropdown-menu animated flipInX" role="menu">
-            <li><a href="/new-service"><span class="glyphicon glyphicon-plus"></span>Create Service</a></li>
-            <li><a href="/admin-service"><span class="glyphicon glyphicon-tasks"></span> Lists of Services</a></li>
-          </ul>
-        </li>
-      </ul>
-  </div><!-- /.container-fluid -->
-</nav>
+      </div>
+      <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav animated fadeIn text16">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Artists <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-artist"><span class="glyphicon glyphicon-plus"></span>Create Artist</a></li>
+              <li><a href="/admin-artist"><span class="glyphicon glyphicon-tasks"></span> Lists of Artists</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-music"></span> Genre <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-genero"><span class="glyphicon glyphicon-plus"></span>Create Genre</a></li>
+              <li><a href="/admin-genero"><span class="glyphicon glyphicon-tasks"></span> Lists of Genres</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-usd"></span> Sponsors <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-sponsor"><span class="glyphicon glyphicon-plus"></span>Create Sponsor</a></li>
+              <li><a href="/admin-sponsor"><span class="glyphicon glyphicon-tasks"></span> Lists of Sponsors</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-shopping-cart"></span> Services <span class="caret"></span></a>
+            <ul class="dropdown-menu animated flipInX" role="menu">
+              <li><a href="/new-service"><span class="glyphicon glyphicon-plus"></span>Create Service</a></li>
+              <li><a href="/admin-service"><span class="glyphicon glyphicon-tasks"></span> Lists of Services</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- /.container-fluid -->
+  </nav>
 
-<div class="container">
-	<div class="row">
-	    
-	    <div class="col-md-8 col-md-offset-2">
-	        
-    		<h1>Edit Artist</h1>
-    		
-    		    
-    		    <div class="form-group">
-    		        <label for="nombre">Nombre: <span class="require">*</span></label>
-    		        <input type="text" id="nombre" class="form-control" name="nombre" />
-    		    </div>
-    		    
-    		    <div class="form-group">
-                    <img  src="" alt="Image preview" id="preview" style="width:128px;height:128px;" >
-    		    </div>
-    		    
-    		    <div class="form-group">
-                    <input type="text" id="url_photo">
-    		    </div>
-    		    
-    		    <div class="form-group">
-                    <br><input onchange="uploadDemo()" type="file"  id="uploaded_file" name="uploaded_file">
-    		    </div>
-    		    
-    		    <div class="form-group">
-    		        <button type="submit" onclick="editArtist()" class="btn btn-primary">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-8 col-md-offset-2">
+
+        <h1>Edit Artist</h1>
+
+
+        <div class="form-group">
+          <label for="nombre">Nombre: <span class="require">*</span></label>
+          <input type="text" id="nombre" class="form-control" name="nombre" />
+        </div>
+
+        <div class="form-group">
+          <img src="" alt="Image preview" id="preview" style="width:128px;height:128px;">
+        </div>
+
+        <div class="form-group">
+          <input type="text" id="url_photo">
+        </div>
+
+        <div class="form-group">
+          <br><input onchange="uploadDemo()" type="file" id="uploaded_file" name="uploaded_file">
+        </div>
+
+        <div class="form-group">
+          <button type="submit" onclick="editArtist()" class="btn btn-primary">
     		            Edit
     		        </button>
-    		    </div>
-    		    
-		</div>
-		
-	</div>
-</div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 
 </body>
 </body>
+
 </html>

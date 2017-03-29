@@ -14,6 +14,8 @@ from models import Empresa, Team, Artist, Genero, Sponsor, Servicio
 
 import cloudstorage
 from google.appengine.api import app_identity
+from google.appengine.api import taskqueue
+from google.appengine.api import mail
 
 jinja_env = jinja2.Environment(
  loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
@@ -25,6 +27,33 @@ class DemoClass(object):
 def MyClass(obj):
  return obj.__dict__
 
+def send_approved_mail(sender_address, name, email, content):
+    # [START send_message]
+    message = mail.EmailMessage(
+        sender=sender_address,
+        subject="Message by " + name + " from " + email)
+
+    message.to = "Alexandro Cebrian <alex.cebrianm@gmail.com>"
+    message.body = content
+    message.send()
+    # [END send_message]
+
+
+class SendMessageHandler(webapp2.RequestHandler):
+    def get(self):
+        #if not 'X-AppEngine-TaskName' in self.request.headers:
+           #self.error(403)
+        self.response.headers.add_header('Access-Control-Allow-Origin', '*')
+        self.response.headers['Content-Type'] = 'application/json'
+
+        name = self.request.get('name')
+        email = self.request.get('email')
+        content = self.request.get('message')
+        print("NEPE: " + name+" "+email+" "+content)
+        send_approved_mail("admin@minimalist-161601.appspotmail.com".format(app_identity.get_application_id()), name, email, content)
+        #taskqueue.add(url='/sendmail',
+                     #params={'name': name, 'email': email, 'content': content})
+        self.response.write("TRUE")
 
 class GetTotalCounts(webapp2.RequestHandler):
 
@@ -513,4 +542,5 @@ app = webapp2.WSGIApplication([
     ('/getempresas', GetEmpresasHandler),
     ('/getempresa', GetEmpresaHandler),
     ('/cron', GetTotalCounts),
+    ('/sendmail', SendMessageHandler)
 ], debug = True)
