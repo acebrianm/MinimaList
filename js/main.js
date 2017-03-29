@@ -89,12 +89,12 @@ $("#upload").click(function getContact() {
 			processData: true,
 			success: function (response) {
 				// do something
-				alert("PENE MASIVO ENORME LASCIVO ");
+				alert("El mensaje se ha enviado: " + response);
 			},
 
 			error: function (error) {
 				// error handler
-				alert("error sending mail")
+				alert("Error enviando el mail")
 			}
 
 		});

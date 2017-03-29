@@ -39,22 +39,27 @@ def send_approved_mail(sender_address, name, email, content):
     message.send()
     # [END send_message]
 
+class SendTaskMail(webapp2.RequestHandler):
+    def post(self):
+        name = self.request.get('name')
+        email = self.request.get('email')
+        content = self.request.get('content')
+        sender =self.request.get('sender_address')
+        send_approved_mail(sender, name, email, content)
 
 class SendMessageHandler(webapp2.RequestHandler):
     def get(self):
-        #if not 'X-AppEngine-TaskName' in self.request.headers:
-           #self.error(403)
         self.response.headers.add_header('Access-Control-Allow-Origin', '*')
         self.response.headers['Content-Type'] = 'application/json'
 
         name = self.request.get('name')
         email = self.request.get('email')
         content = self.request.get('message')
-        print("NEPE: " + name+" "+email+" "+content)
-        send_approved_mail("admin@minimalist-161601.appspotmail.com".format(app_identity.get_application_id()), name, email, content)
-        #taskqueue.add(url='/sendmail',
-                     #params={'name': name, 'email': email, 'content': content})
-        self.response.write("TRUE")
+        sender = "admin@minimalist-161601.appspotmail.com".format(app_identity.get_application_id())
+        taskqueue.add(url='/sendtask',
+                     params={'sender_address': sender, 'name': name, 'email': email, 'content': content})
+        json_string = json.dumps("true", default=MyClass)
+        self.response.write(json_string)
 
 class GetCron(webapp2.RequestHandler):
 
@@ -563,6 +568,22 @@ class MainHandler(webapp2.RequestHandler):
 
     template_context = {}
     self.response.out.write(
+      self._render_template('empresas.html', template_context))
+
+
+   def _render_template(self, template_name, context=None):
+    if context is None:
+     context = {}
+
+    template = jinja_env.get_template(template_name)
+    return template.render(context)
+
+class IndexHandler(webapp2.RequestHandler):
+
+   def get(self):
+
+    template_context = {}
+    self.response.out.write(
       self._render_template('index.html', template_context))
 
 
@@ -575,6 +596,7 @@ class MainHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
+    ('/index', IndexHandler),
     ('/login', LoginHandler),
     ('/admin', AdminHandler),
     ('/admin-artist', ArtistHandler),
@@ -599,5 +621,6 @@ app = webapp2.WSGIApplication([
     ('/getempresas', GetEmpresasHandler),
     ('/getempresa', GetEmpresaHandler),
     ('/cron', GetTotalCounts),
-    ('/sendmail', SendMessageHandler)
+    ('/sendmail', SendMessageHandler),
+    ('/sendtask', SendTaskMail)
 ], debug = True)
