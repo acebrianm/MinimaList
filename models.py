@@ -97,6 +97,21 @@ if validarEmail("root@kubeet.com") == False:
     )
     admin.hash_password()
     admin.put()
+    edc = Empresa(
+      codigo_empresa = 'edc',
+      nombre_empresa="Electronic Daisy Carnival",
+     
+    )
+    edc.put()
+    keyadmin = ndb.Key(urlsafe=edc.entityKey)
+    adminEdc = Usuarios(
+          empresa_key = keyadmin,
+          email="edc@example.com",
+          password="edc",
+       
+    )
+    adminEdc.hash_password()
+    adminEdc.put()
 
 
 

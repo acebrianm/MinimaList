@@ -23,6 +23,34 @@ def MyClass(obj):
  return obj.__dict__
 
 
+class GetTotalCounts(webapp2.RequestHandler):
+    def get(self):
+        # if 'X-AppEngine-Cron' not in self.request.headers:
+            # self.error(403)
+        artists = Artist.query().fetch()
+        myObj = DemoClass()
+        myList = []
+
+        myObj.artista = len(artists)
+        myList.append(myObj)
+        
+
+        # json_string = json.dumps(myList, default=MyClass)
+        # self.response.write(json_string)
+
+
+        template_context = {}
+        self.response.out.write( self._render_template('admin-artist2.html', template_context))
+
+    def _render_template(self, template_name, context=None):
+        if context is None:
+            context = {myList}
+
+        template = jinja_env.get_template(template_name)
+        return template.render(context)
+        ## hacer una parte en la pagina principal en donde esten los numeros de
+        # artistas y generos y que se cambien de manera automatica
+
 class GetTeamHandler(webapp2.RequestHandler):
 
     def get(self):
@@ -362,4 +390,5 @@ app = webapp2.WSGIApplication([
     ('/getgenero', GetGeneroHandler),
     ('/getservicio', GetServicioHandler),
     ('/getsponsor', GetSponsorHandler),
+    ('/cron', GetTotalCounts),
 ], debug = True)
