@@ -51,7 +51,7 @@ class GetTotalCounts(webapp2.RequestHandler):
         ## hacer una parte en la pagina principal en donde esten los numeros de
         # artistas y generos y que se cambien de manera automatica
 
-class GetTeamHandler(webapp2.RequestHandler):
+class GetEmpresasHandler(webapp2.RequestHandler):
 
     def get(self):
      self.response.headers.add_header('Access-Control-Allow-Origin', '*')
@@ -514,6 +514,7 @@ app = webapp2.WSGIApplication([
     ('/getgenero', GetGeneroHandler),
     ('/getservice', GetServicioHandler),
     ('/getsponsor', GetSponsorHandler),
+    ('/getempresas', GetEmpresasHandler),
     ('/getmapa', GetMapaHandler),
     ('/cron', GetTotalCounts),
 ], debug = True)

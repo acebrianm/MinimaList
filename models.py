@@ -198,14 +198,14 @@ class Sponsor(CustomBaseModel):
         sponsor.put()
         return 0
 
-class Mapa(CustomBaseModel):
-    _message_fields_schema = ('entityKey','lat', 'lng')
-    empresa_key = ndb = ndb.KeyProperty(kind=Empresa)
-    lat = ndb.FloatProperty()
-    lng = ndb.FloatProperty()
-
-    def mapa_m(self, data, empresakey):
-        mapa = Mapa()
-        mapa.populate(data)
-        mapa.empresa_key=empresakey
-        mapa.put()
+# class Mapa(CustomBaseModel):
+#     _message_fields_schema = ('entityKey','lat', 'lng')
+#     empresa_key = ndb = ndb.KeyProperty(kind=Empresa)
+#     lat = ndb.FloatProperty()
+#     lng = ndb.FloatProperty()
+#
+#     def mapa_m(self, data, empresakey):
+#         mapa = Mapa()
+#         mapa.populate(data)
+#         mapa.empresa_key=empresakey
+#         mapa.put()
